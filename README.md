@@ -1,4 +1,4 @@
-# AllHearingEar
+﻿# AllHearingEar
 ## Idé:
 Skapa en babymonitor som ansluter till hemmanätverket via WI-FI och bryter aktivt ljud i din hemdator samt spelar upp ljudet som tas upp av mikrofonen i babymonitorn.
 Detta för att kunna underlätta för användaren av datorn när användaren spelar spel, ser film, lyssnar på musik eller liknande.
@@ -14,7 +14,7 @@ Om vi nu ska köra på illuminati pyramid kan vi istället för att produkten he
 
 ## Hårdvara
 
-Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett snyggt och praktiskt hölje.
+Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett snyggt och praktiskt hölje!
 
 - Esp8266 Wifi Accesspoint/Server (https://github.com/tzapu/WiFiManager )
 
