@@ -12,15 +12,6 @@ Om vi nu ska köra på illuminati pyramid kan vi istället för att produkten he
 
 ### Utförande
 
-## Ström?
-
-En mycket känslig fråga.
-Hur koverterar vi 240v AC till 5V dc. Enklast med en mobiltelefonladdare.
-Köpa och skicka med? Säkerhet? CE märkning osv?
-
-Bygga intern AC-DC konvertering? HLK-PM01? 
-Kostnad för CE/FEE märkning?
-
 ## Hårdvara
 
 Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett snyggt och praktiskt hölje!
@@ -52,56 +43,51 @@ Https://plus.google.com/wm/1/+MarkChaney/posts/EpTNcAjxMak
 Https://perso.aquilenet.fr/~sven337/english/2016/07/14/DIY-wifi-baby-monitor.html
 
 ## Wishlist
-Kamera
+
+##Kamera.
 
 ##Mjukvara
 
 Marcus utformar en mjukvara till Windows som synkar hårdvaran och bryter eventuellt ljud som spelas upp från datorn. För att sedan spela upp ljudet från monitorn.
-Synkning av hårdvara,
- 
-Volymkontroll för uppspelning av ljud upptaget av mikrofon, 
 
-Volymkontroll för dämpning av ljud aktiva i PC,
- 
-Volymkontroll för känslighet i mikrofon,
- 
-Alternativ för autostart av program (Checkbox),
- 
-Statusinformation, 
+Synkning av hårdvara
+
+Volymkontroll för uppspelning av ljud upptaget av mikrofon.
+
+Volymkontroll för dämpning av ljud aktiva i PC.
+
+Volymkontroll för känslighet i mikrofon.
+
+Alternativ för autostart av program (Checkbox)
+
+Statusinformation
 
 Länk till hemsida.
 
-### Länkar till källor.
+## Wishlist
 
-https://www.nuget.org/packages/NAudio/1.7.3 (NAudio API för inspelning av ljud i VB)
-
-https://social.msdn.microsoft.com/Forums/vstudio/en-US/c9841350-2d83-4863-b491-6d9f75bb1daa/stream-mic-audio-to-another-computer?forum=vbgeneral (Exempelprogramm för ljudstream via UDP.)
-
-http://www.codeproject.com/Articles/19485/A-Voice-Chat-Application-in-C - A Voice Chat Application in C#
-
-### Wishlist
 Knapp för att visa video.
+
 Alternativ för att få video picture in picture när monitor aktiveras.
 
-### Språk
-Listener programmeras i Visual Basic då språket är mer känt av Marcus och kod för att skicka och lyssna bevisats fungera och uppfylla de krav vi har.
+## Språk
 
-###Steg 1: Hitta kod för kommunikation mellan mikrofon och dator.
+Fastställs när steg 1 är löst.
+
+Steg 1: Hitta kod för kommunikation mellan mikrofon och dator.
 - UDP / TCP?
-Valt protokoll är UDP då det inte behöver ett svar från client innan nästa packet skickas. UDP streamar hela tiden med risk att tappa delar av packet.
- 
-Då krav på ljudkvalité inte är stort i vårt projekt riskerar vi inte lagg genom att använda TCP.
 
-Två testprogram är färdiga. Sändare och Lyssnare som streamar ljud via UDP. 
+Steg 2: Ändra ljudnivåer i dator för att mikrofonen ska få prioritet på datorn.
 
-###Steg 2: Ändra ljudnivåer i dator för att mikrofonen ska få prioritet på datorn.
+Steg 3: Push/Pull lösning
 
-###Steg 3: Push/Pull lösning
+Steg 4: Användarinställningar / Decibelbegränsning
 
-###Steg 4: Användarinställningar / Decibelbegränsning
+Steg 5: Grafiskt user interface.
 
-###Steg 5: Grafiskt user interface.
-Löser sig på ett enkelt sätt då vi använder VB Form application.
+## Länkar Mjukvara
+
+http://www.codeproject.com/Articles/19485/A-Voice-Chat-Application-in-C - A Voice Chat Application in C#
 
 ##Det kommerciella
 
