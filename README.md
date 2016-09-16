@@ -12,6 +12,15 @@ Om vi nu ska köra på illuminati pyramid kan vi istället för att produkten he
 
 ### Utförande
 
+## Ström?
+
+En mycket känslig fråga.
+Hur koverterar vi 240v AC till 5V dc. Enklast med en mobiltelefonladdare.
+Köpa och skicka med? Säkerhet? CE märkning osv?
+
+Bygga intern AC-DC konvertering? HLK-PM01? 
+Kostnad för CE/FEE märkning?
+
 ## Hårdvara
 
 Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett snyggt och praktiskt hölje!

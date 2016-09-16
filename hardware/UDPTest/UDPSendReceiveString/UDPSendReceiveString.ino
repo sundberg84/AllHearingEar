@@ -8,14 +8,18 @@ const char* password = "castleofhorror";
 IPAddress ipBroadCast(217,210,144,102);
 unsigned int udpRemotePort=11000;
 unsigned int udplocalPort=11000;
+int sensorPin = A0;    // select the input pin for the potentiometer
+int sensorValue = 0;  // variable to store the value coming from the sensor
+unsigned long lastRequest = 0;
 const int UDP_PACKET_SIZE = 48;
-char udpBuffer[ UDP_PACKET_SIZE];
+char udpBuffer[UDP_PACKET_SIZE];
 WiFiUDP udp;
 //================================================================
 // Setup hardware, serial port, and connect to wifi.
 //================================================================
  
 void setup() {
+  delay(6000);
   Serial.begin(115200);
   delay(10);
   // We start by connecting to a WiFi network
@@ -44,19 +48,37 @@ void setup() {
 //================================================================
 // Function to send udp message
 //================================================================
-void fncUdpSend()
+void fncUdpSend(int msg)
 {
-  strcpy(udpBuffer, "hello testing message"); 
+  //trcpy(udpBuffer, "Bajskorv"); 
   udp.beginPacket(ipBroadCast, udpRemotePort);
-  udp.write(udpBuffer, sizeof(udpBuffer));
+  //udp.write(udpBuffer, sizeof(udpBuffer));
+  udp.write(msg);
   udp.endPacket();
+
   }
 //================================================================
 // LOOP MAIN
 //================================================================
+
+
+
 // send udp packet each 5 secconds
- 
 void loop() {
-    delay (5000);
-   fncUdpSend();
+  
+  unsigned long now = millis();
+  //delay (5000);
+  sensorValue = analogRead(sensorPin);
+   
+ Serial.print("Ljud: ");
+  Serial.println(sensorValue);
+    
+  if ((now - lastRequest) > 5000){
+  
+    // read the value from the sensor:
+
+  Serial.print("Sänder ");
+  Serial.println(sensorValue);
+  fncUdpSend(sensorValue);
+ }  
 }
