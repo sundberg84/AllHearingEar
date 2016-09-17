@@ -60,7 +60,7 @@ Volymkontroll för känslighet i mikrofon.
 
 Alternativ för autostart av program (Checkbox)
 
-Statusinformation
+Statusinformation (Klar)
 
 Länk till hemsida.
 
@@ -125,6 +125,15 @@ Hårdvara
 Beställt hårdvara (ESP8266, Mikrofon)
 Tänk köra Wifi via (https://github.com/tzapu/WiFiManager) direkt på ESP8266
 Börjar bygge av hårdvara
-Mjukvara
+###Mjukvara
+Utformat program i Visual Basic. Kod för att ta emot packet via UPD klart.
+
+Programmet tar emot packet ifrån tänkt hårdvara och visar status på om det anslutning finns eller inte.
+
+Mjukvaran kan ta emot ljud ifrån ett testprogram som är tänk ska funger som hårdvarans program.
+
+160917: Färdig med att programmet visar fungerande statusinfo. Med grön/röd text.
+160917: Programmet har en fungerande logg som loggar om man lyckas ansluta eller om man tappar anslutning.
+160918: Grafisk logga och icon för mjukvaran. Även möjlighet att minimera programmet ner till taskbar inkl fungerande menyer.
 
 

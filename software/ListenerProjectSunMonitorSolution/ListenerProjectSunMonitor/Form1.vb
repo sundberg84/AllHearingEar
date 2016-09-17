@@ -1,6 +1,7 @@
 ﻿Imports System.Net
 Imports System.Text.Encoding
 Imports System.Net.Sockets
+Imports Microsoft.Win32
 
 Public Class frmMain
 
@@ -24,16 +25,12 @@ Public Class frmMain
 
         subscriber.Client.ReceiveTimeout = 100
         subscriber.Client.Blocking = False
+        TxtLogg.Text = DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!"
 
-        'Här hittar vi IPadressen på den lokala datorn. Denna ska användas i webapplication vid synkning av hårdvara/mjukvara.
-        Try
-            Dim IPhost As IPHostEntry = Dns.GetHostByName(Dns.GetHostName())
-            labIP.Text = "IP Adress: " & IPhost.AddressList(0).ToString()
-        Catch ex As Exception
-            MsgBox("There is an Error!")
-        End Try
+        Connectionstatus = False
+        lblListen.ForeColor = Color.Red
+        NotifyIcon1.Visible = False 'Visa inte icon i taskbar vid start.
 
-        Timer1.Enabled = True
 
     End Sub
 
@@ -55,42 +52,52 @@ Public Class frmMain
         End Try
     End Sub
 
-    Private Function getcomputername() As String
-        Return Dns.GetHostName
-    End Function
-
-    'Pinga IPadress
-    Function ConnectionStatus() As Boolean
-        Return My.Computer.Network.Ping("8.8.8.8")
-    End Function
-
-    'Timer1 kollar hela tiden om ConnectionStatus får ett svar.
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Try
-            If ConnectionStatus() = True Then
-                lblStatus.Text = "Status: " & "Ansluten!"
-            ElseIf ConnectionStatus() = False Then
-                lblStatus.Text = "Status: " & "Ej ansluten!"
-            End If
-        Catch ex As Exception
-            lblStatus.Text = "Status: " & "Ej ansluten!"
-        End Try
-
-    End Sub
-
     'tmrListen lyssnar efter packet från alla IPadresser och alla portar.
-    Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles Timer1.Tick
+    Dim ticks As Integer = 0
+    Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles tmrListen.Tick
 
-        Try
+
+        ticks = ticks + 1
+        If ticks > 55 Then
+            lblListen.Text = "Ej ansluten!"
+            lblListen.ForeColor = Color.Red
+
+            If Connectionstatus = True Then
+                Call ConStat()
+            End If
+
+        End If
+
+            Try
             Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvbytes() As Byte = subscriber.Receive(ep)
-            lblListen.Text = ASCII.GetString(rcvbytes)
+            lblListen.Text = "Ansluten!" 'ASCII.GetString(rcvbytes)
+            lblListen.ForeColor = Color.Green
+            ticks = 0
+            Call ConStat()
         Catch ex As Exception
+
         End Try
 
     End Sub
 
-    ' UDP receiver code _________________________________________________________________________________________
+    'Logga anslutning/avbrott.
+    Dim Connectionstatus As Boolean
+
+    Private Function ConStat()
+
+
+        If lblListen.Text = "Ansluten!" And Connectionstatus = False Then
+            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to All Hearing Ear!"
+            Connectionstatus = True
+        ElseIf lblListen.Text = "Ej ansluten!" And Connectionstatus = True Then
+            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to All Hearing Ear!"
+            Connectionstatus = False
+        End If
+
+    End Function
+
+    ' UDP VOX receiver code _________________________________________________________________________________________
 
     Dim VoxViaUDP As System.Threading.Thread
     Dim VoxViaUDPIPAddress As IPAddress
@@ -100,6 +107,9 @@ Public Class frmMain
 
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
         Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
+
+        tmrListen.Enabled = True
+
         For Each LocalIP As IPAddress In LocalIPList.AddressList
             If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
                 VoxViaUDPIPAddress = LocalIP
@@ -119,7 +129,10 @@ Public Class frmMain
         VoxViaUDP.Start()
 
         Receive_Vox.Enabled = False
+
         Stop_Receiving.Enabled = True
+        tmrListen.Enabled = True
+
     End Sub
 
     Dim BytesRcvd As Integer = 0
@@ -243,7 +256,75 @@ Public Class frmMain
 
         Receive_Vox.Enabled = True
         Stop_Receiving.Enabled = False
+        tmrListen.Enabled = False
+
+        lblListen.Text = "Ej ansluten!"
+        lblListen.ForeColor = Color.Red
+        TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
 
     End Sub
 
+    Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
+        If CBLogg.Checked = True Then
+            Me.Height = 480
+        Else
+            Me.Height = 310
+        End If
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        NotifyIcon1.Visible = False
+        Try
+            AbortVoxViaUDPThread = True
+        Catch ex As Exception
+        End Try
+        Try
+            VoxViaUDP.Abort()
+        Catch ex As Exception
+        End Try
+        Try
+            VoxViaUDPRxClient.Close()
+        Catch ex As Exception
+        End Try
+        End
+    End Sub
+
+
+
+    Private Sub ShowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowToolStripMenuItem.Click
+        Try
+            Me.Visible = True
+            Me.WindowState = FormWindowState.Normal
+            NotifyIcon1.Visible = False
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub NotifyIcon1_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDown
+        If MouseButtons = MouseButtons.Right Then
+            ContextMenuStrip1.Show()
+        End If
+    End Sub
+
+    Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
+        Try
+            Me.Visible = True
+            Me.WindowState = FormWindowState.Normal
+            NotifyIcon1.Visible = False
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub frmMain_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        If Me.WindowState = FormWindowState.Minimized Then
+            NotifyIcon1.Visible = True
+            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Running minimized", ToolTipIcon.Info)
+            Me.ShowInTaskbar = False
+        ElseIf Me.WindowState.Normal Then
+            NotifyIcon1.Visible = False
+            Me.ShowInTaskbar = True
+        End If
+    End Sub
 End Class
