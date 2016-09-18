@@ -1,7 +1,7 @@
 ﻿Imports System.Net
-Imports System.Text.Encoding
 Imports System.Net.Sockets
 Imports Microsoft.Win32
+
 
 Public Class frmMain
 
@@ -29,7 +29,10 @@ Public Class frmMain
 
         Connectionstatus = False
         lblListen.ForeColor = Color.Red
-        NotifyIcon1.Visible = False 'Visa inte icon i taskbar vid start.
+        NotifyIcon1.Visible = True 'Visa icon i taskbar vid start.
+
+
+        Me.CBAutostart.CheckState = My.Settings.chk1 'Ladda värden i Autostart (Checkboxen)
 
 
     End Sub
@@ -38,6 +41,12 @@ Public Class frmMain
     ' using Visual Studio Debugger or threads may not abort/close.
 
     Private Sub Form1_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
+
+
+
+        My.Settings.chk1 = Me.CBAutostart.CheckState 'Spara värden i Autostart (Checkboxen)
+        My.Settings.Save()
+
         Try
             AbortVoxViaUDPThread = True
         Catch ex As Exception
@@ -50,9 +59,14 @@ Public Class frmMain
             VoxViaUDPRxClient.Close()
         Catch ex As Exception
         End Try
+
+
+
     End Sub
 
     'tmrListen lyssnar efter packet från alla IPadresser och alla portar.
+    'ticks är räknare som känner av ifall vi fortfarande har anslutning var 5,5 sekund.
+    '--------------------------------------------------------------------
     Dim ticks As Integer = 0
     Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles tmrListen.Tick
 
@@ -82,6 +96,7 @@ Public Class frmMain
     End Sub
 
     'Logga anslutning/avbrott.
+    '-------------------------
     Dim Connectionstatus As Boolean
 
     Private Function ConStat()
@@ -93,6 +108,7 @@ Public Class frmMain
         ElseIf lblListen.Text = "Ej ansluten!" And Connectionstatus = True Then
             TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to All Hearing Ear!"
             Connectionstatus = False
+            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to All Hearing Ear", ToolTipIcon.Info)
         End If
 
     End Function
@@ -263,7 +279,8 @@ Public Class frmMain
         TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
 
     End Sub
-
+    'Visa Loggbok vid checkbox.
+    '--------------------------
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
         If CBLogg.Checked = True Then
             Me.Height = 480
@@ -272,6 +289,8 @@ Public Class frmMain
         End If
     End Sub
 
+    'Kod för att minimering av program ska visas i taskbar. Inkl Stripmenu och dubbelklick.
+    '--------------------------------------------------------------------------------------
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         NotifyIcon1.Visible = False
         Try
@@ -295,7 +314,7 @@ Public Class frmMain
         Try
             Me.Visible = True
             Me.WindowState = FormWindowState.Normal
-            NotifyIcon1.Visible = False
+            Me.ShowInTaskbar = True
         Catch ex As Exception
 
         End Try
@@ -311,7 +330,7 @@ Public Class frmMain
         Try
             Me.Visible = True
             Me.WindowState = FormWindowState.Normal
-            NotifyIcon1.Visible = False
+            Me.ShowInTaskbar = True
         Catch ex As Exception
 
         End Try
@@ -319,12 +338,45 @@ Public Class frmMain
 
     Private Sub frmMain_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         If Me.WindowState = FormWindowState.Minimized Then
-            NotifyIcon1.Visible = True
+
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Running minimized", ToolTipIcon.Info)
             Me.ShowInTaskbar = False
+            Me.Visible = False
         ElseIf Me.WindowState.Normal Then
-            NotifyIcon1.Visible = False
+
             Me.ShowInTaskbar = True
+            Me.Visible = True
+        End If
+    End Sub
+
+    'Länk till vår hemsida.
+    '----------------------
+    Private Sub Label5_MouseDown(sender As Object, e As MouseEventArgs) Handles Label5.MouseDown
+        Try
+            System.Diagnostics.Process.Start("http://www.google.se")
+        Catch
+
+        End Try
+    End Sub
+
+
+    'Kod för att CBAutostart checkbox för autostart fungerar som den ska.
+    '--------------------------------------------------------------------
+    Private Sub CBAutostart_CheckedChanged(sender As Object, e As EventArgs) Handles CBAutostart.CheckedChanged
+
+        Dim applicationName As String = Application.ProductName
+        Dim applicationPath As String = Application.ExecutablePath
+
+        If CBAutostart.Checked Then
+            Dim regKey As Microsoft.Win32.RegistryKey
+            regKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True)
+            regKey.SetValue(applicationName, """" & applicationPath & """")
+            regKey.Close()
+        Else
+            Dim regkey As Microsoft.Win32.RegistryKey
+            regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True)
+            regkey.DeleteValue(applicationName, False)
+            regkey.Close()
         End If
     End Sub
 End Class
