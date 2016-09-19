@@ -9,28 +9,29 @@
 //UDP Variabler
 const int UDP_PACKET_SIZE = 48;
 char incomingPacket[UDP_PACKET_SIZE];
-//IPAddress ipBroadCast(217,210,144,102);
-IPAddress ipBroadCast(0, 0, 0, 0);
-unsigned int udpRemotePort=11319;
-unsigned int udplocalPort=11319;
+//IPAddress ipServer(217,210,144,102);
+IPAddress ipServer(0, 0, 0, 0);
+unsigned int udpServerPort = 11319;
+unsigned int udplocalPort = 11319;
 WiFiUDP udp;
 
 //Microfon variabler.
 int sensorPin = A0;    // select the input pin for the potentiometer
 int sensorValue = 0;  // variable to store the value coming from the sensor
-unsigned long lastRequest, lastsensorvalue = 0;
+unsigned long lastRequest = 0;
 
 void setup() {
 
   //Debug
   Serial.begin(115200);
+  Serial.println("Startar...");
 
   //Klientnamn på routern.
   wifi_station_set_hostname("AllHearingEar");
 
   //WiFiManager startar
   WiFiManager wifiManager;
-  
+
   //Använd denna om du vill plocka bort SSID och lösernord.
   //wifiManager.resetSettings();
 
@@ -39,63 +40,59 @@ void setup() {
 
   //Hämta tidigare sparade SSID/Lösen eller starta portal om det behövs.
   wifiManager.autoConnect("AllHearingEar");
-  Serial.println("Connected!");
+  Serial.println("Wifi ansluten!");
 
   // Starta UDP protokoll.
   udp.begin(udplocalPort);
-  Serial.print("UDP Local port: ");
-  Serial.println(udp.localPort());
 
-  pinMode(sensorPin, INPUT);
-
-  Serial.println(ipBroadCast);
-  while (ipBroadCast < 1) {
-
+  // Vänta inkommande sync från servern
+  Serial.print("Väntar server.");
+  while (ipServer < 1) {
     UdpRecieve();
-    
   }
-  
-  
+  Serial.print("IP Server: ");
+  Serial.println(ipServer);
+
 }
-
 void loop() {
-  // put your main code here, to run repeatedly:
-  //sensorValue = analogRead(sensorPin);
-  //Serial.print("Sensorvalue: ");
-  //Serial.println(sensorValue);
-  //fncUdpSend(sensorValue);
-  //delay(5000);
 
+  //Ping varje 5 sek (om inte ljud skickats).
+  unsigned long now = millis();
+  if ((now - lastRequest) > 5000) {
+    lastRequest = now;
+    UdpSend(1);
+  }
 }
 
 void UdpSend(int msg)
 {
-  //trcpy(udpBuffer, "Bajskorv");
-  //udp.beginPacket(ipBroadCast, udpRemotePort);
-  //udp.write(udpBuffer, sizeof(udpBuffer));
-  //udp.write(msg);
-  //udp.endPacket();
+  udp.beginPacket(ipServer, udpServerPort);
+  udp.write(msg);
+  udp.endPacket();
 }
 
 void UdpRecieve() {
+
+  unsigned long now = millis();
+  if ((ipServer < 1) && (now - lastRequest) > 5000) {
+    lastRequest = now;
+    Serial.print(".");
+  }
+
   int packetSize = udp.parsePacket();
-  if (packetSize)
-  {
+  if (packetSize) {
     Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
+    ipServer = udp.remoteIP();
     int len = udp.read(incomingPacket, 255);
     if (len > 0)
     {
       incomingPacket[len] = 0;
     }
-    Serial.printf("UDP packet contents: %s\n", incomingPacket);
-    ipBroadCast == udp.remoteIP();
-    Serial.println(ipBroadCast);
-   
-  //Skriv tillbaka!  
-  udp.beginPacket(udp.remoteIP(), udp.remotePort());
-  udp.write("Jag tog din IP - hehe");
-  udp.endPacket();
-    
+    //Serial.printf("UDP packet contents: %s\n", incomingPacket);
+
+    //Ack!
+    UdpSend(1);
+
   }
 
 }

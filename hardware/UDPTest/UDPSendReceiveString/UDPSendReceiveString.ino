@@ -1,16 +1,17 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUDP.h>
+#include <SPI.h>
 
 // wifi connection variables
-const char* ssid     = "EAMWWS_B";
+const char* ssid     = "EAMWWS_A";
 const char* password = "castleofhorror";
 
 IPAddress ipBroadCast(217,210,144,102);
-unsigned int udpRemotePort=11000;
-unsigned int udplocalPort=11000;
+unsigned int udpRemotePort=11319;
+unsigned int udplocalPort=11319;
 int sensorPin = A0;    // select the input pin for the potentiometer
 int sensorValue = 0;  // variable to store the value coming from the sensor
-unsigned long lastRequest = 0;
+unsigned long lastRequest, lastsensorvalue = 0;
 const int UDP_PACKET_SIZE = 48;
 char udpBuffer[UDP_PACKET_SIZE];
 WiFiUDP udp;
@@ -19,6 +20,8 @@ WiFiUDP udp;
 //================================================================
  
 void setup() {
+  delay(6000);
+  WiFi.disconnect();
   delay(6000);
   Serial.begin(115200);
   delay(10);
@@ -44,6 +47,8 @@ void setup() {
   udp.begin(udplocalPort);
   Serial.print("Local port: ");
   Serial.println(udp.localPort());
+  
+   pinMode(sensorPin, INPUT);
 }
 //================================================================
 // Function to send udp message
@@ -66,19 +71,34 @@ void fncUdpSend(int msg)
 // send udp packet each 5 secconds
 void loop() {
   
-  unsigned long now = millis();
-  //delay (5000);
-  sensorValue = analogRead(sensorPin);
-   
- Serial.print("Ljud: ");
-  Serial.println(sensorValue);
-    
-  if ((now - lastRequest) > 5000){
+unsigned long now = millis();
+sensorValue = analogRead(sensorPin);   
   
-    // read the value from the sensor:
+if ((now - lastRequest) > 1000){  
 
-  Serial.print("Sänder ");
-  Serial.println(sensorValue);
-  fncUdpSend(sensorValue);
- }  
+  Serial.print("Mörker: ");
+  Serial.println(sensorValue / 100);
+  lastRequest = now;
+if (sensorValue > (lastsensorvalue + 10)){   
+
+  Serial.print("Sensorvalue: ");
+  Serial.print(sensorValue);
+  Serial.print("Lastsensorvalue");
+  Serial.println(lastsensorvalue);
+  //fncUdpSend(sensorValue);
+  lastsensorvalue = sensorValue;
+  
+}
+
+if (sensorValue > (lastsensorvalue - 10)){   
+
+  Serial.print("Sensorvalue: ");
+  Serial.print(sensorValue);
+  Serial.print("Lastsensorvalue");
+  Serial.println(lastsensorvalue);
+  //fncUdpSend(sensorValue);
+  lastsensorvalue = sensorValue;
+  
+}
+}
 }
