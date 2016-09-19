@@ -51,6 +51,13 @@ Https://plus.google.com/wm/1/+MarkChaney/posts/EpTNcAjxMak
 
 Https://perso.aquilenet.fr/~sven337/english/2016/07/14/DIY-wifi-baby-monitor.html
 
+#### Ljud/Mic till Arduino:
+
+https://electronpi.wordpress.com/2013/05/28/getting-going-with-an-electret-microphone-and-an-arduino/
+Inkl flera länkar på denna sida!
+
+Sök arduino electret microphone circuit
+
 ## Wishlist
 Kamera
 
