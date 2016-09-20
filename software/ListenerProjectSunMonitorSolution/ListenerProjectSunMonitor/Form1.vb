@@ -1,11 +1,13 @@
-﻿Imports System.Net
+﻿
+Imports System.Net
 Imports System.Net.Sockets
+Imports System.Text.Encoding
 Imports Microsoft.Win32
 
 
 Public Class frmMain
 
-    Dim subscriber As New Sockets.UdpClient(11000)
+
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -25,14 +27,17 @@ Public Class frmMain
 
         subscriber.Client.ReceiveTimeout = 100
         subscriber.Client.Blocking = False
+
         TxtLogg.Text = DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!"
 
         Connectionstatus = False
         lblListen.ForeColor = Color.Red
         NotifyIcon1.Visible = True 'Visa icon i taskbar vid start.
 
+        'LOAD ALL APPLICATION SETTINGS!--------------------------------------------------------------------------------
 
         Me.CBAutostart.CheckState = My.Settings.chk1 'Ladda värden i Autostart (Checkboxen)
+        'Me.HardwareIP.Text = My.Settings.hip1 'ladda värden för synk i textbox
 
 
     End Sub
@@ -45,6 +50,9 @@ Public Class frmMain
 
 
         My.Settings.chk1 = Me.CBAutostart.CheckState 'Spara värden i Autostart (Checkboxen)
+        'My.Settings.hip1 = Me.HardwareIP.Text 'spara synkvärden från textbox.
+
+
         My.Settings.Save()
 
         Try
@@ -67,7 +75,12 @@ Public Class frmMain
     'tmrListen lyssnar efter packet från alla IPadresser och alla portar.
     'ticks är räknare som känner av ifall vi fortfarande har anslutning var 5,5 sekund.
     '--------------------------------------------------------------------
+    Dim publisher As New Sockets.UdpClient(0)
+    Dim subscriber As New Sockets.UdpClient(11319)
     Dim ticks As Integer = 0
+
+
+
     Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles tmrListen.Tick
 
 
@@ -82,16 +95,21 @@ Public Class frmMain
 
         End If
 
-            Try
+        Try
             Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvbytes() As Byte = subscriber.Receive(ep)
-            lblListen.Text = "Ansluten!" 'ASCII.GetString(rcvbytes)
+            lblListen.Text = "Ansluten!"
+            CurrentSync = ep.Address.ToString()
             lblListen.ForeColor = Color.Green
             ticks = 0
             Call ConStat()
+
         Catch ex As Exception
 
         End Try
+
+
+
 
     End Sub
 
@@ -117,19 +135,18 @@ Public Class frmMain
 
     Dim VoxViaUDP As System.Threading.Thread
     Dim VoxViaUDPIPAddress As IPAddress
-    Dim VoxViaUDPLogicalPortNumber As Integer = 11000
+    Dim VoxViaUDPLogicalPortNumber As Integer = 11318
     Dim VoxViaUDPRemoteIpEndPoint As System.Net.IPEndPoint
     Dim VoxViaUDPRxClient As System.Net.Sockets.UdpClient
 
+
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
         Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
-
-        tmrListen.Enabled = True
-
         For Each LocalIP As IPAddress In LocalIPList.AddressList
             If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
                 VoxViaUDPIPAddress = LocalIP
                 VoxViaUDPRemoteIpEndPoint = New IPEndPoint(VoxViaUDPIPAddress, VoxViaUDPLogicalPortNumber)
+
             End If
         Next
         Try
@@ -176,6 +193,7 @@ Public Class frmMain
     Private Sub VoxViaUDPDel()
         If AbortVoxViaUDPThread = False Then
             Label1.Text = "The current received byte count prior to removal and playing is " & (RcvdWaveFileBytes.Count * 1280).ToString & "."
+
             If RcvdWaveFileBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
                 CreateWaveHeaderAndPlay()
             End If
@@ -379,4 +397,270 @@ Public Class frmMain
             regkey.Close()
         End If
     End Sub
+
+    Dim SynkIP As String
+    Dim SynktoPort As Integer
+    Dim SynkWord As Byte
+    Dim CurrentSync As String
+
+    Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
+        SynkIP = "90.230.46.113"
+        SynktoPort = "11319"
+        SynkWord = "0"
+
+        publisher.Connect(SynkIP, SynktoPort)
+        Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
+        publisher.Send(sendbytes, sendbytes.Length)
+
+        If HardwareIP.Text > "" Then
+            Call SyncNew()
+        End If
+    End Sub
+
+    '------------------------------------------------------------------------------------------
+    '   Knappar för att enhetslistan ska fungera som den ska.
+    '   1. När man tar bort en enhet så ska listan sortera sig. (Fungerar)
+    '   2. Finns redan en enhet med samma IP ska den inte synka den.
+    '   3. Tar man bort en enhet ska programmet "glömma den"
+    '
+    '------------------------------------------------------------------------------------------
+
+    Dim NumberOfUnitsSynced As Integer
+    'Definiera värden som ska sparas när program sparas.
+    Dim AHESyncIP1 As String
+    Dim AHEsyncName1 As String
+    Dim AHESyncIP2 As String
+    Dim AHEsyncName2 As String
+    Dim AHESyncIP3 As String
+    Dim AHEsyncName3 As String
+    Dim AHESyncIP4 As String
+    Dim AHEsyncName4 As String
+
+    Private Function SyncNew()
+
+
+        If txtUnit1.Text = "" And txtUnit2.Text = "" And txtUnit3.Text = "" And txtUnit4.Text = "" Then
+            NumberOfUnitsSynced = 0
+        End If
+
+
+        'Måste finnas en deletefunktion som säger vilken slot som står på tur att synkas. Deleteknappen ska endast synas om sloten är syncad.
+
+        Select Case NumberOfUnitsSynced
+            Case 0
+                txtUnit1.Visible = True
+                PBok1.Visible = True
+                PBok1.Enabled = True
+                txtUnit1.Text = "Första enheten!"
+                AHESyncIP1 = CurrentSync
+                btnSetup.Enabled = False
+                Call FindSlot()
+            Case 1
+                txtUnit2.Visible = True
+                PBok2.Visible = True
+                PBok2.Enabled = True
+                txtUnit2.Text = "Andra enheten!"
+                AHESyncIP2 = CurrentSync
+                btnSetup.Enabled = False
+                Call FindSlot()
+            Case 2
+                txtUnit3.Visible = True
+                PBok3.Visible = True
+                PBok3.Enabled = True
+                txtUnit3.Text = "tredje enheten!"
+                AHESyncIP3 = CurrentSync
+                btnSetup.Enabled = False
+                Call FindSlot()
+            Case 3
+                txtUnit4.Visible = True
+                PBok4.Visible = True
+                PBok4.Enabled = True
+                txtUnit4.Text = "Fjärde enheten!"
+                AHESyncIP4 = CurrentSync
+                btnSetup.Enabled = False
+                Call FindSlot()
+
+        End Select
+
+
+
+
+    End Function
+
+    Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
+        txtUnit1.Text = ""
+        PBdelete1.Enabled = False
+        PBdelete1.Visible = False
+        AHEsyncName1 = ""
+        btnSetup.Enabled = True
+        Call FindSlot()
+    End Sub
+
+    Private Sub PBok1_Click(sender As Object, e As EventArgs) Handles PBok1.Click
+        If txtUnit1.Text = "" Then
+            MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
+        Else
+            AHEsyncName1 = txtUnit1.Text
+            txtUnit1.Enabled = False
+            PBdelete1.Visible = True
+            PBdelete1.Enabled = True
+            PBok1.Enabled = False
+            PBok1.Visible = False
+            btnSetup.Enabled = True
+
+        End If
+
+    End Sub
+
+    Private Sub PBok2_Click(sender As Object, e As EventArgs) Handles PBok2.Click
+        If txtUnit2.Text = "" Then
+            MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
+        Else
+            AHEsyncName2 = txtUnit2.Text
+            txtUnit2.Enabled = False
+            PBdelete2.Visible = True
+            PBdelete2.Enabled = True
+            PBok2.Enabled = False
+            PBok2.Visible = False
+            btnSetup.Enabled = True
+        End If
+    End Sub
+
+    Private Sub PBdelete2_Click(sender As Object, e As EventArgs) Handles PBdelete2.Click
+        txtUnit2.Text = ""
+        PBdelete2.Enabled = False
+        PBdelete2.Visible = False
+        AHEsyncName2 = ""
+        btnSetup.Enabled = True
+        Call FindSlot()
+    End Sub
+
+    Private Sub PBok3_Click(sender As Object, e As EventArgs) Handles PBok3.Click
+        If txtUnit3.Text = "" Then
+            MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
+        Else
+            AHEsyncName3 = txtUnit3.Text
+            txtUnit3.Enabled = False
+            PBdelete3.Visible = True
+            PBdelete3.Enabled = True
+            PBok3.Enabled = False
+            PBok3.Visible = False
+            btnSetup.Enabled = True
+        End If
+    End Sub
+
+    Private Sub PBdelete3_Click(sender As Object, e As EventArgs) Handles PBdelete3.Click
+        txtUnit3.Text = ""
+        PBdelete3.Enabled = False
+        PBdelete3.Visible = False
+        AHEsyncName3 = ""
+        btnSetup.Enabled = True
+        Call FindSlot()
+    End Sub
+
+    Private Sub PBok4_Click(sender As Object, e As EventArgs) Handles PBok4.Click
+        If txtUnit4.Text = "" Then
+            MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
+        Else
+            AHEsyncName4 = txtUnit3.Text
+            txtUnit4.Enabled = False
+            PBdelete4.Visible = True
+            PBdelete4.Enabled = True
+            PBok4.Enabled = False
+            PBok4.Visible = False
+        End If
+    End Sub
+
+    Private Sub PBdelete4_Click(sender As Object, e As EventArgs) Handles PBdelete4.Click
+        txtUnit4.Text = ""
+        PBdelete4.Enabled = False
+        PBdelete4.Visible = False
+        AHEsyncName4 = ""
+        btnSetup.Enabled = True
+        Call FindSlot()
+    End Sub
+
+
+    Dim SyncDone As Integer
+    Public Function FindSlot()
+
+
+
+        Do Until SyncDone = 4
+            If txtUnit4.Text = "" Then
+                NumberOfUnitsSynced = 3
+                txtUnit4.Enabled = True
+                txtUnit4.Visible = False
+                If txtUnit4.Text > "" Then
+                    PBdelete4.Visible = True
+                    PBdelete4.Enabled = True
+                End If
+            End If
+
+            If txtUnit3.Text = "" Then
+                txtUnit3.Text = txtUnit4.Text
+                txtUnit4.Text = ""
+                NumberOfUnitsSynced = 2
+
+                PBdelete4.Visible = False
+                If txtUnit3.Text > "" Then
+                    PBdelete3.Visible = True
+                    PBdelete3.Enabled = True
+                End If
+                If txtUnit3.Text = "" Then
+                    txtUnit3.Enabled = True
+                    txtUnit3.Visible = False
+                End If
+            End If
+
+            If txtUnit2.Text = "" Then
+                txtUnit2.Text = txtUnit3.Text
+                txtUnit3.Text = ""
+                NumberOfUnitsSynced = 1
+
+                PBdelete3.Visible = False
+                If txtUnit2.Text > "" Then
+                    PBdelete2.Visible = True
+                    PBdelete2.Enabled = True
+                End If
+                If txtUnit2.Text = "" Then
+                    txtUnit2.Enabled = True
+                    txtUnit2.Visible = False
+                End If
+
+            End If
+
+                If txtUnit1.Text = "" Then
+                txtUnit1.Text = txtUnit2.Text
+                txtUnit2.Text = ""
+                NumberOfUnitsSynced = 0
+
+                PBdelete2.Visible = False
+                If txtUnit1.Text > "" Then
+                    PBdelete1.Visible = True
+                    PBdelete1.Enabled = True
+                End If
+
+            End If
+
+            If txtUnit4.Text > "" And txtUnit3.Text > "" And txtUnit2.Text > "" And txtUnit1.Text > "" Then
+                NumberOfUnitsSynced = 4
+                btnSetup.Enabled = False
+            End If
+
+            If txtUnit4.Text = "" And txtUnit3.Text = "" And txtUnit2.Text = "" And txtUnit1.Text = "" Then
+                NumberOfUnitsSynced = 0
+                txtUnit1.Enabled = True
+                txtUnit1.Visible = False
+            End If
+            SyncDone = SyncDone + 1
+        Loop
+
+
+
+        If SyncDone = 4 Then
+            SyncDone = 0
+        End If
+
+    End Function
 End Class

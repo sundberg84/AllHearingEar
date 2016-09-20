@@ -65,6 +65,66 @@ Namespace My
                 Me("chk1") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property hip1() As String
+            Get
+                Return CType(Me("hip1"),String)
+            End Get
+            Set
+                Me("hip1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property sync1() As String
+            Get
+                Return CType(Me("sync1"),String)
+            End Get
+            Set
+                Me("sync1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property sync2() As String
+            Get
+                Return CType(Me("sync2"),String)
+            End Get
+            Set
+                Me("sync2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property sync3() As String
+            Get
+                Return CType(Me("sync3"),String)
+            End Get
+            Set
+                Me("sync3") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property sync4() As String
+            Get
+                Return CType(Me("sync4"),String)
+            End Get
+            Set
+                Me("sync4") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

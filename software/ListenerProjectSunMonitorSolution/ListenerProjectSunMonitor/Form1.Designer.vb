@@ -43,9 +43,33 @@ Partial Class frmMain
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.HardwareIP = New System.Windows.Forms.Label()
+        Me.btnSetup = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.PBdelete4 = New System.Windows.Forms.PictureBox()
+        Me.PBok4 = New System.Windows.Forms.PictureBox()
+        Me.PBdelete3 = New System.Windows.Forms.PictureBox()
+        Me.PBok3 = New System.Windows.Forms.PictureBox()
+        Me.PBdelete2 = New System.Windows.Forms.PictureBox()
+        Me.PBok2 = New System.Windows.Forms.PictureBox()
+        Me.PBdelete1 = New System.Windows.Forms.PictureBox()
+        Me.PBok1 = New System.Windows.Forms.PictureBox()
+        Me.txtUnit4 = New System.Windows.Forms.TextBox()
+        Me.txtUnit3 = New System.Windows.Forms.TextBox()
+        Me.txtUnit2 = New System.Windows.Forms.TextBox()
+        Me.txtUnit1 = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBok4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBok3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBok2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBdelete1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TmrLogg
@@ -59,7 +83,7 @@ Partial Class frmMain
         '
         Me.lblListen.AutoSize = True
         Me.lblListen.ForeColor = System.Drawing.Color.Black
-        Me.lblListen.Location = New System.Drawing.Point(13, 252)
+        Me.lblListen.Location = New System.Drawing.Point(13, 267)
         Me.lblListen.Name = "lblListen"
         Me.lblListen.Size = New System.Drawing.Size(62, 13)
         Me.lblListen.TabIndex = 3
@@ -67,7 +91,7 @@ Partial Class frmMain
         '
         'Receive_Vox
         '
-        Me.Receive_Vox.Location = New System.Drawing.Point(16, 183)
+        Me.Receive_Vox.Location = New System.Drawing.Point(16, 198)
         Me.Receive_Vox.Name = "Receive_Vox"
         Me.Receive_Vox.Size = New System.Drawing.Size(75, 23)
         Me.Receive_Vox.TabIndex = 8
@@ -77,7 +101,7 @@ Partial Class frmMain
         'Stop_Receiving
         '
         Me.Stop_Receiving.Enabled = False
-        Me.Stop_Receiving.Location = New System.Drawing.Point(97, 183)
+        Me.Stop_Receiving.Location = New System.Drawing.Point(97, 198)
         Me.Stop_Receiving.Name = "Stop_Receiving"
         Me.Stop_Receiving.Size = New System.Drawing.Size(75, 23)
         Me.Stop_Receiving.TabIndex = 9
@@ -90,9 +114,9 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(16, 68)
+        Me.GroupBox1.Location = New System.Drawing.Point(16, 291)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(343, 109)
+        Me.GroupBox1.Size = New System.Drawing.Size(339, 109)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Data Recieved"
@@ -136,7 +160,7 @@ Partial Class frmMain
         'CBAutostart
         '
         Me.CBAutostart.AutoSize = True
-        Me.CBAutostart.Location = New System.Drawing.Point(16, 212)
+        Me.CBAutostart.Location = New System.Drawing.Point(16, 227)
         Me.CBAutostart.Name = "CBAutostart"
         Me.CBAutostart.Size = New System.Drawing.Size(173, 17)
         Me.CBAutostart.TabIndex = 11
@@ -145,18 +169,18 @@ Partial Class frmMain
         '
         'TxtLogg
         '
-        Me.TxtLogg.Location = New System.Drawing.Point(19, 278)
+        Me.TxtLogg.Location = New System.Drawing.Point(16, 406)
         Me.TxtLogg.Multiline = True
         Me.TxtLogg.Name = "TxtLogg"
         Me.TxtLogg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtLogg.Size = New System.Drawing.Size(339, 155)
+        Me.TxtLogg.Size = New System.Drawing.Size(339, 122)
         Me.TxtLogg.TabIndex = 12
         Me.TxtLogg.Text = "Logg"
         '
         'CBLogg
         '
         Me.CBLogg.AutoSize = True
-        Me.CBLogg.Location = New System.Drawing.Point(16, 232)
+        Me.CBLogg.Location = New System.Drawing.Point(16, 247)
         Me.CBLogg.Name = "CBLogg"
         Me.CBLogg.Size = New System.Drawing.Size(69, 17)
         Me.CBLogg.TabIndex = 13
@@ -199,20 +223,190 @@ Partial Class frmMain
         'Label5
         '
         Me.Label5.AutoSize = True
+        Me.Label5.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Blue
-        Me.Label5.Location = New System.Drawing.Point(220, 252)
+        Me.Label5.Location = New System.Drawing.Point(220, 267)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(148, 13)
         Me.Label5.TabIndex = 15
         Me.Label5.Text = "http://www.allhearingear.com"
+        '
+        'HardwareIP
+        '
+        Me.HardwareIP.Location = New System.Drawing.Point(249, 228)
+        Me.HardwareIP.Name = "HardwareIP"
+        Me.HardwareIP.Size = New System.Drawing.Size(67, 16)
+        Me.HardwareIP.TabIndex = 21
+        Me.HardwareIP.Text = "HardwareIP"
+        '
+        'btnSetup
+        '
+        Me.btnSetup.Location = New System.Drawing.Point(252, 198)
+        Me.btnSetup.Name = "btnSetup"
+        Me.btnSetup.Size = New System.Drawing.Size(75, 23)
+        Me.btnSetup.TabIndex = 22
+        Me.btnSetup.Text = "Synka"
+        Me.btnSetup.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.PBdelete4)
+        Me.GroupBox2.Controls.Add(Me.PBok4)
+        Me.GroupBox2.Controls.Add(Me.PBdelete3)
+        Me.GroupBox2.Controls.Add(Me.PBok3)
+        Me.GroupBox2.Controls.Add(Me.PBdelete2)
+        Me.GroupBox2.Controls.Add(Me.PBok2)
+        Me.GroupBox2.Controls.Add(Me.PBdelete1)
+        Me.GroupBox2.Controls.Add(Me.PBok1)
+        Me.GroupBox2.Controls.Add(Me.txtUnit4)
+        Me.GroupBox2.Controls.Add(Me.txtUnit3)
+        Me.GroupBox2.Controls.Add(Me.txtUnit2)
+        Me.GroupBox2.Controls.Add(Me.txtUnit1)
+        Me.GroupBox2.Location = New System.Drawing.Point(16, 63)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(339, 129)
+        Me.GroupBox2.TabIndex = 23
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Enheter"
+        '
+        'PBdelete4
+        '
+        Me.PBdelete4.Enabled = False
+        Me.PBdelete4.Image = CType(resources.GetObject("PBdelete4.Image"), System.Drawing.Image)
+        Me.PBdelete4.Location = New System.Drawing.Point(116, 99)
+        Me.PBdelete4.Name = "PBdelete4"
+        Me.PBdelete4.Size = New System.Drawing.Size(18, 18)
+        Me.PBdelete4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBdelete4.TabIndex = 11
+        Me.PBdelete4.TabStop = False
+        Me.PBdelete4.Visible = False
+        '
+        'PBok4
+        '
+        Me.PBok4.Enabled = False
+        Me.PBok4.Image = CType(resources.GetObject("PBok4.Image"), System.Drawing.Image)
+        Me.PBok4.Location = New System.Drawing.Point(116, 99)
+        Me.PBok4.Name = "PBok4"
+        Me.PBok4.Size = New System.Drawing.Size(15, 15)
+        Me.PBok4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBok4.TabIndex = 10
+        Me.PBok4.TabStop = False
+        Me.PBok4.Visible = False
+        '
+        'PBdelete3
+        '
+        Me.PBdelete3.Enabled = False
+        Me.PBdelete3.Image = CType(resources.GetObject("PBdelete3.Image"), System.Drawing.Image)
+        Me.PBdelete3.Location = New System.Drawing.Point(116, 73)
+        Me.PBdelete3.Name = "PBdelete3"
+        Me.PBdelete3.Size = New System.Drawing.Size(18, 18)
+        Me.PBdelete3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBdelete3.TabIndex = 9
+        Me.PBdelete3.TabStop = False
+        Me.PBdelete3.Visible = False
+        '
+        'PBok3
+        '
+        Me.PBok3.Enabled = False
+        Me.PBok3.Image = CType(resources.GetObject("PBok3.Image"), System.Drawing.Image)
+        Me.PBok3.Location = New System.Drawing.Point(116, 73)
+        Me.PBok3.Name = "PBok3"
+        Me.PBok3.Size = New System.Drawing.Size(15, 15)
+        Me.PBok3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBok3.TabIndex = 8
+        Me.PBok3.TabStop = False
+        Me.PBok3.Visible = False
+        '
+        'PBdelete2
+        '
+        Me.PBdelete2.Enabled = False
+        Me.PBdelete2.Image = CType(resources.GetObject("PBdelete2.Image"), System.Drawing.Image)
+        Me.PBdelete2.Location = New System.Drawing.Point(116, 47)
+        Me.PBdelete2.Name = "PBdelete2"
+        Me.PBdelete2.Size = New System.Drawing.Size(18, 18)
+        Me.PBdelete2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBdelete2.TabIndex = 7
+        Me.PBdelete2.TabStop = False
+        Me.PBdelete2.Visible = False
+        '
+        'PBok2
+        '
+        Me.PBok2.Enabled = False
+        Me.PBok2.Image = CType(resources.GetObject("PBok2.Image"), System.Drawing.Image)
+        Me.PBok2.Location = New System.Drawing.Point(116, 47)
+        Me.PBok2.Name = "PBok2"
+        Me.PBok2.Size = New System.Drawing.Size(15, 15)
+        Me.PBok2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBok2.TabIndex = 6
+        Me.PBok2.TabStop = False
+        Me.PBok2.Visible = False
+        '
+        'PBdelete1
+        '
+        Me.PBdelete1.Enabled = False
+        Me.PBdelete1.Image = CType(resources.GetObject("PBdelete1.Image"), System.Drawing.Image)
+        Me.PBdelete1.Location = New System.Drawing.Point(116, 21)
+        Me.PBdelete1.Name = "PBdelete1"
+        Me.PBdelete1.Size = New System.Drawing.Size(18, 18)
+        Me.PBdelete1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBdelete1.TabIndex = 5
+        Me.PBdelete1.TabStop = False
+        Me.PBdelete1.Visible = False
+        '
+        'PBok1
+        '
+        Me.PBok1.Enabled = False
+        Me.PBok1.Image = CType(resources.GetObject("PBok1.Image"), System.Drawing.Image)
+        Me.PBok1.Location = New System.Drawing.Point(116, 22)
+        Me.PBok1.Name = "PBok1"
+        Me.PBok1.Size = New System.Drawing.Size(15, 15)
+        Me.PBok1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBok1.TabIndex = 4
+        Me.PBok1.TabStop = False
+        Me.PBok1.Visible = False
+        '
+        'txtUnit4
+        '
+        Me.txtUnit4.Location = New System.Drawing.Point(10, 97)
+        Me.txtUnit4.Name = "txtUnit4"
+        Me.txtUnit4.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit4.TabIndex = 3
+        Me.txtUnit4.Visible = False
+        '
+        'txtUnit3
+        '
+        Me.txtUnit3.Location = New System.Drawing.Point(10, 71)
+        Me.txtUnit3.Name = "txtUnit3"
+        Me.txtUnit3.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit3.TabIndex = 2
+        Me.txtUnit3.Visible = False
+        '
+        'txtUnit2
+        '
+        Me.txtUnit2.Location = New System.Drawing.Point(10, 45)
+        Me.txtUnit2.Name = "txtUnit2"
+        Me.txtUnit2.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit2.TabIndex = 1
+        Me.txtUnit2.Visible = False
+        '
+        'txtUnit1
+        '
+        Me.txtUnit1.Location = New System.Drawing.Point(10, 19)
+        Me.txtUnit1.Name = "txtUnit1"
+        Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit1.TabIndex = 0
+        Me.txtUnit1.Visible = False
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(371, 271)
+        Me.ClientSize = New System.Drawing.Size(373, 537)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.btnSetup)
+        Me.Controls.Add(Me.HardwareIP)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.CBLogg)
@@ -230,6 +424,16 @@ Partial Class frmMain
         Me.GroupBox1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBok4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBok3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBok2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBdelete1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBok1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -253,4 +457,19 @@ Partial Class frmMain
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Private WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents Label5 As Label
+    Friend WithEvents HardwareIP As Label
+    Friend WithEvents btnSetup As Button
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents txtUnit1 As TextBox
+    Friend WithEvents txtUnit4 As TextBox
+    Friend WithEvents txtUnit3 As TextBox
+    Friend WithEvents txtUnit2 As TextBox
+    Friend WithEvents PBdelete1 As PictureBox
+    Friend WithEvents PBok1 As PictureBox
+    Friend WithEvents PBdelete4 As PictureBox
+    Friend WithEvents PBok4 As PictureBox
+    Friend WithEvents PBdelete3 As PictureBox
+    Friend WithEvents PBok3 As PictureBox
+    Friend WithEvents PBdelete2 As PictureBox
+    Friend WithEvents PBok2 As PictureBox
 End Class
