@@ -36,9 +36,42 @@ Public Class frmMain
 
         'LOAD ALL APPLICATION SETTINGS!--------------------------------------------------------------------------------
 
-        Me.CBAutostart.CheckState = My.Settings.chk1 'Ladda värden i Autostart (Checkboxen)
-        'Me.HardwareIP.Text = My.Settings.hip1 'ladda värden för synk i textbox
+        Me.CBAutostart.CheckState = My.Settings.chk1
+        Me.AHESyncIP1 = My.Settings.hip1
+        Me.AHESyncIP2 = My.Settings.hip2
+        Me.AHESyncIP3 = My.Settings.hip3
+        Me.AHESyncIP4 = My.Settings.hip4
+        txtUnit1.Text = My.Settings.syncName1
+        txtUnit2.Text = My.Settings.syncName2
+        txtUnit3.Text = My.Settings.syncName3
+        txtUnit4.Text = My.Settings.syncName4
 
+
+
+        If txtUnit1.Text <> "" Then
+            txtUnit1.Visible = True
+            txtUnit1.Enabled = False
+            PBdelete1.Visible = True
+            PBdelete1.Enabled = True
+        End If
+        If txtUnit2.Text <> "" Then
+            txtUnit2.Visible = True
+            txtUnit2.Enabled = False
+            PBdelete2.Visible = True
+            PBdelete2.Enabled = True
+        End If
+        If txtUnit3.Text <> "" Then
+            txtUnit3.Visible = True
+            txtUnit3.Enabled = False
+            PBdelete3.Visible = True
+            PBdelete3.Enabled = True
+        End If
+        If txtUnit4.Text <> "" Then
+            txtUnit4.Visible = True
+            txtUnit4.Enabled = False
+            PBdelete4.Visible = True
+            PBdelete4.Enabled = True
+        End If
 
     End Sub
 
@@ -47,11 +80,17 @@ Public Class frmMain
 
     Private Sub Form1_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
 
+        'SAVE ALL APPLICATION SETTINGS!---------------------------------------------------------------------------------
 
-
-        My.Settings.chk1 = Me.CBAutostart.CheckState 'Spara värden i Autostart (Checkboxen)
-        'My.Settings.hip1 = Me.HardwareIP.Text 'spara synkvärden från textbox.
-
+        My.Settings.chk1 = Me.CBAutostart.CheckState
+        My.Settings.hip1 = AHESyncIP1
+        My.Settings.hip2 = AHESyncIP2
+        My.Settings.hip3 = AHESyncIP3
+        My.Settings.hip4 = AHESyncIP4
+        My.Settings.syncName1 = txtUnit1.Text
+        My.Settings.syncName2 = txtUnit2.Text
+        My.Settings.syncName3 = txtUnit3.Text
+        My.Settings.syncName4 = txtUnit4.Text
 
         My.Settings.Save()
 
@@ -99,7 +138,6 @@ Public Class frmMain
             Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvbytes() As Byte = subscriber.Receive(ep)
             lblListen.Text = "Ansluten!"
-            CurrentSync = ep.Address.ToString()
             lblListen.ForeColor = Color.Green
             ticks = 0
             Call ConStat()
@@ -109,6 +147,30 @@ Public Class frmMain
         End Try
 
 
+
+
+    End Sub
+
+    Private Sub TmrSync_Tick(sender As Object, e As EventArgs) Handles TmrSync.Tick
+
+        Try
+            Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
+            Dim rcvbytes2() As Byte = subscriber.Receive(respondSync)
+            lblHwip.Text = ASCII.GetString(rcvbytes2)
+            If lblHwip.Text = "1" Then
+                lblHwip.Text = respondSync.Address.ToString()
+                CurrentSync = respondSync.Address.ToString()
+                TmrSync.Enabled = False
+                Call SyncNew()
+
+
+            ElseIf lblHwip.Text = "0" Then
+                    lblHwip.Text = "Inga AHE svarade!"
+                TmrSync.Enabled = False
+            End If
+
+        Catch ex As Exception
+        End Try
 
 
     End Sub
@@ -404,7 +466,8 @@ Public Class frmMain
     Dim CurrentSync As String
 
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
-        SynkIP = "90.230.46.113"
+        TmrSync.Enabled = True
+        SynkIP = "192.168.1.88"
         SynktoPort = "11319"
         SynkWord = "0"
 
@@ -412,16 +475,14 @@ Public Class frmMain
         Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
         publisher.Send(sendbytes, sendbytes.Length)
 
-        If HardwareIP.Text > "" Then
-            Call SyncNew()
-        End If
+
     End Sub
 
     '------------------------------------------------------------------------------------------
     '   Knappar för att enhetslistan ska fungera som den ska.
     '   1. När man tar bort en enhet så ska listan sortera sig. (Fungerar)
-    '   2. Finns redan en enhet med samma IP ska den inte synka den.
-    '   3. Tar man bort en enhet ska programmet "glömma den"
+    '   2. Finns redan en enhet med samma IP ska den inte synka den. (Fungerar)
+    '   3. Tar man bort en enhet ska programmet "glömma den" (Fungerar)
     '
     '------------------------------------------------------------------------------------------
 
@@ -444,44 +505,46 @@ Public Class frmMain
         End If
 
 
-        'Måste finnas en deletefunktion som säger vilken slot som står på tur att synkas. Deleteknappen ska endast synas om sloten är syncad.
 
-        Select Case NumberOfUnitsSynced
-            Case 0
-                txtUnit1.Visible = True
-                PBok1.Visible = True
-                PBok1.Enabled = True
-                txtUnit1.Text = "Första enheten!"
-                AHESyncIP1 = CurrentSync
-                btnSetup.Enabled = False
-                Call FindSlot()
-            Case 1
-                txtUnit2.Visible = True
-                PBok2.Visible = True
-                PBok2.Enabled = True
-                txtUnit2.Text = "Andra enheten!"
-                AHESyncIP2 = CurrentSync
-                btnSetup.Enabled = False
-                Call FindSlot()
-            Case 2
-                txtUnit3.Visible = True
-                PBok3.Visible = True
-                PBok3.Enabled = True
-                txtUnit3.Text = "tredje enheten!"
-                AHESyncIP3 = CurrentSync
-                btnSetup.Enabled = False
-                Call FindSlot()
-            Case 3
-                txtUnit4.Visible = True
-                PBok4.Visible = True
-                PBok4.Enabled = True
-                txtUnit4.Text = "Fjärde enheten!"
-                AHESyncIP4 = CurrentSync
-                btnSetup.Enabled = False
-                Call FindSlot()
+        If AHESyncIP1 = lblHwip.Text Or lblHwip.Text = AHESyncIP2 Or lblHwip.Text = AHESyncIP3 Or lblHwip.Text = AHESyncIP4 Then
+            MsgBox("AHE redan synkad!", MsgBoxStyle.OkOnly, "All hearing ear")
+        Else
+            Select Case NumberOfUnitsSynced
+                Case 0
+                    txtUnit1.Visible = True
+                    PBok1.Visible = True
+                    PBok1.Enabled = True
+                    txtUnit1.Text = CurrentSync
+                    AHESyncIP1 = CurrentSync
+                    btnSetup.Enabled = False
+                    Call FindSlot()
+                Case 1
+                    txtUnit2.Visible = True
+                    PBok2.Visible = True
+                    PBok2.Enabled = True
+                    txtUnit2.Text = CurrentSync
+                    AHESyncIP2 = CurrentSync
+                    btnSetup.Enabled = False
+                    Call FindSlot()
+                Case 2
+                    txtUnit3.Visible = True
+                    PBok3.Visible = True
+                    PBok3.Enabled = True
+                    txtUnit3.Text = CurrentSync
+                    AHESyncIP3 = CurrentSync
+                    btnSetup.Enabled = False
+                    Call FindSlot()
+                Case 3
+                    txtUnit4.Visible = True
+                    PBok4.Visible = True
+                    PBok4.Enabled = True
+                    txtUnit4.Text = CurrentSync
+                    AHESyncIP4 = CurrentSync
+                    btnSetup.Enabled = False
+                    Call FindSlot()
 
-        End Select
-
+            End Select
+        End If
 
 
 
@@ -493,6 +556,8 @@ Public Class frmMain
         PBdelete1.Visible = False
         AHEsyncName1 = ""
         btnSetup.Enabled = True
+        AHESyncIP1 = ""
+
         Call FindSlot()
     End Sub
 
@@ -531,6 +596,7 @@ Public Class frmMain
         PBdelete2.Enabled = False
         PBdelete2.Visible = False
         AHEsyncName2 = ""
+        AHESyncIP2 = ""
         btnSetup.Enabled = True
         Call FindSlot()
     End Sub
@@ -554,6 +620,7 @@ Public Class frmMain
         PBdelete3.Enabled = False
         PBdelete3.Visible = False
         AHEsyncName3 = ""
+        AHESyncIP3 = ""
         btnSetup.Enabled = True
         Call FindSlot()
     End Sub
@@ -576,6 +643,7 @@ Public Class frmMain
         PBdelete4.Enabled = False
         PBdelete4.Visible = False
         AHEsyncName4 = ""
+        AHESyncIP4 = ""
         btnSetup.Enabled = True
         Call FindSlot()
     End Sub
@@ -663,4 +731,6 @@ Public Class frmMain
         End If
 
     End Function
+
+
 End Class

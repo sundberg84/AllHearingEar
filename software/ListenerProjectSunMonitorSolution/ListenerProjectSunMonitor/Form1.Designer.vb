@@ -24,7 +24,7 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.TmrLogg = New System.Windows.Forms.Timer(Me.components)
+        Me.TmrSync = New System.Windows.Forms.Timer(Me.components)
         Me.tmrListen = New System.Windows.Forms.Timer(Me.components)
         Me.lblListen = New System.Windows.Forms.Label()
         Me.Receive_Vox = New System.Windows.Forms.Button()
@@ -43,7 +43,6 @@ Partial Class frmMain
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.HardwareIP = New System.Windows.Forms.Label()
         Me.btnSetup = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.PBdelete4 = New System.Windows.Forms.PictureBox()
@@ -58,6 +57,7 @@ Partial Class frmMain
         Me.txtUnit3 = New System.Windows.Forms.TextBox()
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
+        Me.lblHwip = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -72,9 +72,8 @@ Partial Class frmMain
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'TmrLogg
+        'TmrSync
         '
-        Me.TmrLogg.Interval = 1000
         '
         'tmrListen
         '
@@ -231,14 +230,6 @@ Partial Class frmMain
         Me.Label5.Size = New System.Drawing.Size(148, 13)
         Me.Label5.TabIndex = 15
         Me.Label5.Text = "http://www.allhearingear.com"
-        '
-        'HardwareIP
-        '
-        Me.HardwareIP.Location = New System.Drawing.Point(249, 228)
-        Me.HardwareIP.Name = "HardwareIP"
-        Me.HardwareIP.Size = New System.Drawing.Size(67, 16)
-        Me.HardwareIP.TabIndex = 21
-        Me.HardwareIP.Text = "HardwareIP"
         '
         'btnSetup
         '
@@ -398,15 +389,23 @@ Partial Class frmMain
         Me.txtUnit1.TabIndex = 0
         Me.txtUnit1.Visible = False
         '
+        'lblHwip
+        '
+        Me.lblHwip.AutoSize = True
+        Me.lblHwip.Location = New System.Drawing.Point(249, 231)
+        Me.lblHwip.Name = "lblHwip"
+        Me.lblHwip.Size = New System.Drawing.Size(0, 13)
+        Me.lblHwip.TabIndex = 24
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.ClientSize = New System.Drawing.Size(373, 537)
+        Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnSetup)
-        Me.Controls.Add(Me.HardwareIP)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.CBLogg)
@@ -438,7 +437,7 @@ Partial Class frmMain
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents TmrLogg As Timer
+    Friend WithEvents TmrSync As Timer
     Friend WithEvents tmrListen As Timer
     Friend WithEvents lblListen As Label
     Friend WithEvents Receive_Vox As Button
@@ -457,7 +456,6 @@ Partial Class frmMain
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Private WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents Label5 As Label
-    Friend WithEvents HardwareIP As Label
     Friend WithEvents btnSetup As Button
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents txtUnit1 As TextBox
@@ -472,4 +470,5 @@ Partial Class frmMain
     Friend WithEvents PBok3 As PictureBox
     Friend WithEvents PBdelete2 As PictureBox
     Friend WithEvents PBok2 As PictureBox
+    Friend WithEvents lblHwip As Label
 End Class

@@ -81,48 +81,84 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property sync1() As String
+        Public Property syncName1() As String
             Get
-                Return CType(Me("sync1"),String)
+                Return CType(Me("syncName1"),String)
             End Get
             Set
-                Me("sync1") = value
+                Me("syncName1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property sync2() As String
+        Public Property syncName2() As String
             Get
-                Return CType(Me("sync2"),String)
+                Return CType(Me("syncName2"),String)
             End Get
             Set
-                Me("sync2") = value
+                Me("syncName2") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property sync3() As String
+        Public Property syncName3() As String
             Get
-                Return CType(Me("sync3"),String)
+                Return CType(Me("syncName3"),String)
             End Get
             Set
-                Me("sync3") = value
+                Me("syncName3") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property sync4() As String
+        Public Property syncName4() As String
             Get
-                Return CType(Me("sync4"),String)
+                Return CType(Me("syncName4"),String)
             End Get
             Set
-                Me("sync4") = value
+                Me("syncName4") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property hip2() As String
+            Get
+                Return CType(Me("hip2"),String)
+            End Get
+            Set
+                Me("hip2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property hip3() As String
+            Get
+                Return CType(Me("hip3"),String)
+            End Get
+            Set
+                Me("hip3") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property hip4() As String
+            Get
+                Return CType(Me("hip4"),String)
+            End Get
+            Set
+                Me("hip4") = value
             End Set
         End Property
     End Class

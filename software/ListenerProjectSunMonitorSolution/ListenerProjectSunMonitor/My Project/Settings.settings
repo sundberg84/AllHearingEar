@@ -8,16 +8,25 @@
     <Setting Name="hip1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="sync1" Type="System.String" Scope="User">
+    <Setting Name="syncName1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="sync2" Type="System.String" Scope="User">
+    <Setting Name="syncName2" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="sync3" Type="System.String" Scope="User">
+    <Setting Name="syncName3" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="sync4" Type="System.String" Scope="User">
+    <Setting Name="syncName4" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hip2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hip3" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hip4" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
