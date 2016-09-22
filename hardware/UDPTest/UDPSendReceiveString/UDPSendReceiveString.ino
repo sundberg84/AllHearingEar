@@ -3,8 +3,8 @@
 #include <SPI.h>
 
 // wifi connection variables
-const char* ssid     = "EAMWWS_A";
-const char* password = "castleofhorror";
+const char* ssid     = """;
+const char* password = "";
 
 IPAddress ipBroadCast(217,210,144,102);
 unsigned int udpRemotePort=11319;
