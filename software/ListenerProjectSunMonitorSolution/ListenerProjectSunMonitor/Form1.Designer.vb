@@ -26,7 +26,6 @@ Partial Class frmMain
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.TmrSync = New System.Windows.Forms.Timer(Me.components)
         Me.tmrListen = New System.Windows.Forms.Timer(Me.components)
-        Me.lblListen = New System.Windows.Forms.Label()
         Me.Receive_Vox = New System.Windows.Forms.Button()
         Me.Stop_Receiving = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -78,16 +77,6 @@ Partial Class frmMain
         'tmrListen
         '
         '
-        'lblListen
-        '
-        Me.lblListen.AutoSize = True
-        Me.lblListen.ForeColor = System.Drawing.Color.Black
-        Me.lblListen.Location = New System.Drawing.Point(13, 267)
-        Me.lblListen.Name = "lblListen"
-        Me.lblListen.Size = New System.Drawing.Size(62, 13)
-        Me.lblListen.TabIndex = 3
-        Me.lblListen.Text = "Ej ansluten!"
-        '
         'Receive_Vox
         '
         Me.Receive_Vox.Location = New System.Drawing.Point(16, 198)
@@ -113,7 +102,7 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(16, 291)
+        Me.GroupBox1.Location = New System.Drawing.Point(16, 398)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(339, 109)
         Me.GroupBox1.TabIndex = 10
@@ -168,7 +157,7 @@ Partial Class frmMain
         '
         'TxtLogg
         '
-        Me.TxtLogg.Location = New System.Drawing.Point(16, 406)
+        Me.TxtLogg.Location = New System.Drawing.Point(16, 270)
         Me.TxtLogg.Multiline = True
         Me.TxtLogg.Name = "TxtLogg"
         Me.TxtLogg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
@@ -225,7 +214,7 @@ Partial Class frmMain
         Me.Label5.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Blue
-        Me.Label5.Location = New System.Drawing.Point(220, 267)
+        Me.Label5.Location = New System.Drawing.Point(213, 251)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(148, 13)
         Me.Label5.TabIndex = 15
@@ -233,11 +222,11 @@ Partial Class frmMain
         '
         'btnSetup
         '
-        Me.btnSetup.Location = New System.Drawing.Point(252, 198)
+        Me.btnSetup.Location = New System.Drawing.Point(280, 198)
         Me.btnSetup.Name = "btnSetup"
         Me.btnSetup.Size = New System.Drawing.Size(75, 23)
         Me.btnSetup.TabIndex = 22
-        Me.btnSetup.Text = "Synka"
+        Me.btnSetup.Text = "Sync"
         Me.btnSetup.UseVisualStyleBackColor = True
         '
         'GroupBox2
@@ -265,7 +254,7 @@ Partial Class frmMain
         '
         Me.PBdelete4.Enabled = False
         Me.PBdelete4.Image = CType(resources.GetObject("PBdelete4.Image"), System.Drawing.Image)
-        Me.PBdelete4.Location = New System.Drawing.Point(116, 99)
+        Me.PBdelete4.Location = New System.Drawing.Point(116, 97)
         Me.PBdelete4.Name = "PBdelete4"
         Me.PBdelete4.Size = New System.Drawing.Size(18, 18)
         Me.PBdelete4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -289,7 +278,7 @@ Partial Class frmMain
         '
         Me.PBdelete3.Enabled = False
         Me.PBdelete3.Image = CType(resources.GetObject("PBdelete3.Image"), System.Drawing.Image)
-        Me.PBdelete3.Location = New System.Drawing.Point(116, 73)
+        Me.PBdelete3.Location = New System.Drawing.Point(116, 71)
         Me.PBdelete3.Name = "PBdelete3"
         Me.PBdelete3.Size = New System.Drawing.Size(18, 18)
         Me.PBdelete3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -313,7 +302,7 @@ Partial Class frmMain
         '
         Me.PBdelete2.Enabled = False
         Me.PBdelete2.Image = CType(resources.GetObject("PBdelete2.Image"), System.Drawing.Image)
-        Me.PBdelete2.Location = New System.Drawing.Point(116, 47)
+        Me.PBdelete2.Location = New System.Drawing.Point(116, 45)
         Me.PBdelete2.Name = "PBdelete2"
         Me.PBdelete2.Size = New System.Drawing.Size(18, 18)
         Me.PBdelete2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -337,7 +326,7 @@ Partial Class frmMain
         '
         Me.PBdelete1.Enabled = False
         Me.PBdelete1.Image = CType(resources.GetObject("PBdelete1.Image"), System.Drawing.Image)
-        Me.PBdelete1.Location = New System.Drawing.Point(116, 21)
+        Me.PBdelete1.Location = New System.Drawing.Point(116, 19)
         Me.PBdelete1.Name = "PBdelete1"
         Me.PBdelete1.Size = New System.Drawing.Size(18, 18)
         Me.PBdelete1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -375,6 +364,7 @@ Partial Class frmMain
         '
         'txtUnit2
         '
+        Me.txtUnit2.BackColor = System.Drawing.SystemColors.Window
         Me.txtUnit2.Location = New System.Drawing.Point(10, 45)
         Me.txtUnit2.Name = "txtUnit2"
         Me.txtUnit2.Size = New System.Drawing.Size(100, 20)
@@ -383,6 +373,7 @@ Partial Class frmMain
         '
         'txtUnit1
         '
+        Me.txtUnit1.BackColor = System.Drawing.SystemColors.Window
         Me.txtUnit1.Location = New System.Drawing.Point(10, 19)
         Me.txtUnit1.Name = "txtUnit1"
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
@@ -392,7 +383,7 @@ Partial Class frmMain
         'lblHwip
         '
         Me.lblHwip.AutoSize = True
-        Me.lblHwip.Location = New System.Drawing.Point(249, 231)
+        Me.lblHwip.Location = New System.Drawing.Point(277, 231)
         Me.lblHwip.Name = "lblHwip"
         Me.lblHwip.Size = New System.Drawing.Size(0, 13)
         Me.lblHwip.TabIndex = 24
@@ -402,19 +393,18 @@ Partial Class frmMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(373, 537)
+        Me.ClientSize = New System.Drawing.Size(373, 511)
         Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnSetup)
+        Me.Controls.Add(Me.TxtLogg)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.CBLogg)
-        Me.Controls.Add(Me.TxtLogg)
         Me.Controls.Add(Me.CBAutostart)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Stop_Receiving)
         Me.Controls.Add(Me.Receive_Vox)
-        Me.Controls.Add(Me.lblListen)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
@@ -439,7 +429,6 @@ Partial Class frmMain
     End Sub
     Friend WithEvents TmrSync As Timer
     Friend WithEvents tmrListen As Timer
-    Friend WithEvents lblListen As Label
     Friend WithEvents Receive_Vox As Button
     Friend WithEvents Stop_Receiving As Button
     Friend WithEvents GroupBox1 As GroupBox
