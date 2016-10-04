@@ -16,8 +16,6 @@ unsigned int udpSoundPort = 11318;
 WiFiUDP udp;
 
 //Microfon variabler.
-int sensorPin = A0;    // select the input pin for the potentiometer
-int sensorValue = 0;  // variable to store the value coming from the sensor
 unsigned long lastRequest = 0;
 
 // ADC
@@ -31,8 +29,10 @@ int send_samples_now; // flag to signal that a buffer is ready to be sent
 int32_t silence_value = 2048; // computed as an exponential moving average of the signal
 uint16_t envelope_threshold = 150; // envelope threshold to trigger data sending
 uint32_t send_sound_util = 0; // date until sound transmission ends after an envelope threshold has triggered sound transmission
-
 int enable_highpass_filter = 0;
+
+// ÖVrigt
+const int flashPin = 4;     // the number of the pushbutton pin
 
 void setup() {
 
@@ -46,8 +46,16 @@ void setup() {
   //WiFiManager startar
   WiFiManager wifiManager;
 
-  //Använd denna om du vill plocka bort SSID och lösernord.
-  //wifiManager.resetSettings();
+  // initialize the pushbutton pin as an input:
+  pinMode(flashPin, INPUT);
+
+
+  if (digitalRead(flashPin) == HIGH) {
+    //Reset settings
+    Serial.println("Nollställer WIFI");
+    //Använd denna om du vill plocka bort SSID och lösernord.
+    wifiManager.resetSettings();
+  }
 
   //Använd denna om du vill ha exakt IP för portalen.
   //wifiManager.setAPConfig(IPAddress(10,0,1,1), IPAddress(10,0,1,1), IPAddress(255,255,255,0));
@@ -61,7 +69,7 @@ void setup() {
   // Starta UDP protokoll.
   udp.begin(udpPingPort);
 
-  //IPAddress ipServer(217, 210, 144, 102);
+  IPAddress ipServer(217, 210, 144, 102);
 
   // Vänta inkommande sync från servern
   Serial.print("Väntar sync.");
@@ -69,7 +77,7 @@ void setup() {
     UdpRecieve();
   }
 
-  //Aktivera hårdvarutimer
+  //Aktivera hårdvarutimer för 12,5kHz.
   timer1_isr_init();
   timer1_attachInterrupt(sample_isr);
   timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP);
@@ -79,16 +87,12 @@ void setup() {
   Serial.println(ipServer);
 
 }
+
 void loop()
 {
-  //Ping varje 5 sek (om inte ljud skickats).
-  unsigned long ping = millis();
-  if ((ping - lastRequest) > 5000) {
-    lastRequest = ping;
-    UdpSend(1);
-    Serial.println("Ping");
-  }
+
   collectData();
+
 }
 
 void UdpSend(int msg)
@@ -192,6 +196,14 @@ void ICACHE_RAM_ATTR sample_isr(void)
 
 void collectData()
 {
+
+  //Ping varje 5 sek (om inte ljud skickats).
+  if ((millis() - lastRequest) > 5000) {
+    lastRequest = millis();
+    //  UdpSend(1);
+    Serial.println("Ping");
+  }
+
   if (send_samples_now) {
     /* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
        that is, if the sound level is above a certain threshold. */
@@ -242,7 +254,7 @@ void collectData()
     Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
     Serial.print("delay "); Serial.print(millis() - now);
     Serial.println("");
-    lastRequest = ping;
+    lastRequest = millis();
   }
 
   // If not sending anything, add a delay to enable modem sleep
