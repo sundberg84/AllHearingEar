@@ -23,6 +23,8 @@ uint16_t adc_buf[2][700]; // ADC data buffer, double buffered
 int current_adc_buf; // which data buffer is being used for the ADC (the other is being sent)
 unsigned int adc_buf_pos; // position in the ADC data buffer
 int send_samples_now; // flag to signal that a buffer is ready to be sent
+// Pin definitions: 
+const int scePin = 15; // SCE - Chip select
 
 #define SILENCE_EMA_WEIGHT 1024
 #define ENVELOPE_EMA_WEIGHT 2
@@ -69,7 +71,8 @@ void setup() {
   // Starta UDP protokoll.
   udp.begin(udpPingPort);
 
-  IPAddress ipServer(217, 210, 144, 102);
+  //IPAddress ipServer(217, 210, 144, 102); //Marcus
+  IPAddress ipServer(192, 168, 1, 116); //LAN
 
   // Vänta inkommande sync från servern
   Serial.print("Väntar sync.");
@@ -198,11 +201,11 @@ void collectData()
 {
 
   //Ping varje 5 sek (om inte ljud skickats).
-  if ((millis() - lastRequest) > 5000) {
-    lastRequest = millis();
+  //if ((millis() - lastRequest) > 5000) {
+  //  lastRequest = millis();
     //  UdpSend(1);
-    Serial.println("Ping");
-  }
+  //  Serial.println("Ping");
+  //}
 
   if (send_samples_now) {
     /* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
