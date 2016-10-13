@@ -1,15 +1,17 @@
-﻿
+﻿Option Strict Off
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text.Encoding
-Imports Microsoft.Win32
+
+
+
 
 
 Public Class frmMain
 
 
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
 
         Me.Text = "All Hearing Ear"
         Me.Location = New Point(CInt((Screen.PrimaryScreen.WorkingArea.Width / 2) - (Me.Width / 2)), CInt((Screen.PrimaryScreen.WorkingArea.Height / 2) - (Me.Height / 2)))
@@ -168,7 +170,7 @@ Public Class frmMain
         Try
                 Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
                 Dim rcvbytes() As Byte = subscriber.Receive(ep)
-                If ep.Address.ToString = AHESyncIP1 Then
+            If ep.Address.ToString = AHESyncIP1 Then
                 txtUnit1.BackColor = Color.LightGreen
                 ticks = 0
             End If
@@ -187,22 +189,22 @@ Public Class frmMain
 
             Call ConStat()
 
-            Catch ex As Exception
+        Catch ex As Exception
 
-            End Try
+        End Try
 
 
 
 
     End Sub
 
-    Private Sub TmrSync_Tick(sender As Object, e As EventArgs) Handles TmrSync.Tick
+    Private Sub TmrSync_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles TmrSync.Tick
 
         Try
             Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvbytes2() As Byte = subscriber.Receive(respondSync)
             lblHwip.Text = ASCII.GetString(rcvbytes2)
-            If lblHwip.Text > "" Then
+            If lblHwip.Text = "1" Then
                 lblHwip.Text = respondSync.Address.ToString()
                 CurrentSync = respondSync.Address.ToString()
 
@@ -215,6 +217,7 @@ Public Class frmMain
             End If
 
         Catch ex As Exception
+            lblHwip.Text = ex.Message
         End Try
 
 
@@ -224,7 +227,7 @@ Public Class frmMain
     '-------------------------
     Dim Connectionstatus1, Connectionstatus2, Connectionstatus3, Connectionstatus4 As Boolean
 
-    Private Function ConStat()
+    Private Sub ConStat()
 
 
         If txtUnit1.BackColor = Color.LightGreen And Connectionstatus1 = False Then
@@ -265,7 +268,7 @@ Public Class frmMain
 
 
 
-    End Function
+    End Sub
 
     ' UDP VOX receiver code _________________________________________________________________________________________
 
@@ -278,7 +281,9 @@ Public Class frmMain
 
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
 
-        Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
+        If Receive_Vox.Text = "Listen" Then
+            SamplingRate = txtSamplerate.Text
+            Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
             For Each LocalIP As IPAddress In LocalIPList.AddressList
                 If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
                     VoxViaUDPIPAddress = LocalIP
@@ -297,13 +302,36 @@ Public Class frmMain
             AbortVoxViaUDPThread = False
             VoxViaUDP = New System.Threading.Thread(AddressOf VoxViaUDPReceivingThread)
             VoxViaUDP.Start()
-
-            Receive_Vox.Enabled = False
-
-            Stop_Receiving.Enabled = True
             TmrSync.Enabled = False
             tmrListen.Enabled = True
             btnSetup.Enabled = False
+            Receive_Vox.Text = "Stop"
+        ElseIf Receive_Vox.Text = "Stop" Then
+            Try
+                AbortVoxViaUDPThread = True
+            Catch ex As Exception
+            End Try
+            Try
+                VoxViaUDP.Abort()
+            Catch ex As Exception
+            End Try
+            Try
+                VoxViaUDPRxClient.Close()
+            Catch ex As Exception
+            End Try
+            Label1.Text = "Waiting"
+            Label2.Text = "Waiting"
+            Label3.Text = "Waiting"
+            Label4.Text = "Waiting"
+            tmrListen.Enabled = False
+            btnSetup.Enabled = True
+            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
+            Receive_Vox.Text = "Listen"
+            txtUnit1.BackColor = SystemColors.Menu
+            txtUnit2.BackColor = SystemColors.Menu
+            txtUnit3.BackColor = SystemColors.Menu
+            txtUnit4.BackColor = SystemColors.Menu
+        End If
 
 
     End Sub
@@ -357,8 +385,8 @@ Public Class frmMain
     Dim SizeOfData() As Byte                                                           ' Number of bytes of data within the data section. 4 bytes.
     Dim WaveData As New List(Of Byte)                                                  ' The wave data.
     Dim CompleteWaveFile() As Byte
-    Dim NumberofChannels As Integer = 2
-    Dim SamplingRate As Integer = 8000
+    Dim NumberofChannels As Integer = 1
+    Dim SamplingRate As Integer = 16000
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
@@ -410,32 +438,6 @@ Public Class frmMain
         Return Helper.GetRange(0, Length).ToArray
     End Function
 
-    Private Sub Stop_Receiving_Click(sender As Object, e As EventArgs) Handles Stop_Receiving.Click
-        Try
-            AbortVoxViaUDPThread = True
-        Catch ex As Exception
-        End Try
-        Try
-            VoxViaUDP.Abort()
-        Catch ex As Exception
-        End Try
-        Try
-            VoxViaUDPRxClient.Close()
-        Catch ex As Exception
-        End Try
-        Label1.Text = "Waiting"
-        Label2.Text = "Waiting"
-        Label3.Text = "Waiting"
-        Label4.Text = "Waiting"
-
-        Receive_Vox.Enabled = True
-        Stop_Receiving.Enabled = False
-        tmrListen.Enabled = False
-        btnSetup.Enabled = True
-        TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
-
-
-    End Sub
     'Visa Loggbok vid checkbox.
     '--------------------------
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
@@ -547,12 +549,13 @@ Public Class frmMain
     Dim CurrentSync As String
 
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
+
         If TmrSync.Enabled = False Then
             TmrSync.Enabled = True
             Receive_Vox.Enabled = False
 
             btnSetup.Text = "Stop Sync"
-            SynkIP = "90.230.46.113"
+            SynkIP = "155.4.135.170"
             SynktoPort = "11319"
             SynkWord = "0"
 
@@ -588,7 +591,7 @@ Public Class frmMain
     Dim AHESyncIP4 As String
     Dim AHEsyncName4 As String
 
-    Private Function SyncNew()
+    Private Sub SyncNew()
 
         Call FindSlot()
 
@@ -634,7 +637,7 @@ Public Class frmMain
 
 
 
-    End Function
+    End Sub
 
     Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
         AHEsyncName1 = ""
@@ -736,8 +739,7 @@ Public Class frmMain
 
 
     Dim SyncDone As Integer
-    Public Function FindSlot()
-
+    Public Sub FindSlot()
 
 
         Do Until SyncDone = 5
@@ -836,7 +838,7 @@ Public Class frmMain
             SyncDone = 0
         End If
 
-    End Function
+    End Sub
 
 
 End Class

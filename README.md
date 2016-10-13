@@ -37,9 +37,12 @@ Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett s
 
 - Statusled?
 
+- Nattlampa LED
+
 - Hårdvaru
 
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
+-Hål undertill för väggfäste!
 
 - Microfoner: https://store.invensense.com/ProductDetail/ICS43432-InvenSense-Inc/495200/
 

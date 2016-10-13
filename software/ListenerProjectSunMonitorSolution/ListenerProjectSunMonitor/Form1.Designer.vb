@@ -27,7 +27,6 @@ Partial Class frmMain
         Me.TmrSync = New System.Windows.Forms.Timer(Me.components)
         Me.tmrListen = New System.Windows.Forms.Timer(Me.components)
         Me.Receive_Vox = New System.Windows.Forms.Button()
-        Me.Stop_Receiving = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -57,6 +56,8 @@ Partial Class frmMain
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
         Me.lblHwip = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtSamplerate = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -81,20 +82,10 @@ Partial Class frmMain
         '
         Me.Receive_Vox.Location = New System.Drawing.Point(16, 198)
         Me.Receive_Vox.Name = "Receive_Vox"
-        Me.Receive_Vox.Size = New System.Drawing.Size(75, 23)
+        Me.Receive_Vox.Size = New System.Drawing.Size(76, 23)
         Me.Receive_Vox.TabIndex = 8
-        Me.Receive_Vox.Text = "Lyssna"
+        Me.Receive_Vox.Text = "Listen"
         Me.Receive_Vox.UseVisualStyleBackColor = True
-        '
-        'Stop_Receiving
-        '
-        Me.Stop_Receiving.Enabled = False
-        Me.Stop_Receiving.Location = New System.Drawing.Point(97, 198)
-        Me.Stop_Receiving.Name = "Stop_Receiving"
-        Me.Stop_Receiving.Size = New System.Drawing.Size(75, 23)
-        Me.Stop_Receiving.TabIndex = 9
-        Me.Stop_Receiving.Text = "Sluta Lyssna"
-        Me.Stop_Receiving.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
@@ -231,6 +222,8 @@ Partial Class frmMain
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.txtSamplerate)
+        Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Controls.Add(Me.PBdelete4)
         Me.GroupBox2.Controls.Add(Me.PBok4)
         Me.GroupBox2.Controls.Add(Me.PBdelete3)
@@ -349,6 +342,7 @@ Partial Class frmMain
         'txtUnit4
         '
         Me.txtUnit4.Location = New System.Drawing.Point(10, 97)
+        Me.txtUnit4.MaxLength = 16
         Me.txtUnit4.Name = "txtUnit4"
         Me.txtUnit4.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit4.TabIndex = 3
@@ -357,6 +351,7 @@ Partial Class frmMain
         'txtUnit3
         '
         Me.txtUnit3.Location = New System.Drawing.Point(10, 71)
+        Me.txtUnit3.MaxLength = 16
         Me.txtUnit3.Name = "txtUnit3"
         Me.txtUnit3.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit3.TabIndex = 2
@@ -366,6 +361,7 @@ Partial Class frmMain
         '
         Me.txtUnit2.BackColor = System.Drawing.SystemColors.Window
         Me.txtUnit2.Location = New System.Drawing.Point(10, 45)
+        Me.txtUnit2.MaxLength = 16
         Me.txtUnit2.Name = "txtUnit2"
         Me.txtUnit2.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit2.TabIndex = 1
@@ -375,6 +371,7 @@ Partial Class frmMain
         '
         Me.txtUnit1.BackColor = System.Drawing.SystemColors.Window
         Me.txtUnit1.Location = New System.Drawing.Point(10, 19)
+        Me.txtUnit1.MaxLength = 16
         Me.txtUnit1.Name = "txtUnit1"
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit1.TabIndex = 0
@@ -388,12 +385,29 @@ Partial Class frmMain
         Me.lblHwip.Size = New System.Drawing.Size(0, 13)
         Me.lblHwip.TabIndex = 24
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(197, 42)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(136, 13)
+        Me.Label6.TabIndex = 26
+        Me.Label6.Text = "Samplerate: Default 16000."
+        '
+        'txtSamplerate
+        '
+        Me.txtSamplerate.Location = New System.Drawing.Point(215, 58)
+        Me.txtSamplerate.Name = "txtSamplerate"
+        Me.txtSamplerate.Size = New System.Drawing.Size(100, 20)
+        Me.txtSamplerate.TabIndex = 27
+        Me.txtSamplerate.Text = "16000"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(373, 511)
+        Me.ClientSize = New System.Drawing.Size(372, 543)
         Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnSetup)
@@ -403,7 +417,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.CBLogg)
         Me.Controls.Add(Me.CBAutostart)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.Stop_Receiving)
         Me.Controls.Add(Me.Receive_Vox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -430,7 +443,6 @@ Partial Class frmMain
     Friend WithEvents TmrSync As Timer
     Friend WithEvents tmrListen As Timer
     Friend WithEvents Receive_Vox As Button
-    Friend WithEvents Stop_Receiving As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
@@ -460,4 +472,6 @@ Partial Class frmMain
     Friend WithEvents PBdelete2 As PictureBox
     Friend WithEvents PBok2 As PictureBox
     Friend WithEvents lblHwip As Label
+    Friend WithEvents txtSamplerate As TextBox
+    Friend WithEvents Label6 As Label
 End Class
