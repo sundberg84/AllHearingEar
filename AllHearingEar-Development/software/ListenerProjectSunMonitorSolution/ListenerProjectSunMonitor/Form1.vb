@@ -1,17 +1,15 @@
-﻿Option Strict Off
+﻿
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text.Encoding
-
-
-
+Imports Microsoft.Win32
 
 
 Public Class frmMain
 
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Text = "All Hearing Ear"
         Me.Location = New Point(CInt((Screen.PrimaryScreen.WorkingArea.Width / 2) - (Me.Width / 2)), CInt((Screen.PrimaryScreen.WorkingArea.Height / 2) - (Me.Height / 2)))
@@ -32,12 +30,8 @@ Public Class frmMain
 
         TxtLogg.Text = DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!"
 
-        Connectionstatus1 = False
-        Connectionstatus2 = False
-        Connectionstatus3 = False
-        Connectionstatus4 = False
-
-
+        Connectionstatus = False
+        lblListen.ForeColor = Color.Red
         NotifyIcon1.Visible = True 'Visa icon i taskbar vid start.
 
         'LOAD ALL APPLICATION SETTINGS!--------------------------------------------------------------------------------
@@ -51,12 +45,6 @@ Public Class frmMain
         txtUnit2.Text = My.Settings.syncName2
         txtUnit3.Text = My.Settings.syncName3
         txtUnit4.Text = My.Settings.syncName4
-        AHEsyncName1 = My.Settings.syncName1
-        AHEsyncName2 = My.Settings.syncName2
-        AHEsyncName3 = My.Settings.syncName3
-        AHEsyncName4 = My.Settings.syncName4
-
-        NumberOfUnitsSynced = My.Settings.NumOfSynUn
 
 
 
@@ -99,11 +87,11 @@ Public Class frmMain
         My.Settings.hip2 = AHESyncIP2
         My.Settings.hip3 = AHESyncIP3
         My.Settings.hip4 = AHESyncIP4
-        My.Settings.syncName1 = AHEsyncName1
-        My.Settings.syncName2 = AHEsyncName2
-        My.Settings.syncName3 = AHEsyncName3
-        My.Settings.syncName4 = AHEsyncName4
-        My.Settings.NumOfSynUn = NumberOfUnitsSynced
+        My.Settings.syncName1 = txtUnit1.Text
+        My.Settings.syncName2 = txtUnit2.Text
+        My.Settings.syncName3 = txtUnit3.Text
+        My.Settings.syncName4 = txtUnit4.Text
+
         My.Settings.Save()
 
         Try
@@ -128,65 +116,30 @@ Public Class frmMain
     '--------------------------------------------------------------------
     Dim publisher As New Sockets.UdpClient(0)
     Dim subscriber As New Sockets.UdpClient(11319)
-    Dim ticks, ticks2, ticks3, ticks4 As Integer
-
-
+    Dim ticks As Integer = 0
 
 
 
     Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles tmrListen.Tick
 
+
         ticks = ticks + 1
-        ticks2 = ticks2 + 1
+        If ticks > 55 Then
+            lblListen.Text = "Ej ansluten!"
+            lblListen.ForeColor = Color.Red
 
-        If ticks > 54 Then
-            txtUnit1.BackColor = SystemColors.Menu
-            If Connectionstatus1 = True Then
+            If Connectionstatus = True Then
                 Call ConStat()
             End If
-        End If
 
-        If ticks2 > 54 Then
-            txtUnit2.BackColor = SystemColors.Menu
-            If Connectionstatus2 = True Then
-                Call ConStat()
-            End If
-        End If
-
-        If ticks3 > 54 Then
-            txtUnit3.BackColor = SystemColors.Menu
-            If Connectionstatus3 = True Then
-                Call ConStat()
-            End If
-        End If
-
-        If ticks3 > 54 Then
-            txtUnit4.BackColor = SystemColors.Menu
-            If Connectionstatus4 = True Then
-                Call ConStat()
-            End If
         End If
 
         Try
-                Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
-                Dim rcvbytes() As Byte = subscriber.Receive(ep)
-            If ep.Address.ToString = AHESyncIP1 Then
-                txtUnit1.BackColor = Color.LightGreen
-                ticks = 0
-            End If
-            If ep.Address.ToString = AHESyncIP2 Then
-                txtUnit2.BackColor = Color.LightGreen
-                ticks2 = 0
-            End If
-            If ep.Address.ToString = AHESyncIP3 Then
-                txtUnit3.BackColor = Color.LightGreen
-                ticks3 = 0
-            End If
-            If ep.Address.ToString = AHESyncIP4 Then
-                txtUnit4.BackColor = Color.LightGreen
-                ticks4 = 0
-            End If
-
+            Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
+            Dim rcvbytes() As Byte = subscriber.Receive(ep)
+            lblListen.Text = "Ansluten!"
+            lblListen.ForeColor = Color.Green
+            ticks = 0
             Call ConStat()
 
         Catch ex As Exception
@@ -198,7 +151,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub TmrSync_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles TmrSync.Tick
+    Private Sub TmrSync_Tick(sender As Object, e As EventArgs) Handles TmrSync.Tick
 
         Try
             Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
@@ -207,17 +160,16 @@ Public Class frmMain
             If lblHwip.Text = "1" Then
                 lblHwip.Text = respondSync.Address.ToString()
                 CurrentSync = respondSync.Address.ToString()
-
+                TmrSync.Enabled = False
                 Call SyncNew()
 
 
-            ElseIf lblHwip.Text = "0" Or lblHwip.Text = "" Then
-                lblHwip.Text = "Inga AHE svarade!"
-
+            ElseIf lblHwip.Text = "0" Then
+                    lblHwip.Text = "Inga AHE svarade!"
+                TmrSync.Enabled = False
             End If
 
         Catch ex As Exception
-            lblHwip.Text = ex.Message
         End Try
 
 
@@ -225,50 +177,21 @@ Public Class frmMain
 
     'Logga anslutning/avbrott.
     '-------------------------
-    Dim Connectionstatus1, Connectionstatus2, Connectionstatus3, Connectionstatus4 As Boolean
+    Dim Connectionstatus As Boolean
 
-    Private Sub ConStat()
+    Private Function ConStat()
 
 
-        If txtUnit1.BackColor = Color.LightGreen And Connectionstatus1 = False Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName1
-            Connectionstatus1 = True
-        ElseIf txtUnit1.BackColor = SystemColors.Menu And Connectionstatus1 = True Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName1
-            Connectionstatus1 = False
-            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName1, ToolTipIcon.Info)
+        If lblListen.Text = "Ansluten!" And Connectionstatus = False Then
+            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to All Hearing Ear!"
+            Connectionstatus = True
+        ElseIf lblListen.Text = "Ej ansluten!" And Connectionstatus = True Then
+            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to All Hearing Ear!"
+            Connectionstatus = False
+            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to All Hearing Ear", ToolTipIcon.Info)
         End If
 
-        If txtUnit2.BackColor = Color.LightGreen And Connectionstatus2 = False Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName2
-            Connectionstatus2 = True
-        ElseIf txtUnit2.BackColor = SystemColors.Menu And Connectionstatus2 = True Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName2
-            Connectionstatus2 = False
-            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName2, ToolTipIcon.Info)
-        End If
-
-        If txtUnit3.BackColor = Color.LightGreen And Connectionstatus3 = False Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName3
-            Connectionstatus3 = True
-        ElseIf txtUnit3.BackColor = SystemColors.Menu And Connectionstatus3 = True Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName3
-            Connectionstatus3 = False
-            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName3, ToolTipIcon.Info)
-        End If
-
-        If txtUnit4.BackColor = Color.LightGreen And Connectionstatus4 = False Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName4
-            Connectionstatus4 = True
-        ElseIf txtUnit4.BackColor = SystemColors.Menu And Connectionstatus4 = True Then
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName4
-            Connectionstatus4 = False
-            NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName4, ToolTipIcon.Info)
-        End If
-
-
-
-    End Sub
+    End Function
 
     ' UDP VOX receiver code _________________________________________________________________________________________
 
@@ -280,59 +203,30 @@ Public Class frmMain
 
 
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
+        Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
+        For Each LocalIP As IPAddress In LocalIPList.AddressList
+            If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
+                VoxViaUDPIPAddress = LocalIP
+                VoxViaUDPRemoteIpEndPoint = New IPEndPoint(VoxViaUDPIPAddress, VoxViaUDPLogicalPortNumber)
 
-        If Receive_Vox.Text = "Listen" Then
-            SamplingRate = txtSamplerate.Text
-            Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
-            For Each LocalIP As IPAddress In LocalIPList.AddressList
-                If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
-                    VoxViaUDPIPAddress = LocalIP
-                    VoxViaUDPRemoteIpEndPoint = New IPEndPoint(VoxViaUDPIPAddress, VoxViaUDPLogicalPortNumber)
+            End If
+        Next
+        Try
+            VoxViaUDP.Abort()
+        Catch ex As Exception
+        End Try
+        Try
+            VoxViaUDPRxClient.Close()
+        Catch ex As Exception
+        End Try
+        AbortVoxViaUDPThread = False
+        VoxViaUDP = New System.Threading.Thread(AddressOf VoxViaUDPReceivingThread)
+        VoxViaUDP.Start()
 
-                End If
-            Next
-            Try
-                VoxViaUDP.Abort()
-            Catch ex As Exception
-            End Try
-            Try
-                VoxViaUDPRxClient.Close()
-            Catch ex As Exception
-            End Try
-            AbortVoxViaUDPThread = False
-            VoxViaUDP = New System.Threading.Thread(AddressOf VoxViaUDPReceivingThread)
-            VoxViaUDP.Start()
-            TmrSync.Enabled = False
-            tmrListen.Enabled = True
-            btnSetup.Enabled = False
-            Receive_Vox.Text = "Stop"
-        ElseIf Receive_Vox.Text = "Stop" Then
-            Try
-                AbortVoxViaUDPThread = True
-            Catch ex As Exception
-            End Try
-            Try
-                VoxViaUDP.Abort()
-            Catch ex As Exception
-            End Try
-            Try
-                VoxViaUDPRxClient.Close()
-            Catch ex As Exception
-            End Try
-            Label1.Text = "Waiting"
-            Label2.Text = "Waiting"
-            Label3.Text = "Waiting"
-            Label4.Text = "Waiting"
-            tmrListen.Enabled = False
-            btnSetup.Enabled = True
-            TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
-            Receive_Vox.Text = "Listen"
-            txtUnit1.BackColor = SystemColors.Menu
-            txtUnit2.BackColor = SystemColors.Menu
-            txtUnit3.BackColor = SystemColors.Menu
-            txtUnit4.BackColor = SystemColors.Menu
-        End If
+        Receive_Vox.Enabled = False
 
+        Stop_Receiving.Enabled = True
+        tmrListen.Enabled = True
 
     End Sub
 
@@ -395,13 +289,8 @@ Public Class frmMain
             Label2.Text = RcvdWaveFileBytes(i).Length
 
         Next
-<<<<<<< HEAD
-        Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
-        RcvdWaveFileBytes.RemoveRange(0, 25) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
-=======
         'Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
         RcvdWaveFileBytes.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
->>>>>>> origin/Development
         FileSize = WaveFileHelper(WaveData.Count + 36, 4)
         FormatLength = WaveFileHelper(16, 4)
         WaveTypePCM = WaveFileHelper(1, 2)
@@ -445,13 +334,40 @@ Public Class frmMain
         Return Helper.GetRange(0, Length).ToArray
     End Function
 
+    Private Sub Stop_Receiving_Click(sender As Object, e As EventArgs) Handles Stop_Receiving.Click
+        Try
+            AbortVoxViaUDPThread = True
+        Catch ex As Exception
+        End Try
+        Try
+            VoxViaUDP.Abort()
+        Catch ex As Exception
+        End Try
+        Try
+            VoxViaUDPRxClient.Close()
+        Catch ex As Exception
+        End Try
+        Label1.Text = "Waiting"
+        Label2.Text = "Waiting"
+        Label3.Text = "Waiting"
+        Label4.Text = "Waiting"
+
+        Receive_Vox.Enabled = True
+        Stop_Receiving.Enabled = False
+        tmrListen.Enabled = False
+
+        lblListen.Text = "Ej ansluten!"
+        lblListen.ForeColor = Color.Red
+        TxtLogg.Text = TxtLogg.Text & Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!"
+
+    End Sub
     'Visa Loggbok vid checkbox.
     '--------------------------
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
         If CBLogg.Checked = True Then
-            Me.Height = 555
+            Me.Height = 480
         Else
-            Me.Height = 308
+            Me.Height = 310
         End If
     End Sub
 
@@ -493,9 +409,6 @@ Public Class frmMain
     End Sub
 
     Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
-
-
-
         Try
             Me.Visible = True
             Me.WindowState = FormWindowState.Normal
@@ -503,7 +416,6 @@ Public Class frmMain
         Catch ex As Exception
 
         End Try
-
     End Sub
 
     Private Sub frmMain_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
@@ -512,7 +424,7 @@ Public Class frmMain
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Running minimized", ToolTipIcon.Info)
             Me.ShowInTaskbar = False
             Me.Visible = False
-        Else
+        ElseIf Me.WindowState.Normal Then
 
             Me.ShowInTaskbar = True
             Me.Visible = True
@@ -556,33 +468,15 @@ Public Class frmMain
     Dim CurrentSync As String
 
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
-<<<<<<< HEAD
-=======
         TmrSync.Enabled = True
         SynkIP = "192.168.1.255"
         SynktoPort = "11319"
         SynkWord = "0"
->>>>>>> origin/Development
 
-        If TmrSync.Enabled = False Then
-            TmrSync.Enabled = True
-            Receive_Vox.Enabled = False
+        publisher.Connect(SynkIP, SynktoPort)
+        Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
+        publisher.Send(sendbytes, sendbytes.Length)
 
-            btnSetup.Text = "Stop Sync"
-            SynkIP = "46.59.40.127"
-            SynktoPort = "11319"
-            SynkWord = "0"
-
-            publisher.Connect(SynkIP, SynktoPort)
-            Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
-            publisher.Send(sendbytes, sendbytes.Length)
-
-        Else
-            TmrSync.Enabled = False
-            Receive_Vox.Enabled = True
-            lblHwip.Text = ""
-            btnSetup.Text = "Sync"
-        End If
 
     End Sub
 
@@ -605,12 +499,17 @@ Public Class frmMain
     Dim AHESyncIP4 As String
     Dim AHEsyncName4 As String
 
-    Private Sub SyncNew()
+    Private Function SyncNew()
 
-        Call FindSlot()
 
-        If CurrentSync = AHESyncIP1 Or CurrentSync = AHESyncIP2 Or CurrentSync = AHESyncIP3 Or CurrentSync = AHESyncIP4 Then
-            'MsgBox("AHE redan synkad!", MsgBoxStyle.OkOnly, "All hearing ear")
+        If txtUnit1.Text = "" And txtUnit2.Text = "" And txtUnit3.Text = "" And txtUnit4.Text = "" Then
+            NumberOfUnitsSynced = 0
+        End If
+
+
+
+        If AHESyncIP1 = lblHwip.Text Or lblHwip.Text = AHESyncIP2 Or lblHwip.Text = AHESyncIP3 Or lblHwip.Text = AHESyncIP4 Then
+            MsgBox("AHE redan synkad!", MsgBoxStyle.OkOnly, "All hearing ear")
         Else
             Select Case NumberOfUnitsSynced
                 Case 0
@@ -619,7 +518,7 @@ Public Class frmMain
                     PBok1.Enabled = True
                     txtUnit1.Text = CurrentSync
                     AHESyncIP1 = CurrentSync
-
+                    btnSetup.Enabled = False
                     Call FindSlot()
                 Case 1
                     txtUnit2.Visible = True
@@ -627,7 +526,7 @@ Public Class frmMain
                     PBok2.Enabled = True
                     txtUnit2.Text = CurrentSync
                     AHESyncIP2 = CurrentSync
-
+                    btnSetup.Enabled = False
                     Call FindSlot()
                 Case 2
                     txtUnit3.Visible = True
@@ -635,7 +534,7 @@ Public Class frmMain
                     PBok3.Enabled = True
                     txtUnit3.Text = CurrentSync
                     AHESyncIP3 = CurrentSync
-
+                    btnSetup.Enabled = False
                     Call FindSlot()
                 Case 3
                     txtUnit4.Visible = True
@@ -643,7 +542,7 @@ Public Class frmMain
                     PBok4.Enabled = True
                     txtUnit4.Text = CurrentSync
                     AHESyncIP4 = CurrentSync
-
+                    btnSetup.Enabled = False
                     Call FindSlot()
 
             End Select
@@ -651,15 +550,15 @@ Public Class frmMain
 
 
 
-    End Sub
+    End Function
 
     Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
-        AHEsyncName1 = ""
-        AHESyncIP1 = ""
         txtUnit1.Text = ""
         PBdelete1.Enabled = False
         PBdelete1.Visible = False
-
+        AHEsyncName1 = ""
+        btnSetup.Enabled = True
+        AHESyncIP1 = ""
 
         Call FindSlot()
     End Sub
@@ -674,7 +573,7 @@ Public Class frmMain
             PBdelete1.Enabled = True
             PBok1.Enabled = False
             PBok1.Visible = False
-
+            btnSetup.Enabled = True
 
         End If
 
@@ -690,7 +589,7 @@ Public Class frmMain
             PBdelete2.Enabled = True
             PBok2.Enabled = False
             PBok2.Visible = False
-
+            btnSetup.Enabled = True
         End If
     End Sub
 
@@ -700,7 +599,7 @@ Public Class frmMain
         PBdelete2.Visible = False
         AHEsyncName2 = ""
         AHESyncIP2 = ""
-
+        btnSetup.Enabled = True
         Call FindSlot()
     End Sub
 
@@ -714,7 +613,7 @@ Public Class frmMain
             PBdelete3.Enabled = True
             PBok3.Enabled = False
             PBok3.Visible = False
-
+            btnSetup.Enabled = True
         End If
     End Sub
 
@@ -724,7 +623,7 @@ Public Class frmMain
         PBdelete3.Visible = False
         AHEsyncName3 = ""
         AHESyncIP3 = ""
-
+        btnSetup.Enabled = True
         Call FindSlot()
     End Sub
 
@@ -747,38 +646,36 @@ Public Class frmMain
         PBdelete4.Visible = False
         AHEsyncName4 = ""
         AHESyncIP4 = ""
-
+        btnSetup.Enabled = True
         Call FindSlot()
     End Sub
 
 
     Dim SyncDone As Integer
-    Public Sub FindSlot()
+    Public Function FindSlot()
 
 
-        Do Until SyncDone = 5
+
+        Do Until SyncDone = 4
             If txtUnit4.Text = "" Then
-
+                NumberOfUnitsSynced = 3
                 txtUnit4.Enabled = True
                 txtUnit4.Visible = False
-                PBok4.Visible = False
                 If txtUnit4.Text > "" Then
                     PBdelete4.Visible = True
                     PBdelete4.Enabled = True
-
                 End If
             End If
 
             If txtUnit3.Text = "" Then
                 txtUnit3.Text = txtUnit4.Text
                 txtUnit4.Text = ""
-                AHESyncIP3 = AHESyncIP4
+                NumberOfUnitsSynced = 2
+
                 PBdelete4.Visible = False
-                PBok4.Visible = False
                 If txtUnit3.Text > "" Then
                     PBdelete3.Visible = True
                     PBdelete3.Enabled = True
-
                 End If
                 If txtUnit3.Text = "" Then
                     txtUnit3.Enabled = True
@@ -789,13 +686,12 @@ Public Class frmMain
             If txtUnit2.Text = "" Then
                 txtUnit2.Text = txtUnit3.Text
                 txtUnit3.Text = ""
-                AHESyncIP2 = AHESyncIP3
-                PBok3.Visible = False
+                NumberOfUnitsSynced = 1
+
                 PBdelete3.Visible = False
                 If txtUnit2.Text > "" Then
                     PBdelete2.Visible = True
                     PBdelete2.Enabled = True
-
                 End If
                 If txtUnit2.Text = "" Then
                     txtUnit2.Enabled = True
@@ -804,38 +700,22 @@ Public Class frmMain
 
             End If
 
-            If txtUnit1.Text = "" Then
+                If txtUnit1.Text = "" Then
                 txtUnit1.Text = txtUnit2.Text
                 txtUnit2.Text = ""
-                AHESyncIP1 = AHESyncIP2
-                PBok2.Visible = False
+                NumberOfUnitsSynced = 0
+
                 PBdelete2.Visible = False
                 If txtUnit1.Text > "" Then
                     PBdelete1.Visible = True
                     PBdelete1.Enabled = True
-
                 End If
 
             End If
 
             If txtUnit4.Text > "" And txtUnit3.Text > "" And txtUnit2.Text > "" And txtUnit1.Text > "" Then
                 NumberOfUnitsSynced = 4
-
-            End If
-
-            If txtUnit4.Text = "" And txtUnit3.Text > "" And txtUnit2.Text > "" And txtUnit1.Text > "" Then
-                NumberOfUnitsSynced = 3
-
-            End If
-
-            If txtUnit4.Text = "" And txtUnit3.Text = "" And txtUnit2.Text > "" And txtUnit1.Text > "" Then
-                NumberOfUnitsSynced = 2
-
-            End If
-
-            If txtUnit4.Text = "" And txtUnit3.Text = "" And txtUnit2.Text = "" And txtUnit1.Text > "" Then
-                NumberOfUnitsSynced = 1
-
+                btnSetup.Enabled = False
             End If
 
             If txtUnit4.Text = "" And txtUnit3.Text = "" And txtUnit2.Text = "" And txtUnit1.Text = "" Then
@@ -848,11 +728,11 @@ Public Class frmMain
 
 
 
-        If SyncDone = 5 Then
+        If SyncDone = 4 Then
             SyncDone = 0
         End If
 
-    End Sub
+    End Function
 
 
 End Class
