@@ -1,4 +1,4 @@
-update=2016-10-02 19:27:07
+update=2016-10-08 22:54:48
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,3 +61,4 @@ LibName29=valves
 LibName30=kicad-ESP8266-master/ESP8266
 LibName31=mm232r
 LibName32=ft232rl
+LibName33=SundbergKiCadLib

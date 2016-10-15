@@ -4,17 +4,20 @@
 #include <WiFiUdp.h>
 //#include "wifi_params.h"
 #include <ESP8266mDNS.h>
-#include <ArduinoOTA.h>
 
 WiFiUDP udp;
-const int udp_recv_port = 45990; // for command&control
-const int udp_target_port = 45990; // sound transfer
-const IPAddress IP_target_device(192, 168, 0, 13);
-const IPAddress IP_target_PC(192, 168, 0, 2);
+const int udp_recv_port = 11319; // for command&control
+const int udp_target_port = 11318; // sound transfer
+const IPAddress IP_target_device(192, 168, 1, 219);
+const IPAddress IP_target_PC(192, 168, 1, 219);
+
+//const IPAddress IP_target_device(192, 168, 1, 219);
+//const IPAddress IP_target_PC(192, 168, 1, 219);
+
 IPAddress IP_target = IP_target_device;
 
 // Pin definitions: 
-//const int scePin = D8; 
+const int scePin = 15; 
 
 /* HW definition of alternate function:
 static const uint8_t MOSI  = 13; D7 on nodemcu
@@ -25,7 +28,7 @@ static const uint8_t SCK   = 14; D5 on nodemcu
       MCP3201 Pin   ---------------- ESP8266 Pin
 -       1-VREF      ----------------  3,3V
 -       2-IN+       ----------------  ANALOG SIGNAL +
--       3-IN-       ----------------  ANALOG SIGNAL -
+-       3-IN-       ----------------  ANALOG SIGNALc -
 -       4-GND       ----------------  GND
 -       5-CS        ----CS----------  GPIO15/CS (PIN 19)
 -       6-Dout(MISO)----MISO--------  GPIO12/MISO (PIN 16)
@@ -104,6 +107,7 @@ void ICACHE_RAM_ATTR sample_isr(void)
 
 	// Read a sample from ADC
 	val = transfer16();
+       
 	adc_buf[current_adc_buf][adc_buf_pos] = val & 0xFFF;
 	adc_buf_pos++;
 
@@ -113,24 +117,6 @@ void ICACHE_RAM_ATTR sample_isr(void)
 		current_adc_buf = !current_adc_buf;
 		send_samples_now = 1;
 	}
-}
-
-void ota_onstart(void)
-{
-	// Disable timer when an OTA happens
-	timer1_detachInterrupt();
-	timer1_disable();
-}
-
-void ota_onprogress(unsigned int sz, unsigned int total)
-{
-	Serial.print("OTA: "); Serial.print(sz); Serial.print("/"); Serial.print(total);
-	Serial.print("="); Serial.print(100*sz/total); Serial.println("%%");
-}
-
-void ota_onerror(ota_error_t err)
-{
-	Serial.print("OTA ERROR:"); Serial.println((int)err);
 }
 
 
@@ -157,20 +143,12 @@ void setup(void)
 	Serial.print ( "IP " );
 	Serial.println ( WiFi.localIP() );
 
-	ArduinoOTA.onStart(ota_onstart);
-	ArduinoOTA.onError(ota_onerror);
-	ArduinoOTA.onProgress(ota_onprogress);
-	ArduinoOTA.setHostname("bb-xmit");
-	ArduinoOTA.begin();
-
 	spiBegin(); 
 	
 	timer1_isr_init();
 	timer1_attachInterrupt(sample_isr);
 	timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP);
 	timer1_write(clockCyclesPerMicrosecond() / 16 * 50); //80us = 12.5kHz sampling freq
-
-	Serial.println("setup done");
 
 	udp.begin(udp_recv_port);
 }
@@ -208,24 +186,16 @@ uint8_t *delta7_sample(uint16_t last, uint16_t *readptr, uint8_t *writeptr)
 	const uint16_t val = *readptr;
 
 	const int32_t diff = val - last;
-	if (diff > -64 && diff < 64) {
-		// 7bit delta possible
-		// Encode the delta as "sign and magnitude" format. 
-		// CSMMMMMM (compressed signed magnitude^6)
-		int8_t out = 0x80 | ((diff < 0) ? 0x40 : 0x0) | abs(diff);
-		*writeptr++ = out;
-	} else {
+
 		// 7bit delta impossible, output as-is
 		*writeptr++ = highbyte1;
 		*writeptr++ = lowbyte1;
-	}
 
 	return writeptr;
 }
 
 void loop() 
 {
-	ArduinoOTA.handle();
 	if (send_samples_now) {
 		/* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
 		   that is, if the sound level is above a certain threshold. */
@@ -243,7 +213,7 @@ void loop()
 			readptr = &adc_buf[!current_adc_buf][i];
 			int32_t val = *readptr;
 			int32_t rectified;
-
+                       
 			if (enable_highpass_filter) {
 				*readptr = filterloop(val) + 2048;
 				val = *readptr;
@@ -273,9 +243,9 @@ void loop()
 			udp.endPacket();
 		}
 		send_samples_now = 0;
-		Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);	
-		Serial.print("delay "); Serial.print(millis() - now);
-		Serial.println("");
+		//Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);	
+		//Serial.print("delay "); Serial.print(millis() - now);
+		//Serial.println("");
 	}	
 
 	if (udp.parsePacket()) {

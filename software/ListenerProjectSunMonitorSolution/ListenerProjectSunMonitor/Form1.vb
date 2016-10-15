@@ -256,7 +256,7 @@ Public Class frmMain
         If AbortVoxViaUDPThread = False Then
             Label1.Text = "The current received byte count prior to removal and playing is " & (RcvdWaveFileBytes.Count * 1280).ToString & "."
 
-            If RcvdWaveFileBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
+            If RcvdWaveFileBytes.Count > 25 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
                 CreateWaveHeaderAndPlay()
             End If
         End If
@@ -280,14 +280,16 @@ Public Class frmMain
     Dim WaveData As New List(Of Byte)                                                  ' The wave data.
     Dim CompleteWaveFile() As Byte
     Dim NumberofChannels As Integer = 2
-    Dim SamplingRate As Integer = 8000
+    Dim SamplingRate As Integer = 10000
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
-        For i = 0 To 49
+        For i = 0 To 24
             WaveData.AddRange(RcvdWaveFileBytes(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
+            Label2.Text = RcvdWaveFileBytes(i).Length
+
         Next
-        Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
+        'Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
         RcvdWaveFileBytes.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
         FileSize = WaveFileHelper(WaveData.Count + 36, 4)
         FormatLength = WaveFileHelper(16, 4)
@@ -467,7 +469,7 @@ Public Class frmMain
 
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
         TmrSync.Enabled = True
-        SynkIP = "192.168.1.88"
+        SynkIP = "192.168.1.255"
         SynktoPort = "11319"
         SynkWord = "0"
 
