@@ -362,7 +362,7 @@ Public Class frmMain
         If AbortVoxViaUDPThread = False Then
             Label1.Text = "The current received byte count prior to removal and playing is " & (RcvdWaveFileBytes.Count * 1280).ToString & "."
 
-            If RcvdWaveFileBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
+            If RcvdWaveFileBytes.Count > 25 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
                 CreateWaveHeaderAndPlay()
             End If
         End If
@@ -385,16 +385,16 @@ Public Class frmMain
     Dim SizeOfData() As Byte                                                           ' Number of bytes of data within the data section. 4 bytes.
     Dim WaveData As New List(Of Byte)                                                  ' The wave data.
     Dim CompleteWaveFile() As Byte
-    Dim NumberofChannels As Integer = 1
-    Dim SamplingRate As Integer = 16000
+    Dim NumberofChannels As Integer = 2
+    Dim SamplingRate As Integer = 10000
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
-        For i = 0 To 49
+        For i = 0 To 24
             WaveData.AddRange(RcvdWaveFileBytes(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
         Next
         Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
-        RcvdWaveFileBytes.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
+        RcvdWaveFileBytes.RemoveRange(0, 25) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
         FileSize = WaveFileHelper(WaveData.Count + 36, 4)
         FormatLength = WaveFileHelper(16, 4)
         WaveTypePCM = WaveFileHelper(1, 2)
@@ -555,7 +555,7 @@ Public Class frmMain
             Receive_Vox.Enabled = False
 
             btnSetup.Text = "Stop Sync"
-            SynkIP = "155.4.135.170"
+            SynkIP = "46.59.40.127"
             SynktoPort = "11319"
             SynkWord = "0"
 
