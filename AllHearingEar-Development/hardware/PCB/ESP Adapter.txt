@@ -1,9 +1,0 @@
-Simple ESP8266 wi07-12 SMD to DIP/PTH adapter board.
-
-Package includes the adapter board and break away pins, all items are not soldered, not include the wifi board.
-
-Features:
-
-10K resistor between CHPD and VCC, to enable chip
-10K resistor between GPIO2 and GND
-GPIO15 to GND for normal flash boot mode
