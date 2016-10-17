@@ -161,6 +161,18 @@ Namespace My
                 Me("hip4") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property NumOfSynUn() As Integer
+            Get
+                Return CType(Me("NumOfSynUn"),Integer)
+            End Get
+            Set
+                Me("NumOfSynUn") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

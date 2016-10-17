@@ -20,6 +20,12 @@ C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonito
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.frmMain.resources
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.Resources.resources
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.vbproj.GenerateResource.Cache
+<<<<<<< HEAD
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\bin\Debug\ListenerProjectSunMonitor.exe.manifest
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\bin\Debug\ListenerProjectSunMonitor.application
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.exe.manifest
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.application
+=======
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\bin\Debug\ListenerProjectSunMonitor.exe.config
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.exe
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.xml
@@ -31,3 +37,4 @@ D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerPro
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.frmMain.resources
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.Resources.resources
 D:\OneDrive\AllHearingEar\software\ListenerProjectSunMonitorSolution\ListenerProjectSunMonitor\obj\Debug\ListenerProjectSunMonitor.vbproj.GenerateResource.Cache
+>>>>>>> origin/Development
