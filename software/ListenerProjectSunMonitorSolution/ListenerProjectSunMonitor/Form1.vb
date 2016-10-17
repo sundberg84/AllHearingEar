@@ -256,7 +256,7 @@ Public Class frmMain
         If AbortVoxViaUDPThread = False Then
             Label1.Text = "The current received byte count prior to removal and playing is " & (RcvdWaveFileBytes.Count * 1280).ToString & "."
 
-            If RcvdWaveFileBytes.Count > 25 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
+            If RcvdWaveFileBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
                 CreateWaveHeaderAndPlay()
             End If
         End If
@@ -284,7 +284,7 @@ Public Class frmMain
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
-        For i = 0 To 24
+        For i = 0 To 49
             WaveData.AddRange(RcvdWaveFileBytes(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
             Label2.Text = RcvdWaveFileBytes(i).Length
 
@@ -306,6 +306,7 @@ Public Class frmMain
             MS.Write(FileType, 0, FileType.Length)             ' 4 bytes
             MS.Write(FileSize, 0, FileSize.Length)             ' 4 bytes
             MS.Write(HeaderType, 0, HeaderType.Length)         ' 4 bytes
+
             MS.Write(Format, 0, Format.Length)                 ' 4 bytes
             MS.Write(FormatLength, 0, FormatLength.Length)     ' 4 bytes
             MS.Write(WaveTypePCM, 0, WaveTypePCM.Length)       ' 2 bytes

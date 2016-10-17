@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source D:/OneDrive/AllHearingEar/hardware/PCB/dev_02_kicad/Core1.sch)
-    (date "2016-10-14 16:11:47")
+    (date "2016-10-17 21:43:16")
     (tool "Eeschema 4.0.4-stable")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -17,7 +17,7 @@
   (components
     (comp (ref U1)
       (value ESP-07v2)
-      (footprint KiCadCore:ESP-07v2)
+      (footprint dev_02_kicad:ESP-07v2)
       (libsource (lib ESP8266) (part ESP-07v2))
       (sheetpath (names /) (tstamps /))
       (tstamp 57F14223))
@@ -77,7 +77,7 @@
       (tstamp 57F1835E))
     (comp (ref P2)
       (value "Pinhead SMD Connector")
-      (footprint "KiCad libraries:Pin_Header_Angled_1x05_SMD")
+      (footprint Pin_Headers:Pin_Header_Straight_1x05)
       (libsource (lib conn) (part CONN_01X05))
       (sheetpath (names /) (tstamps /))
       (tstamp 57F1A954))
@@ -161,7 +161,7 @@
       (tstamp 57F4582E))
     (comp (ref P6)
       (value "Pinhead SMD Connector")
-      (footprint "KiCad libraries:Pin_Header_Angled_1x05_SMD")
+      (footprint Pin_Headers:Pin_Header_Straight_1x05)
       (libsource (lib conn) (part CONN_01X05))
       (sheetpath (names /) (tstamps /))
       (tstamp 57F45B02)))
@@ -380,10 +380,10 @@
   (libraries
     (library (logical conn)
       (uri "D:\\Program Files (x86)\\KiCad\\share\\kicad\\library\\conn.lib"))
-    (library (logical device)
-      (uri "D:\\Program Files (x86)\\KiCad\\share\\kicad\\library\\device.lib"))
     (library (logical regul)
       (uri "D:\\Program Files (x86)\\KiCad\\share\\kicad\\library\\regul.lib"))
+    (library (logical device)
+      (uri "D:\\Program Files (x86)\\KiCad\\share\\kicad\\library\\device.lib"))
     (library (logical ft232rl)
       (uri "D:\\OneDrive\\Arduino\\KiCad libraries\\ft232rl.lib"))
     (library (logical ESP8266)

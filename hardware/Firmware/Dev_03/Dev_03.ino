@@ -29,7 +29,7 @@ const int scePin = 15; // SCE - Chip select
 #define SILENCE_EMA_WEIGHT 1024
 #define ENVELOPE_EMA_WEIGHT 2
 int32_t silence_value = 2048; // computed as an exponential moving average of the signal
-uint16_t envelope_threshold = 150; // envelope threshold to trigger data sending
+uint16_t envelope_threshold = 10; // envelope threshold to trigger data sending
 uint32_t send_sound_util = 0; // date until sound transmission ends after an envelope threshold has triggered sound transmission
 int enable_highpass_filter = 1;
 
@@ -149,9 +149,9 @@ void loop()
     }
 
     send_samples_now = 0;
-    //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
+    Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
     //Serial.print("delay "); Serial.print(millis() - now);
-    //Serial.println("");
+    Serial.println("");
     lastRequest = millis();
   }
 
