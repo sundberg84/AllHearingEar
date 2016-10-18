@@ -1,15 +1,10 @@
 ﻿Module Audio
 
-    ' Wave header
-
     Dim RcvdWaveFileBytes As New List(Of Byte())
     Dim CompleteStream() As Byte
 
-
-
     'CreateAudioStream är main thread - skicka UDP data hit.
     Public Sub CreateAudioStream(inputRawAudio As Byte())
-
 
         '--//DEBUG//--
         If inputRawAudio.Length <= 0 Then
@@ -26,12 +21,7 @@
             player.Play()
         End Using
 
-        'Audiostream - hur dödar vi denna? Räcker det att döda den i CreateWavStream ??
-        'Om vi tar close - fungerar det bara en gång?
-
-
     End Sub
-
 
     Private Sub CreateWavStream(s_rate As Integer, sample_size As Integer, sample As Byte())
 
@@ -54,9 +44,6 @@
         End If
 
         byte_rate = CInt(num_channels * sample_rate * (bytes_per_sample * 8) / 8)
-
-        'C++: fwrite (data,size,antal/längd,fil)
-        'VB: .write(data byte,offset,antal/längd)
 
         'Se http://soundfile.sapp.org/doc/WaveFormat/ för hur en WAVE format är uppbyggt (RIFF, FMT, DATA).
 
@@ -82,7 +69,7 @@
             AudioStream.Write(System.Text.ASCIIEncoding.ASCII.GetBytes("data"), 0, 4)
             AudioStream.Write(BitConv((sample_size), 4), 0, 4)
 
-            'Stream är nu klar för att ta emot data (Sample, sista delen av DATA).
+            'Stream är nu klar för att ta emot data (Lägg till ljudet (sample) som sista delen av DATA).
             For n As Integer = 0 To sample.Length
                 'Lägg till data enligt stream 
                 AudioStream.Write(sample.ToArray, 0, sample.Count)
@@ -94,7 +81,6 @@
 
         AudioStream.Flush()
         AudioStream.Close()
-        'Dödar denna DIM och gör en andra omgång error?
 
     End Sub
 
