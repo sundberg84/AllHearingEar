@@ -1,13 +1,12 @@
-﻿Option Strict Off
+﻿
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text.Encoding
 
 
 
-
-
 Public Class frmMain
+
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -170,7 +169,7 @@ Public Class frmMain
         Try
                 Dim ep As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
                 Dim rcvbytes() As Byte = subscriber.Receive(ep)
-            If ep.Address.ToString = AHESyncIP1 Then
+                If ep.Address.ToString = AHESyncIP1 Then
                 txtUnit1.BackColor = Color.LightGreen
                 ticks = 0
             End If
@@ -189,9 +188,9 @@ Public Class frmMain
 
             Call ConStat()
 
-        Catch ex As Exception
+            Catch ex As Exception
 
-        End Try
+            End Try
 
 
 
@@ -204,7 +203,7 @@ Public Class frmMain
             Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvbytes2() As Byte = subscriber.Receive(respondSync)
             lblHwip.Text = ASCII.GetString(rcvbytes2)
-            If lblHwip.Text = "1" Then
+            If lblHwip.Text > "" Then
                 lblHwip.Text = respondSync.Address.ToString()
                 CurrentSync = respondSync.Address.ToString()
 
@@ -217,7 +216,6 @@ Public Class frmMain
             End If
 
         Catch ex As Exception
-            lblHwip.Text = ex.Message
         End Try
 
 
@@ -280,9 +278,7 @@ Public Class frmMain
 
 
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
-
         If Receive_Vox.Text = "Listen" Then
-            SamplingRate = txtSamplerate.Text
             Dim LocalIPList As System.Net.IPHostEntry = Dns.GetHostEntry(Environment.MachineName)
             For Each LocalIP As IPAddress In LocalIPList.AddressList
                 If LocalIP.AddressFamily = AddressFamily.InterNetwork Then
@@ -362,7 +358,7 @@ Public Class frmMain
         If AbortVoxViaUDPThread = False Then
             Label1.Text = "The current received byte count prior to removal and playing is " & (RcvdWaveFileBytes.Count * 1280).ToString & "."
 
-            If RcvdWaveFileBytes.Count > 25 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
+            If RcvdWaveFileBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
                 CreateWaveHeaderAndPlay()
             End If
         End If
@@ -385,23 +381,16 @@ Public Class frmMain
     Dim SizeOfData() As Byte                                                           ' Number of bytes of data within the data section. 4 bytes.
     Dim WaveData As New List(Of Byte)                                                  ' The wave data.
     Dim CompleteWaveFile() As Byte
-    Dim NumberofChannels As Integer = 2
-    Dim SamplingRate As Integer = 10000
+    Dim NumberofChannels As Integer = 1
+    Dim SamplingRate As Integer = 8000
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
-        For i = 0 To 24
+        For i = 0 To 49
             WaveData.AddRange(RcvdWaveFileBytes(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
-            Label2.Text = RcvdWaveFileBytes(i).Length
-
         Next
-<<<<<<< HEAD
         Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
-        RcvdWaveFileBytes.RemoveRange(0, 25) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
-=======
-        'Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
         RcvdWaveFileBytes.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
->>>>>>> origin/Development
         FileSize = WaveFileHelper(WaveData.Count + 36, 4)
         FormatLength = WaveFileHelper(16, 4)
         WaveTypePCM = WaveFileHelper(1, 2)
@@ -445,6 +434,11 @@ Public Class frmMain
         Return Helper.GetRange(0, Length).ToArray
     End Function
 
+    Private Sub Stop_Receiving_Click(sender As Object, e As EventArgs)
+
+
+
+    End Sub
     'Visa Loggbok vid checkbox.
     '--------------------------
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
@@ -556,20 +550,13 @@ Public Class frmMain
     Dim CurrentSync As String
 
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
-<<<<<<< HEAD
-=======
-        TmrSync.Enabled = True
-        SynkIP = "192.168.1.255"
-        SynktoPort = "11319"
-        SynkWord = "0"
->>>>>>> origin/Development
 
         If TmrSync.Enabled = False Then
             TmrSync.Enabled = True
             Receive_Vox.Enabled = False
 
             btnSetup.Text = "Stop Sync"
-            SynkIP = "46.59.40.127"
+            SynkIP = debugIP.text
             SynktoPort = "11319"
             SynkWord = "0"
 
@@ -702,6 +689,10 @@ Public Class frmMain
         AHESyncIP2 = ""
 
         Call FindSlot()
+    End Sub
+
+    Private Sub debugIP_TextChanged(sender As Object, e As EventArgs) Handles debugIP.TextChanged
+
     End Sub
 
     Private Sub PBok3_Click(sender As Object, e As EventArgs) Handles PBok3.Click

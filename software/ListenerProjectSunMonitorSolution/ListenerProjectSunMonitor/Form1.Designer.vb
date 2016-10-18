@@ -43,8 +43,6 @@ Partial Class frmMain
         Me.Label5 = New System.Windows.Forms.Label()
         Me.btnSetup = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.txtSamplerate = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.PBdelete4 = New System.Windows.Forms.PictureBox()
         Me.PBok4 = New System.Windows.Forms.PictureBox()
         Me.PBdelete3 = New System.Windows.Forms.PictureBox()
@@ -58,6 +56,7 @@ Partial Class frmMain
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
         Me.lblHwip = New System.Windows.Forms.Label()
+        Me.debugIP = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -222,8 +221,6 @@ Partial Class frmMain
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.txtSamplerate)
-        Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Controls.Add(Me.PBdelete4)
         Me.GroupBox2.Controls.Add(Me.PBok4)
         Me.GroupBox2.Controls.Add(Me.PBdelete3)
@@ -242,23 +239,6 @@ Partial Class frmMain
         Me.GroupBox2.TabIndex = 23
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Enheter"
-        '
-        'txtSamplerate
-        '
-        Me.txtSamplerate.Location = New System.Drawing.Point(215, 58)
-        Me.txtSamplerate.Name = "txtSamplerate"
-        Me.txtSamplerate.Size = New System.Drawing.Size(100, 20)
-        Me.txtSamplerate.TabIndex = 27
-        Me.txtSamplerate.Text = "10000"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(197, 42)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(136, 13)
-        Me.Label6.TabIndex = 26
-        Me.Label6.Text = "Samplerate: Default 10000."
         '
         'PBdelete4
         '
@@ -402,12 +382,20 @@ Partial Class frmMain
         Me.lblHwip.Size = New System.Drawing.Size(0, 13)
         Me.lblHwip.TabIndex = 24
         '
+        'debugIP
+        '
+        Me.debugIP.Location = New System.Drawing.Point(132, 198)
+        Me.debugIP.Name = "debugIP"
+        Me.debugIP.Size = New System.Drawing.Size(118, 20)
+        Me.debugIP.TabIndex = 25
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(371, 543)
+        Me.ClientSize = New System.Drawing.Size(373, 511)
+        Me.Controls.Add(Me.debugIP)
         Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnSetup)
@@ -420,7 +408,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.Receive_Vox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.Text = "All Hearing Ear"
         Me.GroupBox1.ResumeLayout(False)
@@ -473,6 +460,5 @@ Partial Class frmMain
     Friend WithEvents PBdelete2 As PictureBox
     Friend WithEvents PBok2 As PictureBox
     Friend WithEvents lblHwip As Label
-    Friend WithEvents txtSamplerate As TextBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents debugIP As TextBox
 End Class
