@@ -77,7 +77,7 @@ void setup() {
   // Vänta inkommande sync från servern
   Serial.print("Väntar sync.");
   while (ipServer < 1) {
-    UdpRecieve();
+    UdpRecieveSync();
   }
 
   //Aktivera hårdvarutimer för 12,5kHz.
@@ -94,12 +94,12 @@ void setup() {
 void loop()
 {
 
- //Ping varje 5 sek (om inte ljud skickats).
-  //if ((millis() - lastRequest) > 5000) {
-  //  lastRequest = millis();
-  //  UdpSend(1);
-  //  Serial.println("Ping");
-  //}
+  //Ping varje 5 sek (om inte ljud skickats).
+  if ((millis() - lastRequest) > 5000) {
+    lastRequest = millis();
+    UdpSend(1);
+    Serial.println("Ping");
+  }
 
   if (send_samples_now) {
     /* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
@@ -146,13 +146,14 @@ void loop()
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
       udp.endPacket();
+      lastRequest = millis();
     }
 
     send_samples_now = 0;
-    Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
+    //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
     //Serial.print("delay "); Serial.print(millis() - now);
-    Serial.println("");
-    lastRequest = millis();
+    //Serial.println("");
+
   }
 
   // If not sending anything, add a delay to enable modem sleep
@@ -169,7 +170,7 @@ void UdpSend(int msg)
   udp.endPacket();
 }
 
-void UdpRecieve()
+void UdpRecieveSync()
 {
   unsigned long now = millis();
   if ((ipServer < 1) && (now - lastRequest) > 5000) {
@@ -180,16 +181,33 @@ void UdpRecieve()
   int packetSize = udp.parsePacket();
   if (packetSize) {
     Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
-    ipServer = udp.remoteIP();
+
+    if ((ipServer < 1) && (now - lastRequest) > 5000) {
+      ipServer = udp.remoteIP();
+      Serial.print(".");
+    }
+
     int len = udp.read(incomingPacket, 255);
-    if (len > 0)
-    {
+    if (len > 0) {
       incomingPacket[len] = 0;
     }
-    //Serial.printf("UDP packet contents: %s\n", incomingPacket);
 
-    //Ack!
-    UdpSend(1);
+    switch (incomingPacket) {
+      case 0:
+        //Sync från dator! - Skicka ACK
+        UdpSend(1);
+      case 1:
+        //ACK från dator
+        break;
+      case 2:
+        //Sätt volym.
+        
+        break;
+      default:
+        // if nothing else matches, do nothing.
+
+        break;
+    }
   }
 }
 
