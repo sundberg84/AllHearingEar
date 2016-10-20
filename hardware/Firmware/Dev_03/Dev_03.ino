@@ -7,7 +7,12 @@
 #include <SPI.h>
 
 //UDP Variabler
-const int UDP_PACKET_SIZE = 48;
+const int UDP_PACKET_SIZE = 4; 
+//BEHÖVS 48 BYTE? Borde räcka med 4 ??
+//ABBB
+//A = 1 byte = 1-9, vad ska hända = Sync, Volym, Debug?
+//B = 3 byte = 01-99, Volym eller annan info - MAX 3 chars.
+
 char incomingPacket[UDP_PACKET_SIZE];
 IPAddress ipServer(0, 0, 0, 0);
 unsigned int udpServerPort = 11319;
@@ -192,7 +197,8 @@ void UdpRecieveSync()
       incomingPacket[len] = 0;
     }
 
-    switch (incomingPacket) {
+    //Läs första char i incomingPacket. (Blir detta ASCII?)
+    switch (incomingPacket[0])) {
       case 0:
         //Sync från dator! - Skicka ACK
         UdpSend(1);
