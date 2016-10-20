@@ -27,13 +27,7 @@ Partial Class frmMain
         Me.TmrSync = New System.Windows.Forms.Timer(Me.components)
         Me.tmrListen = New System.Windows.Forms.Timer(Me.components)
         Me.Receive_Vox = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.CBAutostart = New System.Windows.Forms.CheckBox()
-        Me.TxtLogg = New System.Windows.Forms.TextBox()
         Me.CBLogg = New System.Windows.Forms.CheckBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
@@ -56,8 +50,7 @@ Partial Class frmMain
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
         Me.lblHwip = New System.Windows.Forms.Label()
-        Me.debugIP = New System.Windows.Forms.TextBox()
-        Me.GroupBox1.SuspendLayout()
+        Me.LBLogg = New System.Windows.Forms.ListBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -86,55 +79,6 @@ Partial Class frmMain
         Me.Receive_Vox.Text = "Listen"
         Me.Receive_Vox.UseVisualStyleBackColor = True
         '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(16, 398)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(339, 109)
-        Me.GroupBox1.TabIndex = 10
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Data Recieved"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 87)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(39, 13)
-        Me.Label4.TabIndex = 11
-        Me.Label4.Text = "Label4"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 63)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
-        Me.Label3.TabIndex = 10
-        Me.Label3.Text = "Label3"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 39)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 13)
-        Me.Label2.TabIndex = 9
-        Me.Label2.Text = "Label2"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 16)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 8
-        Me.Label1.Text = "Label1"
-        '
         'CBAutostart
         '
         Me.CBAutostart.AutoSize = True
@@ -144,16 +88,6 @@ Partial Class frmMain
         Me.CBAutostart.TabIndex = 11
         Me.CBAutostart.Text = "Starta AHE när windows startar"
         Me.CBAutostart.UseVisualStyleBackColor = True
-        '
-        'TxtLogg
-        '
-        Me.TxtLogg.Location = New System.Drawing.Point(16, 270)
-        Me.TxtLogg.Multiline = True
-        Me.TxtLogg.Name = "TxtLogg"
-        Me.TxtLogg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TxtLogg.Size = New System.Drawing.Size(339, 122)
-        Me.TxtLogg.TabIndex = 12
-        Me.TxtLogg.Text = "Logg"
         '
         'CBLogg
         '
@@ -204,7 +138,7 @@ Partial Class frmMain
         Me.Label5.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Blue
-        Me.Label5.Location = New System.Drawing.Point(213, 251)
+        Me.Label5.Location = New System.Drawing.Point(207, 248)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(148, 13)
         Me.Label5.TabIndex = 15
@@ -382,36 +316,33 @@ Partial Class frmMain
         Me.lblHwip.Size = New System.Drawing.Size(0, 13)
         Me.lblHwip.TabIndex = 24
         '
-        'debugIP
+        'LBLogg
         '
-        Me.debugIP.Location = New System.Drawing.Point(132, 198)
-        Me.debugIP.Name = "debugIP"
-        Me.debugIP.Size = New System.Drawing.Size(118, 20)
-        Me.debugIP.TabIndex = 25
+        Me.LBLogg.FormattingEnabled = True
+        Me.LBLogg.Location = New System.Drawing.Point(16, 268)
+        Me.LBLogg.Name = "LBLogg"
+        Me.LBLogg.Size = New System.Drawing.Size(339, 121)
+        Me.LBLogg.TabIndex = 26
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(373, 511)
-        Me.Controls.Add(Me.debugIP)
+        Me.ClientSize = New System.Drawing.Size(373, 398)
+        Me.Controls.Add(Me.LBLogg)
         Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.btnSetup)
-        Me.Controls.Add(Me.TxtLogg)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.CBLogg)
         Me.Controls.Add(Me.CBAutostart)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Receive_Vox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.Text = "All Hearing Ear"
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
@@ -431,13 +362,7 @@ Partial Class frmMain
     Friend WithEvents TmrSync As Timer
     Friend WithEvents tmrListen As Timer
     Friend WithEvents Receive_Vox As Button
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label1 As Label
     Friend WithEvents CBAutostart As CheckBox
-    Friend WithEvents TxtLogg As TextBox
     Friend WithEvents CBLogg As CheckBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents NotifyIcon1 As NotifyIcon
@@ -460,5 +385,5 @@ Partial Class frmMain
     Friend WithEvents PBdelete2 As PictureBox
     Friend WithEvents PBok2 As PictureBox
     Friend WithEvents lblHwip As Label
-    Friend WithEvents debugIP As TextBox
+    Friend WithEvents LBLogg As ListBox
 End Class
