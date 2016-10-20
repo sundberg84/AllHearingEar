@@ -1,4 +1,4 @@
-update=2016-10-15 22:45:47
+update=2016-10-20 19:11:37
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,8 +23,6 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=D:/OneDrive/Arduino/KiCad libraries
@@ -61,3 +59,5 @@ LibName29=valves
 LibName30=kicad-ESP8266-master/ESP8266
 LibName31=mm232r
 LibName32=ft232rl
+[general]
+version=1
