@@ -12,6 +12,8 @@ Module Udp
     Public ThreadReceive As System.Threading.Thread
 
     'Starta en ny thread för servern
+    'Allt som behövs är att kalla udpThread(). Ingen timer/ticks på denna.
+    
     Public Sub udpThread()
 
         receivingUdpClient = New System.Net.Sockets.UdpClient(11318)
@@ -49,11 +51,15 @@ Module Udp
         'Använd denna om du exempelvis vill skicka en sync eller annat via UDP.
         'Exempelvis SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("1"))
 
-        UdpSender.Connect(IP, Port)
-        UdpSender.Send(senddata, senddata.Length)
-        UdpSender.Close()
-        Return "UDP skickat!"
-
+        If senddata.length > "4" Then
+            Return "UDP ej skickat! Max 4 bytes data!"
+        Else
+            UdpSender.Connect(IP, Port)
+            UdpSender.Send(senddata, senddata.Length)
+            UdpSender.Close()
+            Return "UDP skickat!"
+        End if
+            
     End Function
 
 
