@@ -1,0 +1,33 @@
+'Multi Threading with Return value : vb.net
+'https://msdn.microsoft.com/en-us/library/mt679035.aspx <- Därför ska vi inte använda ticks but threads!
+'newThread.Abort()
+
+'In my opinion, the easiest way to do this is with a helper object called a BackgroundWorker. You can find the MSDN documentation here.
+'Here's an example of how to use it:
+
+Private Sub RunFifteenThreads()
+   For i As Integer = 1 To 15
+      Dim some_data As Integer = i
+      Dim worker As New System.ComponentModel.BackgroundWorker
+      AddHandler worker.DoWork, AddressOf RunOneThread
+      AddHandler worker.RunWorkerCompleted, AddressOf HandleThreadCompletion
+      worker.RunWorkerAsync(some_data)
+   Next
+End Sub
+
+Private Sub RunOneThread(ByVal sender As System.Object, _
+                         ByVal e As System.ComponentModel.DoWorkEventArgs)
+   Dim stroutput As String = e.Argument.ToString
+   ' Do whatever else the thread needs to do here...
+   e.Result = stroutput
+End Sub
+
+Private Sub HandleThreadCompletion(ByVal sender As Object, _
+                                   ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs)
+   Dim return_value As String = e.Result.ToString
+   RichTextBox1.Text = RichTextBox1.Text & vbNewLine & return_value
+End Sub
+
+'Each worker object manages its own thread. Calling a worker's RunWorkerAsync method creates a new thread and then raises a DoWork event. The function that handles the DoWork event is executed in the thread created by the worker. When that function completes, the worker raises a RunWorkerCompleted event. The function that handles the RunWorkerCompleted event is executed in the original thread, the one that called RunWorkerAsync.
+'To pass data between threads, you use the EventArgs parameters (e in the example above) in your event handlers. You can pass a single argument to RunWorkerAsync, which is made available to the new thread via e.Argument. To send data the other direction, from the worker thread to the main thread, you set the value of e.Result in the worker thread, which is then passed to function which handles thread completion, also as e.Result.
+'You can also send data between threads while the worker thread is still executing, using ReportProgress and ProgressChanged (see MSDN documentation if you're interested).
