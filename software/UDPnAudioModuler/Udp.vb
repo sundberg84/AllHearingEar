@@ -1,66 +1,68 @@
-﻿Imports System.Threading
+Imports System.Threading
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text
 
-
 Module Udp
-    Public UDPRevStatus As Boolean = True
-    Public UdpSender As New UdpClient(11319)
-    Public receivingUdpClient As UdpClient
+   
+    '----------------------------------------------------------------------------
+    ' UDP Server (11318 för mottagning av Audio)
+    '----------------------------------------------------------------------------
     Public RemoteIpEndPoint As New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0)
     Public ThreadReceive As System.Threading.Thread
-
-    'Starta en ny thread för servern
-    'Allt som behövs är att kalla udpThread(). Ingen timer/ticks på denna.
+    Public receivingUdpAudio As UdpClient
+    Public UDPAudioStatus As Boolean = True
     
-    Public Sub udpThread()
-
-        receivingUdpClient = New System.Net.Sockets.UdpClient(11318)
-        ThreadReceive = New System.Threading.Thread(AddressOf ReceiveMessages)
+    'Starta en ny thread för Audiomottagning,
+    'Allt som behövs är att kalla udpAudioThread(). Ingen timer/ticks på denna. 
+    Public Sub udpAudioThread()
+        receivingUdpAudio = New System.Net.Sockets.UdpClient(11318)
+        ThreadReceive = New System.Threading.Thread(AddressOf ReceiveAudioMessages)
         ThreadReceive.Start()
-
     End Sub
 
-    'Skapa servertråden
-    Public Sub ReceiveMessages()
-
-        While (UDPRevStatus)
+    'Skapa servertråden (görs automatiskt från udpAudioThread()
+    Public Sub ReceiveAudioMessages()
+        While (UDPAudioStatus)
 
             Try
-                Dim receiveBytes As [Byte]() = receivingUdpClient.Receive(RemoteIpEndPoint)
-
+                Dim receiveBytes As [Byte]() = receivingUdpAudio.Receive(RemoteIpEndPoint)
                 Dim BitDet As BitArray
                 BitDet = New BitArray(receiveBytes)
-
                 Dim strReturnData As String = System.Text.Encoding.Unicode.GetString(receiveBytes)
-
                 CreateAudioStream(receiveBytes)
-
             Catch
-                MsgBox("Error in UDP reciever!")
-                UDPRevStatus = False
-                receivingUdpClient.Close()
+                MsgBox("Error in UDP (audio) reciever! - Closing server!") 
+                UDPAudioStatus = False
+                receivingUdpAudio.Close()
             End Try
 
         End While
-
     End Sub
 
+    Public Function StopAudioUDP()
+        UDPAudioStatus = False
+        receivingUdpAudio.Close()
+        Return "UDP (audio) stopped!"
+    End Sub
+    
+    '----------------------------------------------------------------------------
+    ' UDP Client (11319 för skickande OCH mottagande av status/commands)
+    '----------------------------------------------------------------------------
+    
+    Public UdpSender As New UdpClient(11319)
     Public Function SendUDP(IP As String, Port As Integer, senddata As Byte())
         'Använd denna om du exempelvis vill skicka en sync eller annat via UDP.
         'Exempelvis SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("1"))
 
         If senddata.length > "4" Then
-            Return "UDP ej skickat! Max 4 bytes data!"
+            Return "UDP message not sent! Max 4 bytes data!" 'Engelska?
         Else
             UdpSender.Connect(IP, Port)
             UdpSender.Send(senddata, senddata.Length)
             UdpSender.Close()
-            Return "UDP skickat!"
+            Return "UDP message sent, ok!" 'Engelska?
         End if
             
     End Function
-
-
 End Module
