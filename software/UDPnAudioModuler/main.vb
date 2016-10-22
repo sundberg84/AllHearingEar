@@ -5,7 +5,7 @@ Public Class main
     Public Sub main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'Skicka Sync
-        LBLogg.Items.Add(SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("1")))
+        addLog(SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("1")))
         udpAudioThread()
 
 
