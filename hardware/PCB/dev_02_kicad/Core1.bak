@@ -31,7 +31,6 @@ LIBS:valves
 LIBS:ESP8266
 LIBS:mm232r
 LIBS:ft232rl
-LIBS:Core1-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -271,7 +270,7 @@ U 1 1 57F1A954
 P 5350 3050
 F 0 "P2" H 5350 3350 50  0000 C CNN
 F 1 "Pinhead SMD Connector" V 5450 3050 50  0000 C CNN
-F 2 "HeadersSMD:Pin_Header_Angled_1x05_SMD" H 5350 3050 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05" H 5350 3050 50  0001 C CNN
 F 3 "" H 5350 3050 50  0000 C CNN
 	1    5350 3050
 	0    1    1    0   
@@ -555,7 +554,7 @@ U 1 1 57F45B02
 P 3100 7100
 F 0 "P6" H 3100 7400 50  0000 C CNN
 F 1 "Pinhead SMD Connector" V 3200 7100 50  0000 C CNN
-F 2 "HeadersSMD:Pin_Header_Angled_1x05_SMD" H 3100 7100 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05" H 3100 7100 50  0001 C CNN
 F 3 "" H 3100 7100 50  0000 C CNN
 	1    3100 7100
 	1    0    0    -1  

@@ -1,4 +1,4 @@
-update=2016-10-15 22:45:47
+update=2016-10-27 10:11:16
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,3 +61,13 @@ LibName29=valves
 LibName30=kicad-ESP8266-master/ESP8266
 LibName31=mm232r
 LibName32=ft232rl
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60

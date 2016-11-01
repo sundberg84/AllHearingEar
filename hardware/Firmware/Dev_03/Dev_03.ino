@@ -7,11 +7,13 @@
 #include <SPI.h>
 
 //UDP Variabler
-const int UDP_PACKET_SIZE = 4; 
-//BEHÖVS 48 BYTE? Borde räcka med 4 ??
+const int UDP_PACKET_SIZE = 64; 
 //ABBB
 //A = 1 byte = 1-9, vad ska hända = Sync, Volym, Debug?
-//B = 3 byte = 01-99, Volym eller annan info - MAX 3 chars.
+  //0 = SYNC
+  //1 = ACK
+  //2 = VOLYM
+//B = 3 byte = 001-999, Volym eller annan info - MAX 3 chars.
 
 char incomingPacket[UDP_PACKET_SIZE];
 IPAddress ipServer(0, 0, 0, 0);
@@ -22,14 +24,17 @@ WiFiUDP udp;
 
 //Microfon variabler.
 unsigned long lastRequest = 0;
+unsigned long lastPing;
+unsigned long now;
 
 // ADC
 uint16_t adc_buf[2][700]; // ADC data buffer, double buffered
 int current_adc_buf; // which data buffer is being used for the ADC (the other is being sent)
 unsigned int adc_buf_pos; // position in the ADC data buffer
 int send_samples_now; // flag to signal that a buffer is ready to be sent
+
 // Pin definitions:
-const int scePin = 15; // SCE - Chip select
+// const int scePin = 15; // SCE - Chip select
 
 #define SILENCE_EMA_WEIGHT 1024
 #define ENVELOPE_EMA_WEIGHT 2
@@ -39,7 +44,7 @@ uint32_t send_sound_util = 0; // date until sound transmission ends after an env
 int enable_highpass_filter = 1;
 
 // ÖVrigt
-const int flashPin = 4;     // the number of the pushbutton pin
+const int resetPIN = 4;     // the number of the pushbutton pin
 
 void setup() {
 
@@ -54,18 +59,15 @@ void setup() {
   WiFiManager wifiManager;
 
   // initialize the pushbutton pin as an input:
-  pinMode(flashPin, INPUT);
+  pinMode(resetPIN, INPUT);
 
 
-  if (digitalRead(flashPin) == HIGH) {
+  if (digitalRead(resetPIN) == HIGH) {
     //Reset settings
     Serial.println("Nollställer WIFI");
     //Använd denna om du vill plocka bort SSID och lösernord.
     //wifiManager.resetSettings();
   }
-
-  //Använd denna om du vill ha exakt IP för portalen.
-  //wifiManager.setAPConfig(IPAddress(10,0,1,1), IPAddress(10,0,1,1), IPAddress(255,255,255,0));
 
   //Hämta tidigare sparade SSID/Lösen eller starta portal om det behövs.
   wifiManager.autoConnect("AllHearingEar");
@@ -93,19 +95,13 @@ void setup() {
 
   Serial.print("Allt klart - IP Server: ");
   Serial.println(ipServer);
-
 }
 
 void loop()
-{
-
-  //Ping varje 5 sek (om inte ljud skickats).
-  if ((millis() - lastRequest) > 5000) {
-    lastRequest = millis();
-    UdpSend(1);
-    Serial.println("Ping");
-  }
-
+{  
+  
+  UdpRecieveData();
+  
   if (send_samples_now) {
     /* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
        that is, if the sound level is above a certain threshold. */
@@ -115,7 +111,6 @@ void loop()
     int32_t accum_silence = 0;
     int32_t envelope_value = 0;
 
-    int32_t now = millis();
     uint8_t *writeptr = (uint8_t *)(&adc_buf[!current_adc_buf][0]);
     uint16_t *readptr;
     uint16_t last = 0;
@@ -151,7 +146,6 @@ void loop()
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
       udp.endPacket();
-      lastRequest = millis();
     }
 
     send_samples_now = 0;
@@ -163,9 +157,9 @@ void loop()
 
   // If not sending anything, add a delay to enable modem sleep
   if (millis() > send_sound_util) {
+    
     delay(10);
   }
-
 }
 
 void UdpSend(int msg)
@@ -175,8 +169,8 @@ void UdpSend(int msg)
   udp.endPacket();
 }
 
-void UdpRecieveSync()
-{
+void UdpRecieveSync(){
+  
   unsigned long now = millis();
   if ((ipServer < 1) && (now - lastRequest) > 5000) {
     lastRequest = now;
@@ -185,32 +179,51 @@ void UdpRecieveSync()
 
   int packetSize = udp.parsePacket();
   if (packetSize) {
-    Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
-
-    if ((ipServer < 1) && (now - lastRequest) > 5000) {
-      ipServer = udp.remoteIP();
-      Serial.print(".");
-    }
-
+    //Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
+    ipServer = udp.remoteIP();
     int len = udp.read(incomingPacket, 255);
-    if (len > 0) {
+    if (len > 0)
+    {
       incomingPacket[len] = 0;
     }
+    //Serial.printf("UDP packet contents: %s\n", incomingPacket);
 
-    //Läs första char i incomingPacket. (Blir detta ASCII?)
-    switch (incomingPacket[0])) {
+    //Ack!
+    UdpSend(1);
+  }
+  
+}
+  
+
+void UdpRecieveData()
+{
+
+  char incomingUDP[UDP_PACKET_SIZE];
+  
+  int packetSize = udp.parsePacket();
+  if (packetSize) {
+   //Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
+    udp.read(incomingUDP, UDP_PACKET_SIZE);
+    Serial.printf("UDP packet contents: %s\n", incomingUDP);
+  
+    //Läs första char i incomingPacket.
+    switch (incomingUDP[0]) {
       case 0:
-        //Sync från dator! - Skicka ACK
-        UdpSend(1);
+        //Ping från dator! - Skicka ACK        
+        UdpSend(1);        
+        break;
       case 1:
         //ACK från dator
+        Serial.println("Ack from computer");
+        UdpSend(1);
         break;
       case 2:
+        Serial.println("Volume from computer");
         //Sätt volym.
-        
+        //envelope_threshold =      
         break;
       default:
-        // if nothing else matches, do nothing.
+        // Do nothing
 
         break;
     }

@@ -31,6 +31,7 @@ LIBS:valves
 LIBS:ESP8266
 LIBS:mm232r
 LIBS:ft232rl
+LIBS:Core1-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -609,11 +610,7 @@ Wire Wire Line
 	2800 2900 3900 2900
 Wire Wire Line
 	3700 2300 3850 2300
-Wire Wire Line
-	3700 2200 3750 2200
 Connection ~ 3750 2900
-Wire Wire Line
-	3750 2200 3750 2450
 Wire Wire Line
 	3750 2750 3750 2900
 Wire Wire Line
@@ -894,4 +891,8 @@ Wire Wire Line
 NoConn ~ 1900 1800
 Text Notes 3050 7550 0    60   ~ 0
 http://www.digikey.com/product-search/en/connectors-interconnects/rectangular-connectors-headers-male-pins/1442547?k=header&k=&pkeyword=header&v=19&FV=1140160%2C1600018%2C1600309%2C160045f%2C8000010%2Cfff40016%2Cfff802f3&mnonly=0&newproducts=0&ColumnSort=0&page=1&quantity=0&ptm=0&fid=0&pageSize=25
+NoConn ~ 3700 2200
+Wire Wire Line
+	3750 2450 3750 2300
+Connection ~ 3750 2300
 $EndSCHEMATC
