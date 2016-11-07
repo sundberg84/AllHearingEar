@@ -21,7 +21,7 @@ Public Class frmMain
         subscriber.Client.Blocking = False
 
         'Loggbok info
-        LBLogg.Items.Add(DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!")
+        addLog(DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!")
 
         'Nolla alla anslutningar
         Connectionstatus1 = False
@@ -79,6 +79,8 @@ Public Class frmMain
         'Kör findslot för att veta hur många enheter det finns syncade och för att veta vilken slot nästa enhet ska hamna i.
         Call FindSlot()
 
+
+
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
@@ -103,81 +105,37 @@ Public Class frmMain
     'ticks är räknare som känner av ifall vi fortfarande har anslutning var 5,5 sekund.
     '--------------------------------------------------------------------
 
-
-    Dim ticks, ticks2, ticks3, ticks4 As Integer
-
-    Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles tmrListen.Tick
-
-        ticks = ticks + 1
-        ticks2 = ticks2 + 1
-
-        If ticks > 54 Then
-            txtUnit1.BackColor = SystemColors.Menu
-            If Connectionstatus1 = True Then
-                Call ConStat()
-            End If
-        End If
-
-        If ticks2 > 54 Then
-            txtUnit2.BackColor = SystemColors.Menu
-            If Connectionstatus2 = True Then
-                Call ConStat()
-            End If
-        End If
-
-        If ticks3 > 54 Then
-            txtUnit3.BackColor = SystemColors.Menu
-            If Connectionstatus3 = True Then
-                Call ConStat()
-            End If
-        End If
-
-        If ticks3 > 54 Then
-            txtUnit4.BackColor = SystemColors.Menu
-            If Connectionstatus4 = True Then
-                Call ConStat()
-            End If
-        End If
-    End Sub
-
     Dim subscriber As New Sockets.UdpClient(11319)
-    Private Sub TmrSync_Tick(ByVal sender As System.Object, ByVal e As EventArgs) Handles TmrSync.Tick
-
-        Try
-            Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
-            Dim rcvbytes2() As Byte = subscriber.Receive(respondSync)
-            lblHwip.Text = ASCII.GetString(rcvbytes2)
-            If lblHwip.Text = "1" Then
-                lblHwip.Text = respondSync.Address.ToString()
-                CurrentSync = respondSync.Address.ToString()
-
-                Call SyncNew()
-
-
-            ElseIf lblHwip.Text = "0" Or lblHwip.Text = "" Then
-                lblHwip.Text = "Inga AHE svarade!"
-
-            End If
-
-        Catch ex As Exception
-
-        End Try
-
-
-    End Sub
 
     Private Sub Receive_Vox_Click(sender As Object, e As EventArgs) Handles Receive_Vox.Click
+
+
+
         If Receive_Vox.Text = "Listen" Then
             btnSetup.Enabled = False
             Receive_Vox.Text = "Stop"
+            tmrListen.Enabled = True
+            udpAudioThread()
+
         ElseIf Receive_Vox.Text = "Stop" Then
             btnSetup.Enabled = True
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
             Receive_Vox.Text = "Listen"
             txtUnit1.BackColor = SystemColors.Menu
             txtUnit2.BackColor = SystemColors.Menu
             txtUnit3.BackColor = SystemColors.Menu
             txtUnit4.BackColor = SystemColors.Menu
+            Connectionstatus1 = False
+            Connectionstatus2 = False
+            Connectionstatus3 = False
+            Connectionstatus4 = False
+            ticks = 0
+            ticks2 = 0
+            ticks3 = 0
+            ticks4 = 0
+            Pingtick = 0
+            tmrListen.Enabled = False
+            StopAudioUDP()
         End If
 
 
@@ -187,9 +145,9 @@ Public Class frmMain
     '--------------------------
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
         If CBLogg.Checked = True Then
-            Me.Height = 555
+            Me.Height = 441
         Else
-            Me.Height = 308
+            Me.Height = 305
         End If
     End Sub
 
@@ -272,26 +230,53 @@ Public Class frmMain
     Dim publisher As New Sockets.UdpClient(0)
     Dim SynkIP As String
     Dim SynktoPort As Integer
-    Dim SynkWord As Byte = 1
+    Dim SynkWord As Byte = 0
+    Dim SynkLoop As Integer = 0
     Private Sub btnSetup_Click(sender As Object, e As EventArgs) Handles btnSetup.Click
 
         SynktoPort = 11319
-        SynkIP = "192.168.1.88"
+        SynkIP = "46.59.40.127"
 
         If btnSetup.Text = "Sync" Then
-            TmrSync.Enabled = True
             btnSetup.Text = "Stop sync"
             Receive_Vox.Enabled = False
+
+            publisher.Connect(SynkIP, SynktoPort)
+            Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
+            publisher.Send(sendbytes, sendbytes.Length)
+
+            Do While SynkLoop < 4
+
+                Try
+                    Dim respondSync As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
+                    Dim rcvbytes2() As Byte = subscriber.Receive(respondSync)
+                    lblHwip.Text = ASCII.GetString(rcvbytes2)
+                    If lblHwip.Text = "1" Then
+                        lblHwip.Text = respondSync.Address.ToString()
+                        CurrentSync = respondSync.Address.ToString()
+                        If CurrentSync = AHESyncIP1 Or CurrentSync = AHESyncIP2 Or CurrentSync = AHESyncIP3 Or CurrentSync = AHESyncIP4 Then
+                        Else
+                            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You found a new AHE: " + CurrentSync)
+                        End If
+                        Call SyncNew()
+
+                    ElseIf lblHwip.Text = "0" Or lblHwip.Text = "" Then
+                        lblHwip.Text = "Inga AHE svarade!"
+
+                    End If
+
+                Catch ex As Exception
+
+                End Try
+                SynkLoop += 1
+            Loop
+
         ElseIf btnSetup.Text = "Stop sync" Then
-            TmrSync.Enabled = False
             btnSetup.Text = "Sync"
             lblHwip.Text = ""
             Receive_Vox.Enabled = True
+            SynkLoop = 0
         End If
-
-        publisher.Connect(SynkIP, SynktoPort)
-        Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
-        publisher.Send(sendbytes, sendbytes.Length)
 
     End Sub
 
@@ -571,43 +556,138 @@ Public Class frmMain
 
 
         If txtUnit1.BackColor = Color.LightGreen And Connectionstatus1 = False Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName1)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName1)
             Connectionstatus1 = True
         ElseIf txtUnit1.BackColor = SystemColors.Menu And Connectionstatus1 = True Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName1)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName1)
             Connectionstatus1 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName1, ToolTipIcon.Info)
         End If
 
         If txtUnit2.BackColor = Color.LightGreen And Connectionstatus2 = False Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName2)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName2)
             Connectionstatus2 = True
         ElseIf txtUnit2.BackColor = SystemColors.Menu And Connectionstatus2 = True Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName2)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName2)
             Connectionstatus2 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName2, ToolTipIcon.Info)
         End If
 
         If txtUnit3.BackColor = Color.LightGreen And Connectionstatus3 = False Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName3)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName3)
             Connectionstatus3 = True
         ElseIf txtUnit3.BackColor = SystemColors.Menu And Connectionstatus3 = True Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName3)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName3)
             Connectionstatus3 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName3, ToolTipIcon.Info)
         End If
 
         If txtUnit4.BackColor = Color.LightGreen And Connectionstatus4 = False Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName4)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName4)
             Connectionstatus4 = True
         ElseIf txtUnit4.BackColor = SystemColors.Menu And Connectionstatus4 = True Then
-            LBLogg.Items.Add(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName4)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName4)
             Connectionstatus4 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName4, ToolTipIcon.Info)
         End If
 
 
 
+    End Sub
+
+    Public Sub addLog(udpInfo As String)
+        'Lägg till log
+        LBLogg.Items.Add(udpInfo)
+        'Gör inte statusrutan större än vad som behövs, ta bort om över 25 poster.
+        If LBLogg.Items.Count > 25 Then
+            LBLogg.Items.RemoveAt(0)
+        End If
+    End Sub
+
+
+    Dim ticks, ticks2, ticks3, ticks4 As Integer
+    Dim Pingtick As Integer
+    Dim LookForPing As String
+
+    Private Sub tmrListen_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmrListen.Tick
+        SynktoPort = 11319
+        SynkIP = "46.59.40.127"
+
+        Pingtick += 1
+        If Pingtick = 50 Then
+            publisher.Connect(SynkIP, SynktoPort)
+            Dim sendbytes() As Byte = ASCII.GetBytes(SynkWord)
+            publisher.Send(sendbytes, sendbytes.Length)
+            Pingtick = 0
+        End If
+
+
+        Try
+            Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
+            Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
+            LookForPing = ASCII.GetString(rcvPingbytes)
+
+            If respondPing.Address.ToString = AHESyncIP1 And LookForPing = 1 Then
+                txtUnit1.BackColor = Color.LightGreen
+                ticks = 0
+                Call ConStat()
+            End If
+
+            If respondPing.Address.ToString = AHESyncIP2 And LookForPing = 1 Then
+                txtUnit2.BackColor = Color.LightGreen
+                ticks2 = 0
+                Call ConStat()
+            End If
+
+            If respondPing.Address.ToString = AHESyncIP3 And LookForPing = 1 Then
+                txtUnit3.BackColor = Color.LightGreen
+                ticks3 = 0
+                Call ConStat()
+            End If
+
+            If respondPing.Address.ToString = AHESyncIP4 And LookForPing = 1 Then
+                txtUnit4.BackColor = Color.LightGreen
+                ticks4 = 0
+                Call ConStat()
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+
+
+        ticks += 1
+        ticks2 += 1
+        ticks3 += 1
+        ticks4 += 1
+
+        If ticks > 54 Then
+            txtUnit1.BackColor = SystemColors.Menu
+            If Connectionstatus1 = True Then
+                Call ConStat()
+            End If
+        End If
+        If ticks2 > 54 Then
+            txtUnit2.BackColor = SystemColors.Menu
+            If Connectionstatus2 = True Then
+                Call ConStat()
+            End If
+        End If
+
+        If ticks3 > 54 Then
+            txtUnit3.BackColor = SystemColors.Menu
+            If Connectionstatus3 = True Then
+                Call ConStat()
+            End If
+        End If
+
+        If ticks3 > 54 Then
+            txtUnit4.BackColor = SystemColors.Menu
+            If Connectionstatus4 = True Then
+                Call ConStat()
+            End If
+        End If
     End Sub
 
 End Class

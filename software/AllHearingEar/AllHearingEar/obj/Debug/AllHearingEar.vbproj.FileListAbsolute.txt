@@ -1,0 +1,11 @@
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.exe.config
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.exe
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.pdb
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.xml
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbprojResolveAssemblyReference.cache
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.main.resources
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.Resources.resources
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbproj.GenerateResource.Cache
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.exe
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.xml
+c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.pdb

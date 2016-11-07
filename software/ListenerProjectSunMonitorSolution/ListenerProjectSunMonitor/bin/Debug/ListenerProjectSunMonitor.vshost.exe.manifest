@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListenerProjectSunMonitor.exe" size="545752">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ListenerProjectSunMonitor.exe" size="547800">
       <assemblyIdentity name="ListenerProjectSunMonitor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>c27Pqxp1MiDAoOSkCfNwqCCQHO6G8QERY1iTPV6DZOk=</dsig:DigestValue>
+        <dsig:DigestValue>Zs9GlIOi3pl4olw/AO3XKe6lUNZP4tuEdIJvwYahEV8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -24,7 +24,6 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.TmrSync = New System.Windows.Forms.Timer(Me.components)
         Me.tmrListen = New System.Windows.Forms.Timer(Me.components)
         Me.Receive_Vox = New System.Windows.Forms.Button()
         Me.CBAutostart = New System.Windows.Forms.CheckBox()
@@ -63,9 +62,6 @@ Partial Class frmMain
         CType(Me.PBdelete1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'TmrSync
-        '
         '
         'tmrListen
         '
@@ -329,7 +325,7 @@ Partial Class frmMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(373, 398)
+        Me.ClientSize = New System.Drawing.Size(373, 402)
         Me.Controls.Add(Me.LBLogg)
         Me.Controls.Add(Me.lblHwip)
         Me.Controls.Add(Me.GroupBox2)
@@ -341,6 +337,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.Receive_Vox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.Text = "All Hearing Ear"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -359,7 +356,6 @@ Partial Class frmMain
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents TmrSync As Timer
     Friend WithEvents tmrListen As Timer
     Friend WithEvents Receive_Vox As Button
     Friend WithEvents CBAutostart As CheckBox
