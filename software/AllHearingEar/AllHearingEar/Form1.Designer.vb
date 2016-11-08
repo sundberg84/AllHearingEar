@@ -28,7 +28,18 @@ Partial Class main
         Me.LBLogg = New System.Windows.Forms.ListBox()
         Me.CBLogg = New System.Windows.Forms.CheckBox()
         Me.CBAutoStart = New System.Windows.Forms.CheckBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OpenAllHearingEarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TBSens4 = New System.Windows.Forms.TrackBar()
+        Me.TBSens3 = New System.Windows.Forms.TrackBar()
+        Me.TBSens2 = New System.Windows.Forms.TrackBar()
+        Me.TBSens1 = New System.Windows.Forms.TrackBar()
         Me.PBdelete4 = New System.Windows.Forms.PictureBox()
         Me.PBdelete3 = New System.Windows.Forms.PictureBox()
         Me.PBdelete2 = New System.Windows.Forms.PictureBox()
@@ -41,14 +52,14 @@ Partial Class main
         Me.txtUnit3 = New System.Windows.Forms.TextBox()
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.OpenAllHearingEarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TBSens1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -57,13 +68,11 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'BtnListen
         '
-        Me.BtnListen.Location = New System.Drawing.Point(12, 205)
+        Me.BtnListen.Location = New System.Drawing.Point(12, 218)
         Me.BtnListen.Name = "BtnListen"
         Me.BtnListen.Size = New System.Drawing.Size(75, 23)
         Me.BtnListen.TabIndex = 0
@@ -73,7 +82,7 @@ Partial Class main
         'LBLogg
         '
         Me.LBLogg.FormattingEnabled = True
-        Me.LBLogg.Location = New System.Drawing.Point(12, 280)
+        Me.LBLogg.Location = New System.Drawing.Point(12, 291)
         Me.LBLogg.Name = "LBLogg"
         Me.LBLogg.Size = New System.Drawing.Size(349, 173)
         Me.LBLogg.TabIndex = 1
@@ -81,7 +90,7 @@ Partial Class main
         'CBLogg
         '
         Me.CBLogg.AutoSize = True
-        Me.CBLogg.Location = New System.Drawing.Point(12, 257)
+        Me.CBLogg.Location = New System.Drawing.Point(12, 268)
         Me.CBLogg.Name = "CBLogg"
         Me.CBLogg.Size = New System.Drawing.Size(70, 17)
         Me.CBLogg.TabIndex = 3
@@ -91,7 +100,7 @@ Partial Class main
         'CBAutoStart
         '
         Me.CBAutoStart.AutoSize = True
-        Me.CBAutoStart.Location = New System.Drawing.Point(12, 234)
+        Me.CBAutoStart.Location = New System.Drawing.Point(12, 245)
         Me.CBAutoStart.Name = "CBAutoStart"
         Me.CBAutoStart.Size = New System.Drawing.Size(135, 17)
         Me.CBAutoStart.TabIndex = 4
@@ -99,8 +108,60 @@ Partial Class main
         Me.CBAutoStart.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         Me.CBAutoStart.UseVisualStyleBackColor = True
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.AllHearingEar.My.Resources.Resources.AHE
+        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
+        Me.PictureBox1.TabIndex = 2
+        Me.PictureBox1.TabStop = False
+        '
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
+        Me.NotifyIcon1.Text = "All Hearing Ear"
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenAllHearingEarToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(185, 48)
+        '
+        'OpenAllHearingEarToolStripMenuItem
+        '
+        Me.OpenAllHearingEarToolStripMenuItem.Name = "OpenAllHearingEarToolStripMenuItem"
+        Me.OpenAllHearingEarToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.OpenAllHearingEarToolStripMenuItem.Text = "Open All Hearing Ear"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ExitToolStripMenuItem.Text = "Exit"
+        '
+        'Timer1
+        '
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        Me.LinkLabel1.Location = New System.Drawing.Point(211, 275)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(148, 13)
+        Me.LinkLabel1.TabIndex = 6
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "http://www.allhearingear.com"
+        '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.TBSens4)
+        Me.GroupBox1.Controls.Add(Me.TBSens3)
+        Me.GroupBox1.Controls.Add(Me.TBSens2)
+        Me.GroupBox1.Controls.Add(Me.TBSens1)
         Me.GroupBox1.Controls.Add(Me.PBdelete4)
         Me.GroupBox1.Controls.Add(Me.PBdelete3)
         Me.GroupBox1.Controls.Add(Me.PBdelete2)
@@ -115,10 +176,62 @@ Partial Class main
         Me.GroupBox1.Controls.Add(Me.txtUnit1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 66)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(349, 133)
+        Me.GroupBox1.Size = New System.Drawing.Size(349, 146)
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Units:"
+        '
+        'TBSens4
+        '
+        Me.TBSens4.AutoSize = False
+        Me.TBSens4.Enabled = False
+        Me.TBSens4.Location = New System.Drawing.Point(145, 97)
+        Me.TBSens4.Maximum = 9
+        Me.TBSens4.Name = "TBSens4"
+        Me.TBSens4.Size = New System.Drawing.Size(104, 20)
+        Me.TBSens4.TabIndex = 15
+        Me.TBSens4.TabStop = False
+        Me.TBSens4.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.TBSens4.Visible = False
+        '
+        'TBSens3
+        '
+        Me.TBSens3.AutoSize = False
+        Me.TBSens3.Enabled = False
+        Me.TBSens3.Location = New System.Drawing.Point(145, 71)
+        Me.TBSens3.Maximum = 9
+        Me.TBSens3.Name = "TBSens3"
+        Me.TBSens3.Size = New System.Drawing.Size(104, 20)
+        Me.TBSens3.TabIndex = 14
+        Me.TBSens3.TabStop = False
+        Me.TBSens3.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.TBSens3.Visible = False
+        '
+        'TBSens2
+        '
+        Me.TBSens2.AutoSize = False
+        Me.TBSens2.Enabled = False
+        Me.TBSens2.Location = New System.Drawing.Point(145, 45)
+        Me.TBSens2.Maximum = 9
+        Me.TBSens2.Name = "TBSens2"
+        Me.TBSens2.Size = New System.Drawing.Size(104, 20)
+        Me.TBSens2.TabIndex = 13
+        Me.TBSens2.TabStop = False
+        Me.TBSens2.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.TBSens2.Visible = False
+        '
+        'TBSens1
+        '
+        Me.TBSens1.AutoSize = False
+        Me.TBSens1.Enabled = False
+        Me.TBSens1.Location = New System.Drawing.Point(145, 19)
+        Me.TBSens1.Maximum = 9
+        Me.TBSens1.Name = "TBSens1"
+        Me.TBSens1.Size = New System.Drawing.Size(104, 20)
+        Me.TBSens1.TabIndex = 12
+        Me.TBSens1.TabStop = False
+        Me.TBSens1.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.TBSens1.Visible = False
         '
         'PBdelete4
         '
@@ -236,71 +349,40 @@ Partial Class main
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit1.TabIndex = 0
         '
-        'PictureBox1
+        'Label1
         '
-        Me.PictureBox1.Image = Global.AllHearingEar.My.Resources.Resources.AHE
-        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
-        '
-        'NotifyIcon1
-        '
-        Me.NotifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
-        Me.NotifyIcon1.Text = "All Hearing Ear"
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenAllHearingEarToolStripMenuItem, Me.ExitToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(185, 48)
-        '
-        'OpenAllHearingEarToolStripMenuItem
-        '
-        Me.OpenAllHearingEarToolStripMenuItem.Name = "OpenAllHearingEarToolStripMenuItem"
-        Me.OpenAllHearingEarToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
-        Me.OpenAllHearingEarToolStripMenuItem.Text = "Open All Hearing Ear"
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
-        '
-        'Timer1
-        '
-        '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(211, 264)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(148, 13)
-        Me.LinkLabel1.TabIndex = 6
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "http://www.allhearingear.com"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(151, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(57, 13)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "Sensitivity:"
         '
         'main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(373, 462)
+        Me.ClientSize = New System.Drawing.Size(373, 492)
+        Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.LinkLabel1)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.CBAutoStart)
         Me.Controls.Add(Me.CBLogg)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.LBLogg)
         Me.Controls.Add(Me.BtnListen)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "main"
         Me.Text = "AllHearingEar"
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TBSens1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -309,8 +391,6 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -321,23 +401,28 @@ Partial Class main
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents CBLogg As CheckBox
     Friend WithEvents CBAutoStart As CheckBox
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents txtUnit4 As TextBox
-    Friend WithEvents txtUnit3 As TextBox
-    Friend WithEvents txtUnit2 As TextBox
-    Friend WithEvents txtUnit1 As TextBox
-    Friend WithEvents PBok1 As PictureBox
-    Friend WithEvents PBdelete1 As PictureBox
-    Friend WithEvents PBok4 As PictureBox
-    Friend WithEvents PBok3 As PictureBox
-    Friend WithEvents PBok2 As PictureBox
-    Friend WithEvents PBdelete4 As PictureBox
-    Friend WithEvents PBdelete3 As PictureBox
-    Friend WithEvents PBdelete2 As PictureBox
     Friend WithEvents NotifyIcon1 As NotifyIcon
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents OpenAllHearingEarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Timer1 As Timer
     Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents TBSens4 As TrackBar
+    Friend WithEvents TBSens3 As TrackBar
+    Friend WithEvents TBSens2 As TrackBar
+    Friend WithEvents TBSens1 As TrackBar
+    Friend WithEvents PBdelete4 As PictureBox
+    Friend WithEvents PBdelete3 As PictureBox
+    Friend WithEvents PBdelete2 As PictureBox
+    Friend WithEvents PBdelete1 As PictureBox
+    Friend WithEvents PBok4 As PictureBox
+    Friend WithEvents PBok3 As PictureBox
+    Friend WithEvents PBok2 As PictureBox
+    Friend WithEvents PBok1 As PictureBox
+    Friend WithEvents txtUnit4 As TextBox
+    Friend WithEvents txtUnit3 As TextBox
+    Friend WithEvents txtUnit2 As TextBox
+    Friend WithEvents txtUnit1 As TextBox
+    Friend WithEvents Label1 As Label
 End Class

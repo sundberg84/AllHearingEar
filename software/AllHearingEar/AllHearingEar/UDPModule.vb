@@ -18,8 +18,6 @@ Module Udp
     'Starta en ny thread för Audiomottagning,
     'Allt som behövs är att kalla udpAudioThread(). Ingen timer/ticks på denna. 
     Public Sub udpAudioThread()
-
-        'receivingUdpAudio = New System.Net.Sockets.UdpClient(11318)
         ThreadReceive = New System.Threading.Thread(AddressOf ReceiveAudioMessages)
         ThreadReceive.Start()
         writeUDPDataStatus("0", "UDP (audio) started!") 'Log

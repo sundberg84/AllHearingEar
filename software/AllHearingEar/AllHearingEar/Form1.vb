@@ -13,7 +13,7 @@ Public Class main
         subscriber.Client.Blocking = False
 
         'Loggbok info
-        addLog(DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup succesfull!")
+        addLog(DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup successfull!")
 
         'Nolla alla anslutningar
         Connectionstatus1 = False
@@ -39,7 +39,10 @@ Public Class main
         AHEsyncName2 = My.Settings.syncName2
         AHEsyncName3 = My.Settings.syncName3
         AHEsyncName4 = My.Settings.syncName4
-
+        TBSens1.Value = My.Settings.Sens1
+        TBSens2.Value = My.Settings.Sens2
+        TBSens3.Value = My.Settings.Sens3
+        TBSens4.Value = My.Settings.Sens4
         NumberOfUnitsSynced = My.Settings.NumOfSynUn
 
         'Visa synkade enheter
@@ -48,24 +51,32 @@ Public Class main
             txtUnit1.Enabled = False
             PBdelete1.Visible = True
             PBdelete1.Enabled = True
+            TBSens1.Visible = True
+            TBSens1.Enabled = True
         End If
         If txtUnit2.Text <> "" Then
             txtUnit2.Visible = True
             txtUnit2.Enabled = False
             PBdelete2.Visible = True
             PBdelete2.Enabled = True
+            TBSens2.Visible = True
+            TBSens2.Enabled = True
         End If
         If txtUnit3.Text <> "" Then
             txtUnit3.Visible = True
             txtUnit3.Enabled = False
             PBdelete3.Visible = True
             PBdelete3.Enabled = True
+            TBSens3.Visible = True
+            TBSens3.Enabled = True
         End If
         If txtUnit4.Text <> "" Then
             txtUnit4.Visible = True
             txtUnit4.Enabled = False
             PBdelete4.Visible = True
             PBdelete4.Enabled = True
+            TBSens4.Visible = True
+            TBSens4.Enabled = True
         End If
 
         'Kör findslot för att veta hur många enheter det finns syncade och för att veta vilken slot nästa enhet ska hamna i.
@@ -86,13 +97,17 @@ Public Class main
         My.Settings.syncName3 = AHEsyncName3
         My.Settings.syncName4 = AHEsyncName4
         My.Settings.NumOfSynUn = NumberOfUnitsSynced
+        My.Settings.Sens1 = TBSens1.Value
+        My.Settings.Sens2 = TBSens2.Value
+        My.Settings.Sens3 = TBSens3.Value
+        My.Settings.Sens4 = TBSens4.Value
         My.Settings.Save()
         End
     End Sub
 
     Private Sub BtnListen_Click(sender As Object, e As EventArgs) Handles BtnListen.Click
         If BtnListen.Text = "Listen" Then
-            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("2"))
+            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
             udpAudioThread()
             BtnListen.Text = "Stop"
             Timer1.Enabled = True
@@ -141,19 +156,6 @@ Public Class main
         End If
     End Sub
 
-    Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
-
-        AHEsyncName1 = ""
-        AHESyncIP1 = ""
-        txtUnit1.Text = ""
-        PBdelete1.Enabled = False
-        PBdelete1.Visible = False
-
-
-        Call FindSlot()
-
-    End Sub
-
     Private Sub PBok1_Click(sender As Object, e As EventArgs) Handles PBok1.Click
 
         If txtUnit1.Text = "" Then
@@ -166,6 +168,19 @@ Public Class main
             PBok1.Enabled = False
             PBok1.Visible = False
         End If
+
+    End Sub
+
+    Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
+
+        AHEsyncName1 = ""
+        AHESyncIP1 = ""
+        txtUnit1.Text = ""
+        PBdelete1.Enabled = False
+        PBdelete1.Visible = False
+        TBSens1.Value = 0
+        TBSens1.Visible = False
+        Call FindSlot()
 
     End Sub
 
@@ -191,7 +206,8 @@ Public Class main
         PBdelete2.Visible = False
         AHEsyncName2 = ""
         AHESyncIP2 = ""
-
+        TBSens2.Value = 0
+        TBSens2.Visible = False
         Call FindSlot()
 
     End Sub
@@ -217,7 +233,8 @@ Public Class main
         PBdelete3.Visible = False
         AHEsyncName3 = ""
         AHESyncIP3 = ""
-
+        TBSens3.Value = 0
+        TBSens3.Visible = False
         Call FindSlot()
     End Sub
 
@@ -240,6 +257,8 @@ Public Class main
         PBdelete4.Visible = False
         AHEsyncName4 = ""
         AHESyncIP4 = ""
+        TBSens4.Value = 0
+        TBSens4.Visible = False
 
         Call FindSlot()
     End Sub
@@ -293,7 +312,7 @@ Public Class main
     Dim CurrentSync As String
     Dim NumberOfUnitsSynced As Integer
     'Definiera värden som ska sparas när program sparas.
-    Dim AHESyncIP1 As String
+    Public AHESyncIP1 As String
     Dim AHEsyncName1 As String
     Dim AHESyncIP2 As String
     Dim AHEsyncName2 As String
@@ -316,6 +335,8 @@ Public Class main
                     txtUnit1.Visible = True
                     PBok1.Visible = True
                     PBok1.Enabled = True
+                    TBSens1.Visible = True
+                    TBSens1.Enabled = True
                     txtUnit1.Text = CurrentSync
                     AHESyncIP1 = CurrentSync
 
@@ -324,6 +345,8 @@ Public Class main
                     txtUnit2.Visible = True
                     PBok2.Visible = True
                     PBok2.Enabled = True
+                    TBSens2.Visible = True
+                    TBSens2.Enabled = True
                     txtUnit2.Text = CurrentSync
                     AHESyncIP2 = CurrentSync
 
@@ -332,6 +355,8 @@ Public Class main
                     txtUnit3.Visible = True
                     PBok3.Visible = True
                     PBok3.Enabled = True
+                    TBSens3.Visible = True
+                    TBSens3.Enabled = True
                     txtUnit3.Text = CurrentSync
                     AHESyncIP3 = CurrentSync
 
@@ -340,12 +365,15 @@ Public Class main
                     txtUnit4.Visible = True
                     PBok4.Visible = True
                     PBok4.Enabled = True
+                    TBSens4.Visible = True
+                    TBSens4.Enabled = True
                     txtUnit4.Text = CurrentSync
                     AHESyncIP4 = CurrentSync
 
                     Call FindSlot()
 
             End Select
+            CurrentSync = ""
         End If
 
 
@@ -368,7 +396,8 @@ Public Class main
                 If txtUnit4.Text > "" Then
                     PBdelete4.Visible = True
                     PBdelete4.Enabled = True
-
+                    TBSens4.Visible = True
+                    TBSens4.Enabled = True
                 End If
             End If
 
@@ -377,16 +406,20 @@ Public Class main
                 txtUnit4.Text = ""
                 AHESyncIP3 = AHESyncIP4
                 AHEsyncName3 = AHEsyncName4
+                TBSens3.Value = TBSens4.Value
+                TBSens4.Visible = False
+                TBSens4.Value = 0
                 PBdelete4.Visible = False
                 PBok4.Visible = False
                 If txtUnit3.Text > "" Then
                     PBdelete3.Visible = True
                     PBdelete3.Enabled = True
-
+                    TBSens3.Visible = True
                 End If
                 If txtUnit3.Text = "" Then
                     txtUnit3.Enabled = True
                     txtUnit3.Visible = False
+                    TBSens3.Visible = False
                 End If
             End If
 
@@ -395,16 +428,20 @@ Public Class main
                 txtUnit3.Text = ""
                 AHESyncIP2 = AHESyncIP3
                 AHEsyncName2 = AHEsyncName3
+                TBSens2.Value = TBSens3.Value
+                TBSens3.Visible = False
+                TBSens3.Value = 0
                 PBok3.Visible = False
                 PBdelete3.Visible = False
                 If txtUnit2.Text > "" Then
                     PBdelete2.Visible = True
                     PBdelete2.Enabled = True
-
+                    TBSens2.Visible = True
                 End If
                 If txtUnit2.Text = "" Then
                     txtUnit2.Enabled = True
                     txtUnit2.Visible = False
+                    TBSens2.Visible = False
                 End If
 
             End If
@@ -414,12 +451,15 @@ Public Class main
                 txtUnit2.Text = ""
                 AHESyncIP1 = AHESyncIP2
                 AHEsyncName1 = AHEsyncName2
+                TBSens1.Value = TBSens2.Value
+                TBSens2.Visible = False
+                TBSens2.Value = 0
                 PBok2.Visible = False
                 PBdelete2.Visible = False
                 If txtUnit1.Text > "" Then
                     PBdelete1.Visible = True
                     PBdelete1.Enabled = True
-
+                    TBSens1.Visible = True
                 End If
 
             End If
@@ -466,7 +506,6 @@ Public Class main
     Dim ticks, ticks2, ticks3, ticks4, Pingtick As Integer
 
 
-
     'Länk till hemsida
     '------------------
     Private Sub LinkLabel1_MouseDown(sender As Object, e As MouseEventArgs) Handles LinkLabel1.MouseDown
@@ -481,22 +520,27 @@ Public Class main
     '---------------------
     Dim LookForPing As String
     Dim subscriber As New Sockets.UdpClient(11319)
+
+    Private Sub TBSens1_(sender As Object, e As EventArgs) Handles TBSens1.Scroll
+
+    End Sub
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
 
         Pingtick += 1
         If Pingtick = 50 Then
             If AHESyncIP1 <> "" Then
-                SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("1"))
+                SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
             End If
             If AHESyncIP2 <> "" Then
-                SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("1"))
+                SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
             End If
             If AHESyncIP3 <> "" Then
-                SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("1"))
+                SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
             End If
             If AHESyncIP4 <> "" Then
-                SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("1"))
+                SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
             End If
             Pingtick = 0
         End If
@@ -506,8 +550,11 @@ Public Class main
             Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
+
             If LookForPing = "1" Then
                 CurrentSync = respondPing.Address.ToString()
+
+
                 If CurrentSync = AHESyncIP1 Or CurrentSync = AHESyncIP2 Or CurrentSync = AHESyncIP3 Or CurrentSync = AHESyncIP4 Then
                 Else
                     addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You found a new AHE: " + CurrentSync)
@@ -587,37 +634,37 @@ Public Class main
 
 
         If txtUnit1.BackColor = Color.LightGreen And Connectionstatus1 = False Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName1)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + txtUnit1.Text)
             Connectionstatus1 = True
         ElseIf txtUnit1.BackColor = SystemColors.Menu And Connectionstatus1 = True Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName1)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + txtUnit1.Text)
             Connectionstatus1 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName1, ToolTipIcon.Info)
         End If
 
         If txtUnit2.BackColor = Color.LightGreen And Connectionstatus2 = False Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName2)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + txtUnit2.Text)
             Connectionstatus2 = True
         ElseIf txtUnit2.BackColor = SystemColors.Menu And Connectionstatus2 = True Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName2)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + txtUnit2.Text)
             Connectionstatus2 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName2, ToolTipIcon.Info)
         End If
 
         If txtUnit3.BackColor = Color.LightGreen And Connectionstatus3 = False Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName3)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + txtUnit3.Text)
             Connectionstatus3 = True
         ElseIf txtUnit3.BackColor = SystemColors.Menu And Connectionstatus3 = True Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName3)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + txtUnit3.Text)
             Connectionstatus3 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName3, ToolTipIcon.Info)
         End If
 
         If txtUnit4.BackColor = Color.LightGreen And Connectionstatus4 = False Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + AHEsyncName4)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You are connected to: " + txtUnit4.Text)
             Connectionstatus4 = True
         ElseIf txtUnit4.BackColor = SystemColors.Menu And Connectionstatus4 = True Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + AHEsyncName4)
+            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You lost connection to: " + txtUnit4.Text)
             Connectionstatus4 = False
             NotifyIcon1.ShowBalloonTip(1, "All Hearing Ear", "Connection lost to: " + AHEsyncName4, ToolTipIcon.Info)
         End If
@@ -634,5 +681,24 @@ Public Class main
             LBLogg.Items.RemoveAt(0)
         End If
     End Sub
+
+    'Kontroll för att skicka ljudkänslighet till AHE
+
+    Private Sub TBSens1_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens1.MouseUp
+        SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("2" + TBSens1.Value))
+    End Sub
+
+    Private Sub TBSens2_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens2.MouseUp
+        SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("2" + TBSens2.Value))
+    End Sub
+
+    Private Sub TBSens3_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens3.MouseUp
+        SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("2" + TBSens3.Value.ToString))
+    End Sub
+
+    Private Sub TBSens4_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens4.MouseUp
+        SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("2" + TBSens4.Value.ToString))
+    End Sub
+
 
 End Class

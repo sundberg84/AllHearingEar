@@ -173,6 +173,54 @@ Namespace My
                 Me("NumOfSynUn") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Sens1() As Integer
+            Get
+                Return CType(Me("Sens1"),Integer)
+            End Get
+            Set
+                Me("Sens1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Sens2() As Integer
+            Get
+                Return CType(Me("Sens2"),Integer)
+            End Get
+            Set
+                Me("Sens2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Sens3() As Integer
+            Get
+                Return CType(Me("Sens3"),Integer)
+            End Get
+            Set
+                Me("Sens3") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Sens4() As Integer
+            Get
+                Return CType(Me("Sens4"),Integer)
+            End Get
+            Set
+                Me("Sens4") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
