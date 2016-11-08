@@ -16,6 +16,8 @@ const int UDP_PACKET_SIZE = 64;
 //B = 3 byte = 001-999, Volym eller annan info - MAX 3 chars.
 
 char incomingPacket[UDP_PACKET_SIZE];
+char incomingUDP[UDP_PACKET_SIZE];
+
 IPAddress ipServer(0, 0, 0, 0);
 unsigned int udpServerPort = 11319;
 unsigned int udpPingPort = 11319;
@@ -61,10 +63,11 @@ void setup() {
   // initialize the pushbutton pin as an input:
   pinMode(resetPIN, INPUT);
 
-
-  if (digitalRead(resetPIN) == HIGH) {
+  delay(1000);
+  Serial.println(digitalRead(resetPIN));
+  if (digitalRead(resetPIN)) {
     //Reset settings
-    Serial.println("Nollställer WIFI");
+    Serial.println("Clear WIFI");
     //Använd denna om du vill plocka bort SSID och lösernord.
     //wifiManager.resetSettings();
   }
@@ -93,7 +96,7 @@ void setup() {
   timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP);
   timer1_write(clockCyclesPerMicrosecond() / 16 * 50); //80us = 12.5kHz sampling freq
 
-  Serial.print("Allt klart - IP Server: ");
+  Serial.print("Sync - IP Server: ");
   Serial.println(ipServer);
 }
 
@@ -149,6 +152,7 @@ void loop()
     }
 
     send_samples_now = 0;
+    
     //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
     //Serial.print("delay "); Serial.print(millis() - now);
     //Serial.println("");
@@ -162,8 +166,9 @@ void loop()
   }
 }
 
-void UdpSend(int msg)
+void UdpSend(byte msg)
 {
+  Serial.println("UDP Send");
   udp.beginPacket(ipServer, udpServerPort);
   udp.write(msg);
   udp.endPacket();
@@ -179,52 +184,45 @@ void UdpRecieveSync(){
 
   int packetSize = udp.parsePacket();
   if (packetSize) {
-    //Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
     ipServer = udp.remoteIP();
     int len = udp.read(incomingPacket, 255);
     if (len > 0)
     {
       incomingPacket[len] = 0;
     }
-    //Serial.printf("UDP packet contents: %s\n", incomingPacket);
-
     //Ack!
     UdpSend(1);
   }
   
 }
-  
 
 void UdpRecieveData()
 {
-
-  char incomingUDP[UDP_PACKET_SIZE];
   
-  int packetSize = udp.parsePacket();
-  if (packetSize) {
-   //Serial.printf("Received %d bytes from %s, port %d\n", packetSize, udp.remoteIP().toString().c_str(), udp.remotePort());
-    udp.read(incomingUDP, UDP_PACKET_SIZE);
-    Serial.printf("UDP packet contents: %s\n", incomingUDP);
-  
-    //Läs första char i incomingPacket.
-    switch (incomingUDP[0]) {
+  int packetSizeD = udp.parsePacket();
+  if (packetSizeD) {
+   //Serial.printf("Received %d bytes from %s, port %d\n", packetSizeD, udp.remoteIP().toString().c_str(), udp.remotePort());
+    udp.read(incomingUDP, 255);     
+    uint8_t swUDP = incomingUDP[0] - '0';
+    
+    switch (swUDP) {
       case 0:
-        //Ping från dator! - Skicka ACK        
-        UdpSend(1);        
-        break;
+        Serial.println("0: Ping from computer");        
+        UdpSend(49);        
+        break;      
       case 1:
         //ACK från dator
-        Serial.println("Ack from computer");
-        UdpSend(1);
+        Serial.println("1: Ack from computer");
+        UdpSend(49);
         break;
       case 2:
-        Serial.println("Volume from computer");
+        Serial.println("2: Volume from computer");
+        Serial.print("incomingUDP[1]: "); Serial.println(incomingUDP[1]);
         //Sätt volym.
         //envelope_threshold =      
         break;
       default:
-        // Do nothing
-
+        Serial.println("Nothing to switch");
         break;
     }
   }

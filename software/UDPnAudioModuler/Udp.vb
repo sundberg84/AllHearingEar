@@ -1,7 +1,5 @@
 Imports System.Net.Sockets
 
-
-
 Module Udp
 
     Dim logInfo As String
