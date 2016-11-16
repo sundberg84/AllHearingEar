@@ -219,7 +219,8 @@ void UdpRecieveData()
         Serial.println("2: Volume from computer");
         Serial.print("Volume: "); Serial.println(incomingUDP[1]);
         //Sätt volym.
-        envelope_threshold = incomingUDP[1];     
+        envelope_threshold = incomingUDP[1] * 10;     
+        if (envelope_threshold == 0){envelope_threshold = 5;}
         break;
       default:
         Serial.println("Nothing to switch");
