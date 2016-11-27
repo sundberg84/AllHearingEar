@@ -1,4 +1,6 @@
-﻿Module Audio
+﻿Imports System.Media
+Module Audio
+
 
     Dim RcvdWaveFileBytes As New List(Of Byte())
     Dim CompleteStream() As Byte
@@ -20,6 +22,7 @@
             Dim player As New Media.SoundPlayer(Audio)
             player.Play()
         End Using
+
 
     End Sub
 

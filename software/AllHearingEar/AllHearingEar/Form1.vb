@@ -150,9 +150,9 @@ Public Class main
 
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
         If CBLogg.Checked = True Then
-            Me.Height = 501
+            Me.Height = 514
         Else
-            Me.Height = 317
+            Me.Height = 330
         End If
     End Sub
 
@@ -521,7 +521,7 @@ Public Class main
     Dim LookForPing As String
     Dim subscriber As New Sockets.UdpClient(11319)
 
-    Private Sub TBSens1_(sender As Object, e As EventArgs) Handles TBSens1.Scroll
+    Private Sub TBVolume1_Scroll(sender As Object, e As EventArgs) Handles TBVolume1.Scroll
 
     End Sub
 
@@ -685,11 +685,12 @@ Public Class main
     'Kontroll för att skicka ljudkänslighet till AHE
 
     Private Sub TBSens1_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens1.MouseUp
-        SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("2" + TBSens1.Value))
+        SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("2" + TBSens1.Value.ToString))
+
     End Sub
 
     Private Sub TBSens2_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens2.MouseUp
-        SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("2" + TBSens2.Value))
+        SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("2" + TBSens2.Value.ToString))
     End Sub
 
     Private Sub TBSens3_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens3.MouseUp
