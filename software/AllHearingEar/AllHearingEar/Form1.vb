@@ -26,6 +26,8 @@ Public Class main
 
         'Ladda alla nödvändiga värden
 
+
+
         Me.CBAutoStart.CheckState = My.Settings.chk1
         Me.AHESyncIP1 = My.Settings.hip1
         Me.AHESyncIP2 = My.Settings.hip2
@@ -124,8 +126,8 @@ Public Class main
             Connectionstatus3 = False
             Connectionstatus4 = False
             Timer1.Enabled = False
-            subscriber.Close()
-            StopAudioUDP()
+            'subscriber.Close()
+            'StopAudioUDP()
         End If
 
 
@@ -518,12 +520,9 @@ Public Class main
 
     'Pingfunktion i Timer
     '---------------------
-    Dim LookForPing As String
+    Dim LookForPing As Integer
     Dim subscriber As New Sockets.UdpClient(11319)
 
-    Private Sub TBVolume1_Scroll(sender As Object, e As EventArgs) Handles TBVolume1.Scroll
-
-    End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
@@ -551,7 +550,7 @@ Public Class main
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
 
-            If LookForPing = "1" Then
+            If LookForPing = 1 Then
                 CurrentSync = respondPing.Address.ToString()
 
 
@@ -561,7 +560,7 @@ Public Class main
                 End If
                 Call SyncNew()
 
-            ElseIf LookForPing = "0" Or LookForPing = "" Then
+            ElseIf LookForPing = "" Then
                 addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No AHE detected!")
 
             End If
