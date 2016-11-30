@@ -25,3 +25,14 @@ C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\UDPServerAS\UDPServerAS\
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.xml
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.pdb
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.vbprojResolveAssemblyReference.cache
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\bin\Debug\UDPServerAS.exe.config
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.exe
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.xml
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.pdb
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.vbprojResolveAssemblyReference.cache
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.Resources.resources
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.vbproj.GenerateResource.Cache
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\bin\Debug\UDPServerAS.exe
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\bin\Debug\UDPServerAS.pdb
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\bin\Debug\UDPServerAS.xml
+D:\OneDrive\AllHearingEar\software\UDPServerAS\UDPServerAS\obj\Debug\UDPServerAS.main.resources

@@ -168,6 +168,7 @@ void loop()
 
 void UdpSend(byte msg)
 {
+  Serial.print("UDPSEND: ");  Serial.println(msg);
   udp.beginPacket(ipServer, udpServerPort);
   udp.write(msg);
   udp.endPacket();
@@ -200,9 +201,10 @@ void UdpRecieveData()
   
   int packetSizeD = udp.parsePacket();
   if (packetSizeD) {
-   //Serial.printf("Received %d bytes from %s, port %d\n", packetSizeD, udp.remoteIP().toString().c_str(), udp.remotePort());
     udp.read(incomingUDP, 255);     
     uint8_t swUDP = incomingUDP[0] - '0';
+        
+     Serial.print("Switching: ");Serial.println(swUDP);
         
     switch (swUDP) {
       case 0:     
@@ -212,10 +214,8 @@ void UdpRecieveData()
         //ACK från dator
         UdpSend(49);
         break;
-      case 2:
-        //Serial.println("2: Volume from computer");      
+      case 2: 
         //Sätt volym.
-        //Serial.println(incomingUDP[1]);
         envelope_threshold = (incomingUDP[1] - '0') * 10;     
         if (envelope_threshold == 0){envelope_threshold = 5;}
         Serial.print("Volym: "); Serial.println(envelope_threshold);
