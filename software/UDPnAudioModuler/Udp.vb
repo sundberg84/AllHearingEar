@@ -64,7 +64,11 @@ Module Udp
             UdpSender.Close()
             Return "UDP message sent, ok!"
         End If
-
+    End Function
+    
+    Public Function RecieveUDP()
+        Dim udpData As Byte() = UdpSender.Receive(???)
+        Return Encoding.ASCII.GetString(udpData, 0, udpData.Length))
     End Function
 
     Private Sub writeUDPDataStatus(remoteIP As String, data As String)
