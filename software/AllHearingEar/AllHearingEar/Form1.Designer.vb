@@ -36,6 +36,8 @@ Partial Class main
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TBVolume1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TBSens4 = New System.Windows.Forms.TrackBar()
         Me.TBSens3 = New System.Windows.Forms.TrackBar()
@@ -53,11 +55,11 @@ Partial Class main
         Me.txtUnit3 = New System.Windows.Forms.TextBox()
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TBVolume1 = New System.Windows.Forms.TrackBar()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,7 +72,6 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnListen
@@ -79,13 +80,14 @@ Partial Class main
         Me.BtnListen.Name = "BtnListen"
         Me.BtnListen.Size = New System.Drawing.Size(75, 23)
         Me.BtnListen.TabIndex = 0
-        Me.BtnListen.Text = "Listen"
+        Me.BtnListen.Text = "Connect"
         Me.BtnListen.UseVisualStyleBackColor = True
         '
         'LBLogg
         '
         Me.LBLogg.FormattingEnabled = True
         Me.LBLogg.Location = New System.Drawing.Point(12, 291)
+        Me.LBLogg.MultiColumn = True
         Me.LBLogg.Name = "LBLogg"
         Me.LBLogg.Size = New System.Drawing.Size(349, 173)
         Me.LBLogg.TabIndex = 1
@@ -147,6 +149,7 @@ Partial Class main
         '
         'Timer1
         '
+        Me.Timer1.Enabled = True
         '
         'LinkLabel1
         '
@@ -185,6 +188,26 @@ Partial Class main
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Units:"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(286, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(42, 13)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = "Master:"
+        '
+        'TBVolume1
+        '
+        Me.TBVolume1.AutoSize = False
+        Me.TBVolume1.Location = New System.Drawing.Point(298, 19)
+        Me.TBVolume1.Maximum = 99
+        Me.TBVolume1.Name = "TBVolume1"
+        Me.TBVolume1.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.TBVolume1.Size = New System.Drawing.Size(30, 98)
+        Me.TBVolume1.TabIndex = 16
+        Me.TBVolume1.TickStyle = System.Windows.Forms.TickStyle.None
         '
         'Label1
         '
@@ -364,31 +387,11 @@ Partial Class main
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit1.TabIndex = 0
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(286, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(42, 13)
-        Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Master:"
-        '
-        'TBVolume1
-        '
-        Me.TBVolume1.AutoSize = False
-        Me.TBVolume1.Location = New System.Drawing.Point(298, 19)
-        Me.TBVolume1.Maximum = 99
-        Me.TBVolume1.Name = "TBVolume1"
-        Me.TBVolume1.Orientation = System.Windows.Forms.Orientation.Vertical
-        Me.TBVolume1.Size = New System.Drawing.Size(30, 98)
-        Me.TBVolume1.TabIndex = 16
-        Me.TBVolume1.TickStyle = System.Windows.Forms.TickStyle.None
-        '
         'main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(373, 291)
+        Me.ClientSize = New System.Drawing.Size(373, 493)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.CBAutoStart)
@@ -405,6 +408,7 @@ Partial Class main
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -417,7 +421,6 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -454,4 +457,5 @@ Partial Class main
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents TBVolume1 As TrackBar
+    Friend WithEvents Timer2 As Timer
 End Class

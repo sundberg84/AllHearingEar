@@ -47,6 +47,8 @@ Public Class main
         TBSens4.Value = My.Settings.Sens4
         NumberOfUnitsSynced = My.Settings.NumOfSynUn
 
+
+
         'Visa synkade enheter
         If txtUnit1.Text <> "" Then
             txtUnit1.Visible = True
@@ -108,15 +110,15 @@ Public Class main
     End Sub
 
     Private Sub BtnListen_Click(sender As Object, e As EventArgs) Handles BtnListen.Click
-        If BtnListen.Text = "Listen" Then
-            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
-            udpAudioThread()
-            BtnListen.Text = "Stop"
-            Timer1.Enabled = True
+        If BtnListen.Text = "Connect" Then
 
-        ElseIf BtnListen.Text = "Stop" Then
+            udpAudioThread()
+            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
+            BtnListen.Text = "Disconnect"
+            Timer1.Enabled = True
+        ElseIf BtnListen.Text = "Disconnect" Then
             addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
-            BtnListen.Text = "Listen"
+            BtnListen.Text = "Connect"
             txtUnit1.BackColor = SystemColors.Menu
             txtUnit2.BackColor = SystemColors.Menu
             txtUnit3.BackColor = SystemColors.Menu
@@ -125,6 +127,7 @@ Public Class main
             Connectionstatus2 = False
             Connectionstatus3 = False
             Connectionstatus4 = False
+            Pingtick = 0
             Timer1.Enabled = False
             'subscriber.Close()
             'StopAudioUDP()
@@ -523,33 +526,12 @@ Public Class main
     Dim LookForPing As Integer
     Dim subscriber As New Sockets.UdpClient(11319)
 
-
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-
-
-        Pingtick += 1
-        If Pingtick = 50 Then
-            If AHESyncIP1 <> "" Then
-                SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
-            End If
-            If AHESyncIP2 <> "" Then
-                SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
-            End If
-            If AHESyncIP3 <> "" Then
-                SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
-            End If
-            If AHESyncIP4 <> "" Then
-                SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
-            End If
-            Pingtick = 0
-        End If
-
 
         Try
             Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
-
             If LookForPing = 1 Then
                 CurrentSync = respondPing.Address.ToString()
 
@@ -558,11 +540,8 @@ Public Class main
                 Else
                     addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You found a new AHE: " + CurrentSync)
                 End If
+
                 Call SyncNew()
-
-            ElseIf LookForPing = "" Then
-                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No AHE detected!")
-
             End If
 
             If respondPing.Address.ToString = AHESyncIP1 And LookForPing = 1 Then
@@ -626,6 +605,26 @@ Public Class main
                 Call ConStat()
             End If
         End If
+
+
+
+        Pingtick += 1
+        If Pingtick = 50 Then
+            If AHESyncIP1 <> "" Then
+                SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
+            End If
+            If AHESyncIP2 <> "" Then
+                SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
+            End If
+            If AHESyncIP3 <> "" Then
+                SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
+            End If
+            If AHESyncIP4 <> "" Then
+                SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
+            End If
+            Pingtick = 0
+        End If
+
     End Sub
     'Kontroll och funktion o anslutningsstatus
     '-----------------------------------------

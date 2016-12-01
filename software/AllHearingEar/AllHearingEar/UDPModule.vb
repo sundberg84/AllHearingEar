@@ -20,7 +20,7 @@ Module Udp
     Public Sub udpAudioThread()
         ThreadReceive = New System.Threading.Thread(AddressOf ReceiveAudioMessages)
         ThreadReceive.Start()
-        writeUDPDataStatus("0", "UDP (audio) started!") 'Log
+        'writeUDPDataStatus("0", "UDP (audio) started!") 'Log
     End Sub
 
     'Skapa servertråden (görs automatiskt från udpAudioThread()
