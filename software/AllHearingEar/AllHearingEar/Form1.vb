@@ -85,6 +85,7 @@ Public Class main
 
         'Kör findslot för att veta hur många enheter det finns syncade och för att veta vilken slot nästa enhet ska hamna i.
         Call FindSlot()
+
     End Sub
 
     Private Sub main_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
@@ -110,10 +111,11 @@ Public Class main
     End Sub
 
     Private Sub BtnListen_Click(sender As Object, e As EventArgs) Handles BtnListen.Click
+        'Finns det syncade AHE så ska AudioMottagningen starta.
         If BtnListen.Text = "Connect" Then
 
-            udpAudioThread()
-            SendUDP("192.168.1.74", 11319, Encoding.ASCII.GetBytes("0"))
+            'Skicka en förfrågan om nya AHE enheten.
+            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
             BtnListen.Text = "Disconnect"
             Timer1.Enabled = True
         ElseIf BtnListen.Text = "Disconnect" Then
@@ -129,6 +131,7 @@ Public Class main
             Connectionstatus4 = False
             Pingtick = 0
             Timer1.Enabled = False
+            StartUp = False
             'subscriber.Close()
             'StopAudioUDP()
         End If
@@ -526,14 +529,51 @@ Public Class main
     Dim LookForPing As Integer
     Dim subscriber As New Sockets.UdpClient(11319)
 
+    Private Sub TBVolume1_Scroll(sender As Object, e As EventArgs) Handles TBVolume1.Scroll
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If Button1.Text = "Manual sync" Then
+            txtManSync.Visible = True
+            Button1.Text = "Sync"
+        ElseIf Button1.Text = "Sync" Then
+            If txtManSync.Text = "" Then
+                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No IP adress specified.")
+            End If
+            Try
+                SendUDP(txtManSync.Text, 11319, Encoding.ASCII.GetBytes("0"))
+                Button1.Text = "Manual sync"
+                txtManSync.Visible = False
+                txtManSync.Text = "IP adress:"
+            Catch ex As Exception
+                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No IP adress specified.")
+            End Try
+
+
+        End If
+
+    End Sub
+    Dim StartUp As Boolean = False
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        If StartUp = False Then
+            'Fråga efter nya enheter när programmet startar.
+            'Skicka en förfrågan om nya AHE enheten.
+            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
+            'Starta ljud om programmet har syncade AHEenheter.
+            If AHESyncIP1 <> "" Or AHESyncIP2 <> "" Or AHESyncIP3 <> "" Or AHESyncIP4 <> "" Then
+                udpAudioThread()
+                StartUp = True
+            End If
+        End If
 
         Try
             Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
 
-            addLog("Debug (11319): " & LookForPing)
+            'addLog("Debug (11319): " & LookForPing)
 
             If LookForPing = 1 Then
                 CurrentSync = respondPing.Address.ToString()
@@ -543,7 +583,6 @@ Public Class main
                 Else
                     addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You found a new AHE: " + CurrentSync)
                 End If
-
                 Call SyncNew()
             End If
 
@@ -576,43 +615,63 @@ Public Class main
         End Try
 
 
-
-        ticks += 1
-        ticks2 += 1
-        ticks3 += 1
-        ticks4 += 1
+        If AHESyncIP1 <> "" Then
+            ticks += 1
+        End If
+        If AHESyncIP2 <> "" Then
+            ticks2 += 1
+        End If
+        If AHESyncIP3 <> "" Then
+            ticks3 += 1
+        End If
+        If AHESyncIP4 <> "" Then
+            ticks4 += 1
+        End If
 
         If ticks > 54 Then
-            txtUnit1.BackColor = SystemColors.Menu
-            If Connectionstatus1 = True Then
-                Call ConStat()
+            SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
+            If ticks > 64 Then
+                txtUnit1.BackColor = SystemColors.Menu
+                If Connectionstatus1 = True Then
+                    Call ConStat()
+                End If
             End If
         End If
+
         If ticks2 > 54 Then
-            txtUnit2.BackColor = SystemColors.Menu
-            If Connectionstatus2 = True Then
-                Call ConStat()
+            SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
+            If ticks2 > 64 Then
+                txtUnit2.BackColor = SystemColors.Menu
+                If Connectionstatus2 = True Then
+                    Call ConStat()
+                End If
             End If
         End If
 
         If ticks3 > 54 Then
-            txtUnit3.BackColor = SystemColors.Menu
-            If Connectionstatus3 = True Then
-                Call ConStat()
+            SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
+            If ticks3 > 64 Then
+                txtUnit3.BackColor = SystemColors.Menu
+                If Connectionstatus3 = True Then
+                    Call ConStat()
+                End If
             End If
         End If
 
-        If ticks3 > 54 Then
-            txtUnit4.BackColor = SystemColors.Menu
-            If Connectionstatus4 = True Then
-                Call ConStat()
+        If ticks4 > 54 Then
+            SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
+            If ticks4 > 64 Then
+                txtUnit4.BackColor = SystemColors.Menu
+                If Connectionstatus4 = True Then
+                    Call ConStat()
+                End If
             End If
         End If
 
 
 
         Pingtick += 1
-        If Pingtick = 50 Then
+        If Pingtick = 40 Then
             If AHESyncIP1 <> "" Then
                 SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
             End If
@@ -702,5 +761,9 @@ Public Class main
         SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("2" + TBSens4.Value.ToString))
     End Sub
 
-
+    Private Sub txtManSync_MouseClick(sender As Object, e As MouseEventArgs) Handles txtManSync.MouseClick
+        If txtManSync.Text = "IP adress:" Then
+            txtManSync.Text = ""
+        End If
+    End Sub
 End Class
