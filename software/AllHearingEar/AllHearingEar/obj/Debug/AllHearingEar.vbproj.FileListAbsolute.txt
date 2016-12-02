@@ -9,3 +9,14 @@ c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEa
 c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.exe
 c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.xml
 c:\users\marcus\documents\visual studio 2015\Projects\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.pdb
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.exe.config
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.exe
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.xml
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.pdb
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.exe
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.pdb
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.xml
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbprojResolveAssemblyReference.cache
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.main.resources
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.Resources.resources
+D:\OneDrive\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbproj.GenerateResource.Cache

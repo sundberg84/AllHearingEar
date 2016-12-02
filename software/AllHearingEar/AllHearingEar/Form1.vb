@@ -113,7 +113,7 @@ Public Class main
         If BtnListen.Text = "Connect" Then
 
             udpAudioThread()
-            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
+            SendUDP("192.168.1.74", 11319, Encoding.ASCII.GetBytes("0"))
             BtnListen.Text = "Disconnect"
             Timer1.Enabled = True
         ElseIf BtnListen.Text = "Disconnect" Then
@@ -532,6 +532,9 @@ Public Class main
             Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
+
+            addLog("Debug (11319): " & LookForPing)
+
             If LookForPing = 1 Then
                 CurrentSync = respondPing.Address.ToString()
 

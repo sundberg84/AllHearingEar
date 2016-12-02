@@ -191,7 +191,7 @@ void UdpRecieveSync(){
       incomingPacket[len] = 0;
     }
     //Ack!
-    UdpSend(1);
+    UdpSend(49);
   }
   
 }
