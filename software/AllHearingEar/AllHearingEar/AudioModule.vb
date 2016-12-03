@@ -10,9 +10,9 @@ Module Audio
 
         '--//DEBUG//--
         If inputRawAudio.Length <= 0 Then
-            MsgBox("No data arrived!", vbAbort, "Error")
-            Exit Sub
-        End If
+                MsgBox("No data arrived!", vbAbort, "Error")
+                Exit Sub
+            End If
 
         '--//STREAM//--
         CreateWavStream(10000, inputRawAudio.Count, inputRawAudio)

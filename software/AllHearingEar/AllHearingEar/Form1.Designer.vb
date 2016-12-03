@@ -193,7 +193,6 @@ Partial Class main
         '
         Me.TBVolume1.AutoSize = False
         Me.TBVolume1.Location = New System.Drawing.Point(298, 19)
-        Me.TBVolume1.Maximum = 99
         Me.TBVolume1.Name = "TBVolume1"
         Me.TBVolume1.Orientation = System.Windows.Forms.Orientation.Vertical
         Me.TBVolume1.Size = New System.Drawing.Size(30, 98)
@@ -409,7 +408,7 @@ Partial Class main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(373, 493)
+        Me.ClientSize = New System.Drawing.Size(373, 475)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.txtManSync)
         Me.Controls.Add(Me.Button1)

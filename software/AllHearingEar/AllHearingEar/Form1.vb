@@ -5,6 +5,23 @@ Imports System.Text.Encoding
 
 Public Class main
 
+    <Runtime.InteropServices.DllImport("winmm.dll")>
+    Public Shared Function waveOutSetVolume(ByVal hwo As IntPtr, ByVal dwVolume As UInteger) As Integer
+    End Function
+
+    Private Sub TBVolume1_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.Scroll
+
+
+    End Sub
+    Private Sub TBVolume1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.ValueChanged
+        Dim NewVolume As Integer = ((UShort.MaxValue / 10) * TBVolume1.Value)
+        ' Set the same volume for both the left and the right channels 
+        Dim NewVolumeAllChannels As UInteger = ((CUInt(NewVolume) And &HFFFF) Or (CUInt(NewVolume) << 16))
+
+        ' Set the volume 
+        waveOutSetVolume(IntPtr.Zero, NewVolumeAllChannels)
+    End Sub
+
     Private Sub main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "All Hearing Ear"
         Me.Location = New Point(CInt((Screen.PrimaryScreen.WorkingArea.Width / 2) - (Me.Width / 2)), CInt((Screen.PrimaryScreen.WorkingArea.Height / 2) - (Me.Height / 2)))
@@ -45,7 +62,10 @@ Public Class main
         TBSens2.Value = My.Settings.Sens2
         TBSens3.Value = My.Settings.Sens3
         TBSens4.Value = My.Settings.Sens4
+        TBVolume1.Value = My.Settings.OutsetVolume
         NumberOfUnitsSynced = My.Settings.NumOfSynUn
+
+
 
 
 
@@ -86,6 +106,8 @@ Public Class main
         'Kör findslot för att veta hur många enheter det finns syncade och för att veta vilken slot nästa enhet ska hamna i.
         Call FindSlot()
 
+
+
     End Sub
 
     Private Sub main_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
@@ -106,6 +128,7 @@ Public Class main
         My.Settings.Sens2 = TBSens2.Value
         My.Settings.Sens3 = TBSens3.Value
         My.Settings.Sens4 = TBSens4.Value
+        My.Settings.OutsetVolume = TBVolume1.Value
         My.Settings.Save()
         End
     End Sub
@@ -118,6 +141,7 @@ Public Class main
             SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("0"))
             BtnListen.Text = "Disconnect"
             Timer1.Enabled = True
+            udpAudioThread()
         ElseIf BtnListen.Text = "Disconnect" Then
             addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
             BtnListen.Text = "Connect"
@@ -131,9 +155,8 @@ Public Class main
             Connectionstatus4 = False
             Pingtick = 0
             Timer1.Enabled = False
-            StartUp = False
             'subscriber.Close()
-            'StopAudioUDP()
+            StopAudioUDP()
         End If
 
 
@@ -529,9 +552,6 @@ Public Class main
     Dim LookForPing As Integer
     Dim subscriber As New Sockets.UdpClient(11319)
 
-    Private Sub TBVolume1_Scroll(sender As Object, e As EventArgs) Handles TBVolume1.Scroll
-
-    End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Button1.Text = "Manual sync" Then
@@ -562,6 +582,10 @@ Public Class main
             'Skicka en förfrågan om nya AHE enheten.
             SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("0"))
             StartUp = True
+
+            If AHESyncIP1 <> "" Or AHESyncIP2 <> "" Or AHESyncIP3 <> "" Or AHESyncIP4 <> "" Then
+                udpAudioThread()
+            End If
             'Starta ljud om programmet har syncade AHEenheter.
         End If
 
@@ -766,4 +790,6 @@ Public Class main
             txtManSync.Text = ""
         End If
     End Sub
+
+
 End Class

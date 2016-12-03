@@ -221,6 +221,18 @@ Namespace My
                 Me("Sens4") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property OutsetVolume() As Integer
+            Get
+                Return CType(Me("OutsetVolume"),Integer)
+            End Get
+            Set
+                Me("OutsetVolume") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
