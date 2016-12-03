@@ -42,12 +42,6 @@ Partial Class main
         Me.TBSens3 = New System.Windows.Forms.TrackBar()
         Me.TBSens2 = New System.Windows.Forms.TrackBar()
         Me.TBSens1 = New System.Windows.Forms.TrackBar()
-        Me.txtUnit4 = New System.Windows.Forms.TextBox()
-        Me.txtUnit3 = New System.Windows.Forms.TextBox()
-        Me.txtUnit2 = New System.Windows.Forms.TextBox()
-        Me.txtUnit1 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PBdelete4 = New System.Windows.Forms.PictureBox()
         Me.PBdelete3 = New System.Windows.Forms.PictureBox()
         Me.PBdelete2 = New System.Windows.Forms.PictureBox()
@@ -56,6 +50,12 @@ Partial Class main
         Me.PBok3 = New System.Windows.Forms.PictureBox()
         Me.PBok2 = New System.Windows.Forms.PictureBox()
         Me.PBok1 = New System.Windows.Forms.PictureBox()
+        Me.txtUnit4 = New System.Windows.Forms.TextBox()
+        Me.txtUnit3 = New System.Windows.Forms.TextBox()
+        Me.txtUnit2 = New System.Windows.Forms.TextBox()
+        Me.txtUnit1 = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.txtManSync = New System.Windows.Forms.TextBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -64,7 +64,6 @@ Partial Class main
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,6 +72,7 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnListen
@@ -262,52 +262,6 @@ Partial Class main
         Me.TBSens1.TickStyle = System.Windows.Forms.TickStyle.None
         Me.TBSens1.Visible = False
         '
-        'txtUnit4
-        '
-        Me.txtUnit4.Location = New System.Drawing.Point(6, 97)
-        Me.txtUnit4.Name = "txtUnit4"
-        Me.txtUnit4.Size = New System.Drawing.Size(100, 20)
-        Me.txtUnit4.TabIndex = 3
-        '
-        'txtUnit3
-        '
-        Me.txtUnit3.Location = New System.Drawing.Point(6, 71)
-        Me.txtUnit3.Name = "txtUnit3"
-        Me.txtUnit3.Size = New System.Drawing.Size(100, 20)
-        Me.txtUnit3.TabIndex = 2
-        '
-        'txtUnit2
-        '
-        Me.txtUnit2.Location = New System.Drawing.Point(6, 45)
-        Me.txtUnit2.Name = "txtUnit2"
-        Me.txtUnit2.Size = New System.Drawing.Size(100, 20)
-        Me.txtUnit2.TabIndex = 1
-        '
-        'txtUnit1
-        '
-        Me.txtUnit1.Location = New System.Drawing.Point(6, 19)
-        Me.txtUnit1.Name = "txtUnit1"
-        Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
-        Me.txtUnit1.TabIndex = 0
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(284, 218)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(77, 23)
-        Me.Button1.TabIndex = 7
-        Me.Button1.Text = "Manual sync"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.AllHearingEar.My.Resources.Resources.AHE
-        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
-        '
         'PBdelete4
         '
         Me.PBdelete4.Image = Global.AllHearingEar.My.Resources.Resources.delete
@@ -396,6 +350,52 @@ Partial Class main
         Me.PBok1.TabStop = False
         Me.PBok1.Visible = False
         '
+        'txtUnit4
+        '
+        Me.txtUnit4.Location = New System.Drawing.Point(6, 97)
+        Me.txtUnit4.Name = "txtUnit4"
+        Me.txtUnit4.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit4.TabIndex = 3
+        '
+        'txtUnit3
+        '
+        Me.txtUnit3.Location = New System.Drawing.Point(6, 71)
+        Me.txtUnit3.Name = "txtUnit3"
+        Me.txtUnit3.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit3.TabIndex = 2
+        '
+        'txtUnit2
+        '
+        Me.txtUnit2.Location = New System.Drawing.Point(6, 45)
+        Me.txtUnit2.Name = "txtUnit2"
+        Me.txtUnit2.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit2.TabIndex = 1
+        '
+        'txtUnit1
+        '
+        Me.txtUnit1.Location = New System.Drawing.Point(6, 19)
+        Me.txtUnit1.Name = "txtUnit1"
+        Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
+        Me.txtUnit1.TabIndex = 0
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(284, 218)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(77, 23)
+        Me.Button1.TabIndex = 7
+        Me.Button1.Text = "Manual sync"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.AllHearingEar.My.Resources.Resources.AHE
+        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
+        Me.PictureBox1.TabIndex = 2
+        Me.PictureBox1.TabStop = False
+        '
         'txtManSync
         '
         Me.txtManSync.Location = New System.Drawing.Point(261, 247)
@@ -433,7 +433,6 @@ Partial Class main
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBdelete2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -442,6 +441,7 @@ Partial Class main
         CType(Me.PBok3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

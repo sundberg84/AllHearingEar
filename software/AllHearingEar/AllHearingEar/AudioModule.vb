@@ -55,7 +55,7 @@ Module Audio
 
             '/* RIFF */ 
             AudioStream.Write(ChunkID, 0, 4)                                                            'ChunkID, 4 bytes
-            AudioStream.Write(BitConv(sample_size + 36, 4), 0, 4)                                       'FileSize, 4 bytes
+            AudioStream.Write(BitConv(sample.Count + 36, 4), 0, 4)                                       'FileSize, 4 bytes
             AudioStream.Write(Format, 0, 4)                                                             'Format, 4 bytes
 
             '/* FMT */
@@ -70,13 +70,10 @@ Module Audio
 
             '/* DATA */
             AudioStream.Write(System.Text.ASCIIEncoding.ASCII.GetBytes("data"), 0, 4)
-            AudioStream.Write(BitConv((sample_size), 4), 0, 4)
+            AudioStream.Write(BitConv((sample.Count), 4), 0, 4)
 
             'Stream är nu klar för att ta emot data (Lägg till ljudet (sample) som sista delen av DATA).
-            For n As Integer = 0 To sample.Length
-                'Lägg till data enligt stream 
-                AudioStream.Write(sample.ToArray, 0, sample.Count)
-            Next
+            AudioStream.Write(sample.ToArray, 0, sample.Count)
 
             CompleteStream = AudioStream.ToArray
 

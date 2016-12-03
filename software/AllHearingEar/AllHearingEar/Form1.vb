@@ -115,7 +115,7 @@ Public Class main
         If BtnListen.Text = "Connect" Then
 
             'Skicka en förfrågan om nya AHE enheten.
-            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
+            SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("0"))
             BtnListen.Text = "Disconnect"
             Timer1.Enabled = True
         ElseIf BtnListen.Text = "Disconnect" Then
@@ -560,13 +560,11 @@ Public Class main
         If StartUp = False Then
             'Fråga efter nya enheter när programmet startar.
             'Skicka en förfrågan om nya AHE enheten.
-            SendUDP("46.59.40.127", 11319, Encoding.ASCII.GetBytes("0"))
+            SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("0"))
+            StartUp = True
             'Starta ljud om programmet har syncade AHEenheter.
-            If AHESyncIP1 <> "" Or AHESyncIP2 <> "" Or AHESyncIP3 <> "" Or AHESyncIP4 <> "" Then
-                udpAudioThread()
-                StartUp = True
-            End If
         End If
+
 
         Try
             Dim respondPing As IPEndPoint = New IPEndPoint(IPAddress.Any, 0)
@@ -582,6 +580,7 @@ Public Class main
                 If CurrentSync = AHESyncIP1 Or CurrentSync = AHESyncIP2 Or CurrentSync = AHESyncIP3 Or CurrentSync = AHESyncIP4 Then
                 Else
                     addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You found a new AHE: " + CurrentSync)
+                    udpAudioThread()
                 End If
                 Call SyncNew()
             End If
@@ -688,6 +687,7 @@ Public Class main
         End If
 
     End Sub
+
     'Kontroll och funktion o anslutningsstatus
     '-----------------------------------------
     Private Sub ConStat()
