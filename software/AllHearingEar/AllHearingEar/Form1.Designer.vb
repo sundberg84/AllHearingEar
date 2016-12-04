@@ -35,6 +35,7 @@ Partial Class main
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Tb1Sound = New System.Windows.Forms.TrackBar()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TBVolume1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -59,6 +60,7 @@ Partial Class main
         Me.txtManSync = New System.Windows.Forms.TextBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.Tb1Sound, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -154,6 +156,7 @@ Partial Class main
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Tb1Sound)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TBVolume1)
         Me.GroupBox1.Controls.Add(Me.Label1)
@@ -179,6 +182,19 @@ Partial Class main
         Me.GroupBox1.TabIndex = 5
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Units:"
+        '
+        'Tb1Sound
+        '
+        Me.Tb1Sound.AutoSize = False
+        Me.Tb1Sound.LargeChange = 1
+        Me.Tb1Sound.Location = New System.Drawing.Point(234, 19)
+        Me.Tb1Sound.Maximum = 9
+        Me.Tb1Sound.Name = "Tb1Sound"
+        Me.Tb1Sound.Size = New System.Drawing.Size(51, 20)
+        Me.Tb1Sound.TabIndex = 17
+        Me.Tb1Sound.TabStop = False
+        Me.Tb1Sound.TickStyle = System.Windows.Forms.TickStyle.None
+        Me.Tb1Sound.Value = 1
         '
         'Label2
         '
@@ -428,6 +444,7 @@ Partial Class main
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.Tb1Sound, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -480,4 +497,5 @@ Partial Class main
     Friend WithEvents TBVolume1 As TrackBar
     Friend WithEvents Button1 As Button
     Friend WithEvents txtManSync As TextBox
+    Friend WithEvents Tb1Sound As TrackBar
 End Class

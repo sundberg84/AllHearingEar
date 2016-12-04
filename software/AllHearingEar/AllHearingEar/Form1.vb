@@ -755,36 +755,42 @@ Public Class main
 
     End Sub
 
+    Private Sub Tb1Sound_Scroll(sender As Object, e As EventArgs) Handles Tb1Sound.Scroll
+
+    End Sub
+
+
+
     Public Sub addLog(udpInfo As String)
         'Lägg till log
         LBLogg.Items.Add(udpInfo)
         'Gör inte statusrutan större än vad som behövs, ta bort om över 25 poster.
-        If LBLogg.Items.Count > 25 Then
+        If LBLogg.Items.Count > 15 Then
             LBLogg.Items.RemoveAt(0)
         End If
     End Sub
 
-    Private Sub txtUnit1_TextChanged(sender As Object, e As EventArgs) Handles txtUnit1.TextChanged
-
-    End Sub
 
     'Kontroll för att skicka ljudkänslighet till AHE
 
     Private Sub TBSens1_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens1.MouseUp
         SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("2" + TBSens1.Value.ToString))
-
+        addLog(txtUnit1.Text & " Set sensitivity: " & TBSens1.Value.ToString * 10)
     End Sub
 
     Private Sub TBSens2_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens2.MouseUp
         SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("2" + TBSens2.Value.ToString))
+        addLog(txtUnit2.Text & " Set sensitivity: " & TBSens2.Value.ToString * 10)
     End Sub
 
     Private Sub TBSens3_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens3.MouseUp
         SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("2" + TBSens3.Value.ToString))
+        addLog(txtUnit3.Text & " Set sensitivity: " & TBSens3.Value.ToString * 10)
     End Sub
 
     Private Sub TBSens4_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens4.MouseUp
         SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("2" + TBSens4.Value.ToString))
+        addLog(txtUnit4.Text & " Set sensitivity: " & TBSens4.Value.ToString * 10)
     End Sub
 
     Private Sub txtManSync_MouseClick(sender As Object, e As MouseEventArgs) Handles txtManSync.MouseClick
@@ -793,5 +799,8 @@ Public Class main
         End If
     End Sub
 
-
+    Private Sub Tb1Sound_MouseUp(sender As Object, e As MouseEventArgs) Handles Tb1Sound.MouseUp
+        addLog(SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("3" + (Tb1Sound.Value.ToString))))
+        addLog(txtUnit1.Text & " Set sounds length: " & Tb1Sound.Value.ToString * 3.333 & " sek")
+    End Sub
 End Class

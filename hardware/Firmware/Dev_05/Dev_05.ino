@@ -43,6 +43,7 @@ int send_samples_now; // flag to signal that a buffer is ready to be sent
 int32_t silence_value = 2048; // computed as an exponential moving average of the signal
 uint16_t envelope_threshold = 10; // envelope threshold to trigger data sending
 uint32_t send_sound_util = 0; // date until sound transmission ends after an envelope threshold has triggered sound transmission
+unsigned int stop_sound_after  = 10000;
 int enable_highpass_filter = 1;
 
 // ÖVrigt
@@ -142,7 +143,7 @@ void loop()
     envelope_value = envelope_value;
 
     if (envelope_value > envelope_threshold) {
-      send_sound_util = millis() + 15000;
+      send_sound_util = millis() + stop_sound_after;
     }
 
     if (millis() < send_sound_util) {
@@ -168,7 +169,7 @@ void loop()
 
 void UdpSend(byte msg)
 {
-  udp.beginPacket(ipServer, udpServerPort);
+ udp.beginPacket(ipServer, udpServerPort);
   udp.write(msg);
   udp.endPacket();
 }
@@ -190,7 +191,7 @@ void UdpRecieveSync(){
       incomingPacket[len] = 0;
     }
     //Ack!
-    UdpSend(1);
+    UdpSend(49);
   }
   
 }
@@ -200,9 +201,10 @@ void UdpRecieveData()
   
   int packetSizeD = udp.parsePacket();
   if (packetSizeD) {
-   //Serial.printf("Received %d bytes from %s, port %d\n", packetSizeD, udp.remoteIP().toString().c_str(), udp.remotePort());
     udp.read(incomingUDP, 255);     
     uint8_t swUDP = incomingUDP[0] - '0';
+        
+     Serial.print("Switching: ");Serial.println(swUDP);
         
     switch (swUDP) {
       case 0:     
@@ -212,15 +214,17 @@ void UdpRecieveData()
         //ACK från dator
         UdpSend(49);
         break;
-      case 2:
-        //Serial.println("2: Volume from computer");      
+      case 2: 
         //Sätt volym.
-        //Serial.println(incomingUDP[1]);
         envelope_threshold = (incomingUDP[1] - '0') * 10;     
         if (envelope_threshold == 0){envelope_threshold = 5;}
-        Serial.print("Volym: "); Serial.println(envelope_threshold);
+        Serial.print("Volym: "); Serial.println(envelope_threshold);    
         break;
-        
+      case 3:
+        stop_sound_after = (incomingUDP[1] - '0') * 3333;
+        if (envelope_threshold == 0){envelope_threshold = 1000;}
+        Serial.print("StopSoundAfter: "); Serial.println(stop_sound_after);
+         break;
       default:
         Serial.println("Inget giltigt commando");
         break;
