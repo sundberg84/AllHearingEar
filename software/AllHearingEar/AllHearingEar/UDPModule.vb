@@ -2,45 +2,50 @@
 Imports System.Net
 Imports System.Text.Encoding
 
-
 Module Udp
-
-    Dim logInfo As String
 
     '----------------------------------------------------------------------------
     ' UDP Server (11318 för mottagning av Audio)
     '----------------------------------------------------------------------------
-    Public RemoteIpEndPoint As New System.Net.IPEndPoint(System.Net.IPAddress.Any, 11318)
-    Public ThreadReceive As System.Threading.Thread
-    Public receivingUdpAudio As New System.Net.Sockets.UdpClient(11318)
+    Dim RemoteIpEndPoint As New System.Net.IPEndPoint(System.Net.IPAddress.Any, 11318)
+    Dim ThreadReceive As System.Threading.Thread
+    Dim receivingUdpAudio As System.Net.Sockets.UdpClient
     Public UDPAudioStatus As Boolean = True
+    Dim logInfo As String
 
     'Starta en ny thread för Audiomottagning,
     'Allt som behövs är att kalla udpAudioThread(). Ingen timer/ticks på denna. 
     Public Sub udpAudioThread()
         ThreadReceive = New System.Threading.Thread(AddressOf ReceiveAudioMessages)
+        ThreadReceive.Priority = Threading.ThreadPriority.Highest
         ThreadReceive.Start()
         writeUDPDataStatus("0", "UDP (audio) started!") 'Log
     End Sub
 
     'Skapa servertråden (görs automatiskt från udpAudioThread()
-    Public Sub ReceiveAudioMessages()
-        While (UDPAudioStatus)
+    Dim receiveBytes As New List(Of Byte()) ' A List of Byte Arrays per index, not just single bytes per index.
 
-            Try
-                Dim receiveBytes As [Byte]() = receivingUdpAudio.Receive(RemoteIpEndPoint)
-                Dim BitDet As BitArray
-                BitDet = New BitArray(receiveBytes)
-                Dim strReturnData As String = System.Text.Encoding.Unicode.GetString(receiveBytes)
-                CreateAudioStream(receiveBytes)
-            Catch
-                writeUDPDataStatus("0", "Error in UDP (audio) reciever! - Closing server!")
-                UDPAudioStatus = False
-                receivingUdpAudio.Close()
-                writeUDPDataStatus("0", "Error In UDP (audio) reciever! - Closing server!") 'Log
-            End Try
+    Private Sub ReceiveAudioMessages()
+        Try
+            Do
+                If UDPAudioStatus = True Then
+                    receivingUdpAudio = New UdpClient(11318)
+                    receiveBytes.Add(receivingUdpAudio.Receive(RemoteIpEndPoint))
+                    receivingUdpAudio.Close()
+                Else
+                    writeUDPDataStatus("0", "Error In UDP (audio) reciever! - Closing server!") 'Log
+                    Exit Do
+                End If
+                'Invoke(New CollectUDPdataStreamDelegate(AddressOf CollectUDPdataStream))
 
-        End While
+                If receiveBytes.Count > 50 Then ' (Testing at 2 seconds data) Should be 32000 bytes or 1 second of recorded data. 25 * 1280 bytes per rcvd packet = 32000 bytes.
+                    CreateAudioStream(receiveBytes)
+                End If
+
+            Loop
+
+        Catch ex As Exception
+        End Try
     End Sub
 
     Public Function StopAudioUDP()

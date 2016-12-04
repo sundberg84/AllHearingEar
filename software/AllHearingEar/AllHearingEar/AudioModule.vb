@@ -6,13 +6,13 @@ Module Audio
     Dim CompleteStream() As Byte
 
     'CreateAudioStream är main thread - skicka UDP data hit.
-    Public Sub CreateAudioStream(inputRawAudio As Byte())
+    Public Sub CreateAudioStream(inputRawAudio As List(Of Byte()))
 
         '--//DEBUG//--
-        If inputRawAudio.Length <= 0 Then
-                MsgBox("No data arrived!", vbAbort, "Error")
-                Exit Sub
-            End If
+        If inputRawAudio.Count <= 0 Then
+            MsgBox("No data arrived!", vbAbort, "Error")
+            Exit Sub
+        End If
 
         '--//STREAM//--
         CreateWavStream(10000, inputRawAudio.Count, inputRawAudio)
@@ -26,10 +26,18 @@ Module Audio
 
     End Sub
 
-    Private Sub CreateWavStream(s_rate As Integer, sample_size As Integer, sample As Byte())
+    Private Sub CreateWavStream(s_rate As Integer, sample_size As Integer, WaveData As List(Of Byte()))
 
         's_rate = Kommer i @20kHz från AHE
         'Om du vill spara på hårddisken (lägga till senare?)
+
+        Dim sample As New List(Of Byte)
+        sample.Clear()
+        For i = 0 To 49
+            sample.AddRange(WaveData(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
+        Next
+
+        WaveData.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
 
         Dim ChunkID() As Byte = System.Text.ASCIIEncoding.ASCII.GetBytes("RIFF")
         Dim Format() As Byte = System.Text.ASCIIEncoding.ASCII.GetBytes("WAVE")
