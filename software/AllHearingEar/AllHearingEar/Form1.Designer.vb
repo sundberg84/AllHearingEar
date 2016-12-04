@@ -376,6 +376,7 @@ Partial Class main
         Me.txtUnit1.Name = "txtUnit1"
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit1.TabIndex = 0
+        Me.txtUnit1.Text = "Enter name:"
         '
         'Button1
         '

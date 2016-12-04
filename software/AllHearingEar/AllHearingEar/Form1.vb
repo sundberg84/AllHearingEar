@@ -9,10 +9,7 @@ Public Class main
     Public Shared Function waveOutSetVolume(ByVal hwo As IntPtr, ByVal dwVolume As UInteger) As Integer
     End Function
 
-    Private Sub TBVolume1_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.Scroll
 
-
-    End Sub
     Private Sub TBVolume1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.ValueChanged
         Dim NewVolume As Integer = ((UShort.MaxValue / 10) * TBVolume1.Value)
         ' Set the same volume for both the left and the right channels 
@@ -156,7 +153,7 @@ Public Class main
             Pingtick = 0
             Timer1.Enabled = False
             'subscriber.Close()
-            StopAudioUDP()
+            'StopAudioUDP()
         End If
 
 
@@ -189,7 +186,7 @@ Public Class main
 
     Private Sub PBok1_Click(sender As Object, e As EventArgs) Handles PBok1.Click
 
-        If txtUnit1.Text = "" Then
+        If txtUnit1.Text = "Enter name:" Then
             MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName1 = txtUnit1.Text
@@ -712,6 +709,7 @@ Public Class main
 
     End Sub
 
+
     'Kontroll och funktion o anslutningsstatus
     '-----------------------------------------
     Private Sub ConStat()
@@ -764,6 +762,10 @@ Public Class main
         If LBLogg.Items.Count > 25 Then
             LBLogg.Items.RemoveAt(0)
         End If
+    End Sub
+
+    Private Sub txtUnit1_TextChanged(sender As Object, e As EventArgs) Handles txtUnit1.TextChanged
+
     End Sub
 
     'Kontroll för att skicka ljudkänslighet till AHE
