@@ -33,7 +33,7 @@ Module Audio
 
         Dim sample As New List(Of Byte)
         sample.Clear()
-        For i = 0 To 49
+        For i = 0 To 48
             sample.AddRange(WaveData(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
         Next
 
@@ -87,7 +87,7 @@ Module Audio
 
         End Using
 
-        AudioStream.Flush()
+        'AudioStream.Flush()
         AudioStream.Close()
 
     End Sub
