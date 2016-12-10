@@ -35,7 +35,6 @@ Partial Class main
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Tb1Sound = New System.Windows.Forms.TrackBar()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TBVolume1 = New System.Windows.Forms.TrackBar()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -56,11 +55,14 @@ Partial Class main
         Me.txtUnit2 = New System.Windows.Forms.TextBox()
         Me.txtUnit1 = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.txtManSync = New System.Windows.Forms.TextBox()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PBSyncHelp = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.ToolTipSyncHelp = New System.Windows.Forms.ToolTip(Me.components)
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.Tb1Sound, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,11 +77,13 @@ Partial Class main
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PBSyncHelp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'BtnListen
         '
-        Me.BtnListen.Location = New System.Drawing.Point(12, 218)
+        Me.BtnListen.Location = New System.Drawing.Point(12, 221)
         Me.BtnListen.Name = "BtnListen"
         Me.BtnListen.Size = New System.Drawing.Size(75, 23)
         Me.BtnListen.TabIndex = 0
@@ -97,7 +101,7 @@ Partial Class main
         'CBLogg
         '
         Me.CBLogg.AutoSize = True
-        Me.CBLogg.Location = New System.Drawing.Point(12, 268)
+        Me.CBLogg.Location = New System.Drawing.Point(12, 272)
         Me.CBLogg.Name = "CBLogg"
         Me.CBLogg.Size = New System.Drawing.Size(70, 17)
         Me.CBLogg.TabIndex = 3
@@ -107,7 +111,7 @@ Partial Class main
         'CBAutoStart
         '
         Me.CBAutoStart.AutoSize = True
-        Me.CBAutoStart.Location = New System.Drawing.Point(12, 245)
+        Me.CBAutoStart.Location = New System.Drawing.Point(12, 250)
         Me.CBAutoStart.Name = "CBAutoStart"
         Me.CBAutoStart.Size = New System.Drawing.Size(135, 17)
         Me.CBAutoStart.TabIndex = 4
@@ -147,7 +151,7 @@ Partial Class main
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(211, 275)
+        Me.LinkLabel1.Location = New System.Drawing.Point(213, 276)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(148, 13)
         Me.LinkLabel1.TabIndex = 6
@@ -156,7 +160,6 @@ Partial Class main
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Tb1Sound)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TBVolume1)
         Me.GroupBox1.Controls.Add(Me.Label1)
@@ -183,32 +186,19 @@ Partial Class main
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Units:"
         '
-        'Tb1Sound
-        '
-        Me.Tb1Sound.AutoSize = False
-        Me.Tb1Sound.LargeChange = 1
-        Me.Tb1Sound.Location = New System.Drawing.Point(234, 19)
-        Me.Tb1Sound.Maximum = 9
-        Me.Tb1Sound.Name = "Tb1Sound"
-        Me.Tb1Sound.Size = New System.Drawing.Size(51, 20)
-        Me.Tb1Sound.TabIndex = 17
-        Me.Tb1Sound.TabStop = False
-        Me.Tb1Sound.TickStyle = System.Windows.Forms.TickStyle.None
-        Me.Tb1Sound.Value = 1
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(286, 0)
+        Me.Label2.Location = New System.Drawing.Point(301, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(42, 13)
+        Me.Label2.Size = New System.Drawing.Size(45, 13)
         Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Master:"
+        Me.Label2.Text = "Volume:"
         '
         'TBVolume1
         '
         Me.TBVolume1.AutoSize = False
-        Me.TBVolume1.Location = New System.Drawing.Point(298, 19)
+        Me.TBVolume1.Location = New System.Drawing.Point(313, 19)
         Me.TBVolume1.Name = "TBVolume1"
         Me.TBVolume1.Orientation = System.Windows.Forms.Orientation.Vertical
         Me.TBVolume1.Size = New System.Drawing.Size(30, 98)
@@ -279,7 +269,7 @@ Partial Class main
         '
         'PBdelete4
         '
-        Me.PBdelete4.Image = Global.AllHearingEar.My.Resources.Resources.delete
+        Me.PBdelete4.Image = CType(resources.GetObject("PBdelete4.Image"), System.Drawing.Image)
         Me.PBdelete4.Location = New System.Drawing.Point(112, 97)
         Me.PBdelete4.Name = "PBdelete4"
         Me.PBdelete4.Size = New System.Drawing.Size(18, 18)
@@ -290,7 +280,7 @@ Partial Class main
         '
         'PBdelete3
         '
-        Me.PBdelete3.Image = Global.AllHearingEar.My.Resources.Resources.delete
+        Me.PBdelete3.Image = CType(resources.GetObject("PBdelete3.Image"), System.Drawing.Image)
         Me.PBdelete3.Location = New System.Drawing.Point(112, 71)
         Me.PBdelete3.Name = "PBdelete3"
         Me.PBdelete3.Size = New System.Drawing.Size(18, 18)
@@ -301,7 +291,7 @@ Partial Class main
         '
         'PBdelete2
         '
-        Me.PBdelete2.Image = Global.AllHearingEar.My.Resources.Resources.delete
+        Me.PBdelete2.Image = CType(resources.GetObject("PBdelete2.Image"), System.Drawing.Image)
         Me.PBdelete2.Location = New System.Drawing.Point(112, 45)
         Me.PBdelete2.Name = "PBdelete2"
         Me.PBdelete2.Size = New System.Drawing.Size(18, 18)
@@ -312,8 +302,8 @@ Partial Class main
         '
         'PBdelete1
         '
-        Me.PBdelete1.Image = Global.AllHearingEar.My.Resources.Resources.delete
-        Me.PBdelete1.Location = New System.Drawing.Point(112, 19)
+        Me.PBdelete1.Image = CType(resources.GetObject("PBdelete1.Image"), System.Drawing.Image)
+        Me.PBdelete1.Location = New System.Drawing.Point(112, 18)
         Me.PBdelete1.Name = "PBdelete1"
         Me.PBdelete1.Size = New System.Drawing.Size(18, 18)
         Me.PBdelete1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -323,7 +313,7 @@ Partial Class main
         '
         'PBok4
         '
-        Me.PBok4.Image = Global.AllHearingEar.My.Resources.Resources.greeok
+        Me.PBok4.Image = CType(resources.GetObject("PBok4.Image"), System.Drawing.Image)
         Me.PBok4.Location = New System.Drawing.Point(112, 99)
         Me.PBok4.Name = "PBok4"
         Me.PBok4.Size = New System.Drawing.Size(15, 15)
@@ -334,7 +324,7 @@ Partial Class main
         '
         'PBok3
         '
-        Me.PBok3.Image = Global.AllHearingEar.My.Resources.Resources.greeok
+        Me.PBok3.Image = CType(resources.GetObject("PBok3.Image"), System.Drawing.Image)
         Me.PBok3.Location = New System.Drawing.Point(112, 73)
         Me.PBok3.Name = "PBok3"
         Me.PBok3.Size = New System.Drawing.Size(15, 15)
@@ -345,7 +335,7 @@ Partial Class main
         '
         'PBok2
         '
-        Me.PBok2.Image = Global.AllHearingEar.My.Resources.Resources.greeok
+        Me.PBok2.Image = CType(resources.GetObject("PBok2.Image"), System.Drawing.Image)
         Me.PBok2.Location = New System.Drawing.Point(112, 47)
         Me.PBok2.Name = "PBok2"
         Me.PBok2.Size = New System.Drawing.Size(15, 15)
@@ -356,7 +346,7 @@ Partial Class main
         '
         'PBok1
         '
-        Me.PBok1.Image = Global.AllHearingEar.My.Resources.Resources.greeok
+        Me.PBok1.Image = CType(resources.GetObject("PBok1.Image"), System.Drawing.Image)
         Me.PBok1.Location = New System.Drawing.Point(112, 21)
         Me.PBok1.Name = "PBok1"
         Me.PBok1.Size = New System.Drawing.Size(15, 15)
@@ -396,37 +386,68 @@ Partial Class main
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(284, 218)
+        Me.Button1.Location = New System.Drawing.Point(258, 224)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(77, 23)
         Me.Button1.TabIndex = 7
         Me.Button1.Text = "Manual sync"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.AllHearingEar.My.Resources.Resources.AHE
-        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
-        '
         'txtManSync
         '
-        Me.txtManSync.Location = New System.Drawing.Point(261, 247)
+        Me.txtManSync.Location = New System.Drawing.Point(258, 253)
         Me.txtManSync.Name = "txtManSync"
         Me.txtManSync.Size = New System.Drawing.Size(100, 20)
         Me.txtManSync.TabIndex = 8
         Me.txtManSync.Text = "IP adress:"
         Me.txtManSync.Visible = False
         '
+        'Timer2
+        '
+        Me.Timer2.Enabled = True
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, -1)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(374, 61)
+        Me.PictureBox1.TabIndex = 2
+        Me.PictureBox1.TabStop = False
+        '
+        'PBSyncHelp
+        '
+        Me.PBSyncHelp.Image = CType(resources.GetObject("PBSyncHelp.Image"), System.Drawing.Image)
+        Me.PBSyncHelp.Location = New System.Drawing.Point(157, 380)
+        Me.PBSyncHelp.Name = "PBSyncHelp"
+        Me.PBSyncHelp.Size = New System.Drawing.Size(21, 23)
+        Me.PBSyncHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PBSyncHelp.TabIndex = 9
+        Me.PBSyncHelp.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
+        Me.PictureBox2.Location = New System.Drawing.Point(340, 226)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(18, 18)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 9
+        Me.PictureBox2.TabStop = False
+        Me.ToolTipSyncHelp.SetToolTip(Me.PictureBox2, "To use manual sync. Write the IP-adress of your AHE. This is found when you conne" &
+        "ct your AHE to your WiFi for the first time.")
+        '
+        'ToolTipSyncHelp
+        '
+        Me.ToolTipSyncHelp.ToolTipTitle = "Manual Sync Help"
+        '
         'main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(373, 475)
+        Me.ClientSize = New System.Drawing.Size(370, 291)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtManSync)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.LinkLabel1)
@@ -444,7 +465,6 @@ Partial Class main
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.Tb1Sound, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TBSens3, System.ComponentModel.ISupportInitialize).EndInit()
@@ -459,6 +479,8 @@ Partial Class main
         CType(Me.PBok2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PBok1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PBSyncHelp, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -497,5 +519,8 @@ Partial Class main
     Friend WithEvents TBVolume1 As TrackBar
     Friend WithEvents Button1 As Button
     Friend WithEvents txtManSync As TextBox
-    Friend WithEvents Tb1Sound As TrackBar
+    Friend WithEvents Timer2 As Timer
+    Friend WithEvents PBSyncHelp As PictureBox
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents ToolTipSyncHelp As ToolTip
 End Class

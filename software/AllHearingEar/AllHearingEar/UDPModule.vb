@@ -19,7 +19,7 @@ Module Udp
         ThreadReceive = New System.Threading.Thread(AddressOf ReceiveAudioMessages)
         ThreadReceive.Priority = Threading.ThreadPriority.Highest
         ThreadReceive.Start()
-        writeUDPDataStatus("0", "UDP (audio) started!") 'Log
+        'writeUDPDataStatus("0", "UDP (audio) started!") 'Log 'Använd denna raden för debug.
     End Sub
 
     'Skapa servertråden (görs automatiskt från udpAudioThread()
@@ -49,10 +49,12 @@ Module Udp
     End Sub
 
     Public Function StopAudioUDP()
-        UDPAudioStatus = False
+        'Plockade bort raden UDPAudioStatus = False efter krock med start av UDP igen. Vilket löste problemet.
+        'UDPAudioStatus = False
         receivingUdpAudio.Close()
+        'writeUDPDataStatus("0", "UDP (audio) stopped!") 'Använd denna raden för debug.
         Return "UDP (audio) stopped!"
-        writeUDPDataStatus("0", "UDP (audio) stopped!") 'Log
+
     End Function
 
     '----------------------------------------------------------------------------

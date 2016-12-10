@@ -1,23 +1,9 @@
 ﻿Imports System.Text
 Imports System.Net
 Imports System.Text.Encoding
-
+Imports System.Runtime.InteropServices
 
 Public Class main
-
-    <Runtime.InteropServices.DllImport("winmm.dll")>
-    Public Shared Function waveOutSetVolume(ByVal hwo As IntPtr, ByVal dwVolume As UInteger) As Integer
-    End Function
-
-
-    Private Sub TBVolume1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.ValueChanged
-        Dim NewVolume As Integer = ((UShort.MaxValue / 10) * TBVolume1.Value)
-        ' Set the same volume for both the left and the right channels 
-        Dim NewVolumeAllChannels As UInteger = ((CUInt(NewVolume) And &HFFFF) Or (CUInt(NewVolume) << 16))
-
-        ' Set the volume 
-        waveOutSetVolume(IntPtr.Zero, NewVolumeAllChannels)
-    End Sub
 
     Private Sub main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "All Hearing Ear"
@@ -35,13 +21,9 @@ Public Class main
         Connectionstatus3 = False
         Connectionstatus4 = False
 
-
         NotifyIcon1.Visible = True 'Visa icon i taskbar vid start.
 
         'Ladda alla nödvändiga värden
-
-
-
         Me.CBAutoStart.CheckState = My.Settings.chk1
         Me.AHESyncIP1 = My.Settings.hip1
         Me.AHESyncIP2 = My.Settings.hip2
@@ -59,12 +41,7 @@ Public Class main
         TBSens2.Value = My.Settings.Sens2
         TBSens3.Value = My.Settings.Sens3
         TBSens4.Value = My.Settings.Sens4
-        TBVolume1.Value = My.Settings.OutsetVolume
         NumberOfUnitsSynced = My.Settings.NumOfSynUn
-
-
-
-
 
         'Visa synkade enheter
         If txtUnit1.Text <> "" Then
@@ -110,7 +87,6 @@ Public Class main
     Private Sub main_FormClosing(sender As Object, e As EventArgs) Handles Me.FormClosing
 
         'Spara alla nödvändiga värden.
-
         My.Settings.chk1 = Me.CBAutoStart.CheckState
         My.Settings.hip1 = AHESyncIP1
         My.Settings.hip2 = AHESyncIP2
@@ -125,7 +101,6 @@ Public Class main
         My.Settings.Sens2 = TBSens2.Value
         My.Settings.Sens3 = TBSens3.Value
         My.Settings.Sens4 = TBSens4.Value
-        My.Settings.OutsetVolume = TBVolume1.Value
         My.Settings.Save()
         End
     End Sub
@@ -153,7 +128,7 @@ Public Class main
             Pingtick = 0
             Timer1.Enabled = False
             'subscriber.Close()
-            'StopAudioUDP()
+            StopAudioUDP()
         End If
 
 
@@ -186,7 +161,7 @@ Public Class main
 
     Private Sub PBok1_Click(sender As Object, e As EventArgs) Handles PBok1.Click
 
-        If txtUnit1.Text = "Enter name:" Then
+        If txtUnit1.Text = AHESyncIP1 Or txtUnit1.Text = "" Then
             MsgBox("Du måste ange namn på enheten!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName1 = txtUnit1.Text
@@ -340,7 +315,7 @@ Public Class main
     Dim CurrentSync As String
     Dim NumberOfUnitsSynced As Integer
     'Definiera värden som ska sparas när program sparas.
-    Public AHESyncIP1 As String
+    Dim AHESyncIP1 As String
     Dim AHEsyncName1 As String
     Dim AHESyncIP2 As String
     Dim AHEsyncName2 As String
@@ -578,6 +553,7 @@ Public Class main
             'Fråga efter nya enheter när programmet startar.
             'Skicka en förfrågan om nya AHE enheten.
             SendUDP("192.168.1.255", 11319, Encoding.ASCII.GetBytes("0"))
+
             StartUp = True
 
             If AHESyncIP1 <> "" Or AHESyncIP2 <> "" Or AHESyncIP3 <> "" Or AHESyncIP4 <> "" Then
@@ -710,6 +686,7 @@ Public Class main
     End Sub
 
 
+
     'Kontroll och funktion o anslutningsstatus
     '-----------------------------------------
     Private Sub ConStat()
@@ -755,11 +732,6 @@ Public Class main
 
     End Sub
 
-    Private Sub Tb1Sound_Scroll(sender As Object, e As EventArgs) Handles Tb1Sound.Scroll
-
-    End Sub
-
-
 
     Public Sub addLog(udpInfo As String)
         'Lägg till log
@@ -799,8 +771,32 @@ Public Class main
         End If
     End Sub
 
-    Private Sub Tb1Sound_MouseUp(sender As Object, e As MouseEventArgs) Handles Tb1Sound.MouseUp
-        addLog(SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("3" + (Tb1Sound.Value.ToString))))
-        addLog(txtUnit1.Text & " Set sounds length: " & Tb1Sound.Value.ToString * 3.333 & " sek")
+    'Master volymkontroll
+
+    Private Sub TBVolume1_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBVolume1.Scroll
+        Dim vol As UInteger = CUInt((UShort.MaxValue / 10) * TBVolume1.Value)
+        waveOutSetVolume(IntPtr.Zero, CUInt((vol And &HFFFF) Or (vol << 16)))
     End Sub
+
+    Private Function GetApplicationVolume() As Integer
+        Dim vol As UInteger = 0
+        waveOutGetVolume(IntPtr.Zero, vol)
+        Return CInt((vol And &HFFFF) / (UShort.MaxValue / 10))
+    End Function
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Dim v As Integer = GetApplicationVolume()
+        If TBVolume1.Value <> v Then
+            TBVolume1.Value = v
+        End If
+    End Sub
+
+    <DllImport("winmm.dll")> Private Shared Function waveOutSetVolume(ByVal hwo As IntPtr, ByVal dwVolume As UInteger) As UInteger
+    End Function
+
+    <DllImport("winmm.dll")> Private Shared Function waveOutGetVolume(ByVal hwo As IntPtr, ByRef pdwVolume As UInteger) As UInteger
+    End Function
+
+    '-------------
+
 End Class
