@@ -535,12 +535,12 @@
       (net 4 "Net-(JP1-Pad1)"))
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x03 (layer F.Cu) (tedit 5842F751) (tstamp 5842B250)
+  (module Pin_Headers:Pin_Header_Straight_1x03 (layer F.Cu) (tedit 58432FC2) (tstamp 5842B250)
     (at 163.6141 93.2307 90)
     (descr "Through hole pin header")
     (tags "pin header")
     (path /5824E9F1)
-    (fp_text reference Debug (at 0.0762 -2.6416 270) (layer F.SilkS)
+    (fp_text reference Debug (at -0.07874 -2.84226 270) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text value Debug (at -15.2019 6.1595 180) (layer F.Fab) hide

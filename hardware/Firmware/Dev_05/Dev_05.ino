@@ -154,7 +154,7 @@ void loop()
 
     send_samples_now = 0;
     
-    //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.print(envelope_value);
+    //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
     //Serial.print("delay "); Serial.print(millis() - now);
     //Serial.println("");
 
@@ -216,8 +216,17 @@ void UdpRecieveData()
         break;
       case 2: 
         //Sätt volym.
-        envelope_threshold = (incomingUDP[1] - '0') * 10;     
-        if (envelope_threshold == 0){envelope_threshold = 5;}
+        Serial.print("RawVolume: ");Serial.println(incomingUDP[1] - '0');    
+        if (incomingUDP[1] - '0' == 0){envelope_threshold = 2;}
+        if (incomingUDP[1] - '0' == 1){envelope_threshold = 5;}
+        if (incomingUDP[1] - '0' == 2){envelope_threshold = 10;}
+        if (incomingUDP[1] - '0' == 3){envelope_threshold = 15;}
+        if (incomingUDP[1] - '0' == 4){envelope_threshold = 20;}
+        if (incomingUDP[1] - '0' == 5){envelope_threshold = 30;}
+        if (incomingUDP[1] - '0' == 6){envelope_threshold = 40;}
+        if (incomingUDP[1] - '0' == 7){envelope_threshold = 60;}
+        if (incomingUDP[1] - '0' == 8){envelope_threshold = 80;}
+        if (incomingUDP[1] - '0' == 9){envelope_threshold = 100;}           
         Serial.print("Volym: "); Serial.println(envelope_threshold);    
         break;
       case 3:

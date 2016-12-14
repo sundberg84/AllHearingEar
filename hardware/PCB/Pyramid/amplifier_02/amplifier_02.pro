@@ -1,4 +1,4 @@
-update=2016-12-08 12:23:58
+update=2016-12-08 14:18:42
 version=1
 last_client=kicad
 [pcbnew]
@@ -59,4 +59,4 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=D:/OneDrive/AllHearingEar/hardware/PCB/andreas_footprints
+LibName31=D:/OneDrive/AllHearingEar/hardware/PCB/KiCad Libraries/andreas_footprints
