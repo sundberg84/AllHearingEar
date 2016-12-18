@@ -27,7 +27,6 @@ C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearing
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.exe
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.pdb
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.xml
-C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbprojResolveAssemblyReference.cache
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.main.resources
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.Resources.resources
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbproj.GenerateResource.Cache
@@ -35,3 +34,4 @@ C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearing
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\bin\Debug\AllHearingEar.application
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.exe.manifest
 C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.application
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\AllHearingEar\AllHearingEar\obj\Debug\AllHearingEar.vbprojResolveAssemblyReference.cache

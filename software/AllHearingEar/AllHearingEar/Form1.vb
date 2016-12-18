@@ -174,6 +174,20 @@ Public Class main
         End If
 
     End Sub
+    Private Sub txtUnit1_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit1.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtUnit1.Text = AHESyncIP1 Or txtUnit1.Text = "" Then
+                MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
+            Else
+                AHEsyncName1 = txtUnit1.Text
+                txtUnit1.Enabled = False
+                PBdelete1.Visible = True
+                PBdelete1.Enabled = True
+                PBok1.Enabled = False
+                PBok1.Visible = False
+            End If
+        End If
+    End Sub
 
     Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
         If AHESyncIP1 > "" Then
@@ -204,6 +218,20 @@ Public Class main
         End If
 
     End Sub
+    Private Sub txtUnit2_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit2.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtUnit2.Text = AHESyncIP2 Or txtUnit2.Text = "" Then
+                MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
+            Else
+                AHEsyncName2 = txtUnit2.Text
+                txtUnit2.Enabled = False
+                PBdelete2.Visible = True
+                PBdelete2.Enabled = True
+                PBok2.Enabled = False
+                PBok2.Visible = False
+            End If
+        End If
+    End Sub
 
     Private Sub PBdelete2_Click(sender As Object, e As EventArgs) Handles PBdelete2.Click
         StopAudioUDP()
@@ -232,6 +260,20 @@ Public Class main
         End If
 
     End Sub
+    Private Sub txtUnit3_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit3.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtUnit3.Text = AHESyncIP3 Or txtUnit3.Text = "" Then
+                MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
+            Else
+                AHEsyncName3 = txtUnit3.Text
+                txtUnit3.Enabled = False
+                PBdelete3.Visible = True
+                PBdelete3.Enabled = True
+                PBok3.Enabled = False
+                PBok3.Visible = False
+            End If
+        End If
+    End Sub
 
     Private Sub PBdelete3_Click(sender As Object, e As EventArgs) Handles PBdelete3.Click
         StopAudioUDP()
@@ -256,6 +298,20 @@ Public Class main
             PBdelete4.Enabled = True
             PBok4.Enabled = False
             PBok4.Visible = False
+        End If
+    End Sub
+    Private Sub txtUnit4_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit4.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtUnit4.Text = AHESyncIP4 Or txtUnit4.Text = "" Then
+                MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
+            Else
+                AHEsyncName4 = txtUnit4.Text
+                txtUnit4.Enabled = False
+                PBdelete4.Visible = True
+                PBdelete4.Enabled = True
+                PBok4.Enabled = False
+                PBok4.Visible = False
+            End If
         End If
     End Sub
 
@@ -533,6 +589,7 @@ Public Class main
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Button1.Text = "Manual sync" Then
             txtManSync.Visible = True
+            txtManSync.Focus()
             Button1.Text = "Sync"
         ElseIf Button1.Text = "Sync" Then
             If txtManSync.Text = "" Then
@@ -770,14 +827,38 @@ Public Class main
         addLog(txtUnit3.Text & " Set sensitivity: " & TBSens3.Value.ToString * 10)
     End Sub
 
+
+
     Private Sub TBSens4_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens4.MouseUp
         SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("2" + TBSens4.Value.ToString))
         addLog(txtUnit4.Text & " Set sensitivity: " & TBSens4.Value.ToString * 10)
     End Sub
 
+
+
     Private Sub txtManSync_MouseClick(sender As Object, e As MouseEventArgs) Handles txtManSync.MouseClick
         If txtManSync.Text = "IP adress:" Then
             txtManSync.Text = ""
+        End If
+    End Sub
+
+    Private Sub txtUnit1_TextChanged(sender As Object, e As EventArgs) Handles txtUnit1.TextChanged
+
+    End Sub
+
+    Private Sub txtManSync_KeyDown(sender As Object, e As KeyEventArgs) Handles txtManSync.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtManSync.Text = "" Then
+                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No IP adress specified.")
+            End If
+            Try
+                SendUDP(txtManSync.Text, 11319, Encoding.ASCII.GetBytes("0"))
+                Button1.Text = "Manual sync"
+                txtManSync.Visible = False
+                txtManSync.Text = "IP adress:"
+            Catch ex As Exception
+                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " No IP adress specified.")
+            End Try
         End If
     End Sub
 
@@ -806,6 +887,7 @@ Public Class main
 
     <DllImport("winmm.dll")> Private Shared Function waveOutGetVolume(ByVal hwo As IntPtr, ByRef pdwVolume As UInteger) As UInteger
     End Function
+
 
     '-------------
 
