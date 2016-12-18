@@ -24,6 +24,7 @@ unsigned int udpServerPort = 11319;
 unsigned int udpPingPort = 11319;
 unsigned int udpSoundPort = 11318;
 unsigned int udpRespondPort = 11320;
+boolean sync = false;
 
 WiFiUDP udp;
 
@@ -86,11 +87,10 @@ void setup() {
   udp.begin(udpPingPort);
 
   //IPAddress ipServer(217, 210, 144, 102); //Marcus
-  //IPAddress ipServer(192, 168, 1, 116); //LAN
 
   // Vänta inkommande sync från servern
   Serial.print("Väntar sync.");
-  while (ipServer < 1) {
+  while (sync == false) {
     UdpRecieveSync();
   }
 
@@ -171,31 +171,42 @@ void loop()
 }
 
 void UdpSend(byte msg)
-{
+{  
+  
  udp.beginPacket(ipServer, udpRespondPort);
-  udp.write(msg);
-  udp.endPacket();
-  Serial.print("Sending: "); Serial.print(ipServer); Serial.println(udpRespondPort);
-}
+ udp.write(msg);
+ Serial.print("Sending: "); Serial.print(ipServer); Serial.println(msg);
+ udp.endPacket();
+} 
+
 
 void UdpRecieveSync(){
   
   unsigned long now = millis();
-  if ((ipServer < 1) && (now - lastRequest) > 5000) {
+  if ((sync == 0) && (now - lastRequest) > 2000) {
     lastRequest = now;
+  
+    IPAddress ipServer(192, 168, 1, 255); //LAN
+    udp.beginPacket(ipServer, udpRespondPort);
+    udp.write(49);
+    Serial.print("Sending: "); Serial.println(ipServer);
+    udp.endPacket();  
     Serial.print(".");
+    //Endast 5 min!
   }
 
   int packetSize = udp.parsePacket();
-  if (packetSize) {
+
+  if (packetSize > 0) { 
     ipServer = udp.remoteIP();
+    sync = true;
     int len = udp.read(incomingPacket, 255);
     if (len > 0)
     {
       incomingPacket[len] = 0;
     }
     //Ack!
-    UdpSend(49);
+    
     delay(5000);
     UdpSend(49);
  
