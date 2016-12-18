@@ -134,7 +134,7 @@ void loop()
       rectified = abs(val - silence_value);
 
       accum_silence += val;
-      envelope_value += rectified;
+      envelope_value += rectified; //TA BORT??
 
       // delta7-compress the data
       writeptr = delta7_sample(last, readptr, writeptr);
@@ -152,15 +152,17 @@ void loop()
     if (millis() < send_sound_util) {
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
+
+  Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
       udp.endPacket();
     }
-
+    //Serial.print("delay "); Serial.print(millis() - now);
+    //Serial.println("");
     send_samples_now = 0;
     
     //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
     //Serial.print("delay "); Serial.print(millis() - now);
     //Serial.println("");
-
   }
 
   // If not sending anything, add a delay to enable modem sleep
@@ -175,7 +177,6 @@ void UdpSend(byte msg)
   
  udp.beginPacket(ipServer, udpRespondPort);
  udp.write(msg);
- Serial.print("Sending: "); Serial.print(ipServer); Serial.println(msg);
  udp.endPacket();
 } 
 
@@ -184,12 +185,10 @@ void UdpRecieveSync(){
   
   unsigned long now = millis();
   if ((sync == 0) && (now - lastRequest) > 2000) {
-    lastRequest = now;
-  
+    lastRequest = now;  
     IPAddress ipServer(192, 168, 1, 255); //LAN
     udp.beginPacket(ipServer, udpRespondPort);
     udp.write(49);
-    Serial.print("Sending: "); Serial.println(ipServer);
     udp.endPacket();  
     Serial.print(".");
     //Endast 5 min!
@@ -235,16 +234,10 @@ void UdpRecieveData()
       case 2: 
         //Sätt volym.
         Serial.print("RawVolume: ");Serial.println(incomingUDP[1] - '0');    
-        if (incomingUDP[1] - '0' == 0){envelope_threshold = 2;}
-        if (incomingUDP[1] - '0' == 1){envelope_threshold = 5;}
-        if (incomingUDP[1] - '0' == 2){envelope_threshold = 10;}
-        if (incomingUDP[1] - '0' == 3){envelope_threshold = 15;}
-        if (incomingUDP[1] - '0' == 4){envelope_threshold = 20;}
-        if (incomingUDP[1] - '0' == 5){envelope_threshold = 30;}
-        if (incomingUDP[1] - '0' == 6){envelope_threshold = 40;}
-        if (incomingUDP[1] - '0' == 7){envelope_threshold = 60;}
-        if (incomingUDP[1] - '0' == 8){envelope_threshold = 80;}
-        if (incomingUDP[1] - '0' == 9){envelope_threshold = 100;}           
+        if (incomingUDP[1] - '0' == 0){envelope_threshold = 2;} //Rör sig
+        if (incomingUDP[1] - '0' == 1){envelope_threshold = 5;} //Gnyr
+        if (incomingUDP[1] - '0' == 2){envelope_threshold = 40;} //Skriker
+        if (incomingUDP[1] - '0' == 3){envelope_threshold = 80;} //Världskrig         
         Serial.print("Volym: "); Serial.println(envelope_threshold);    
         break;
       case 3:
