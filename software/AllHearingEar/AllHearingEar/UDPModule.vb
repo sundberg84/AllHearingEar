@@ -61,7 +61,7 @@ Module Udp
     ' UDP Client (11319 för skickande OCH mottagande av status/commands)
     '----------------------------------------------------------------------------
 
-    Public UdpSender As New UdpClient(0)
+    Public UdpSender As New UdpClient(11319)
     Public Function SendUDP(IP As String, Port As Integer, senddata As Byte())
 
         'Använd denna om du exempelvis vill skicka en sync eller annat via UDP.
@@ -70,6 +70,8 @@ Module Udp
         If senddata.Length > "4" Then
             Return "UDP message not sent! Max 4 bytes data!"
         Else
+
+            UdpSender.EnableBroadcast = True
             UdpSender.Connect(IP, Port)
             UdpSender.Send(senddata, senddata.Length)
             'UdpSender.Close()

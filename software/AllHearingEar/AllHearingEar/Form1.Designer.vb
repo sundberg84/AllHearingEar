@@ -61,6 +61,7 @@ Partial Class main
         Me.PBSyncHelp = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.ToolTipSyncHelp = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,7 +88,7 @@ Partial Class main
         Me.BtnListen.Name = "BtnListen"
         Me.BtnListen.Size = New System.Drawing.Size(75, 23)
         Me.BtnListen.TabIndex = 0
-        Me.BtnListen.Text = "Disconnect"
+        Me.BtnListen.Text = "Stop listen"
         Me.BtnListen.UseVisualStyleBackColor = True
         '
         'LBLogg
@@ -383,6 +384,7 @@ Partial Class main
         Me.txtUnit1.Size = New System.Drawing.Size(100, 20)
         Me.txtUnit1.TabIndex = 0
         Me.txtUnit1.Text = "Enter name:"
+        Me.txtUnit1.Visible = False
         '
         'Button1
         '
@@ -441,12 +443,22 @@ Partial Class main
         '
         Me.ToolTipSyncHelp.ToolTipTitle = "Manual Sync Help"
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(298, 467)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(63, 13)
+        Me.Label3.TabIndex = 10
+        Me.Label3.Text = "Version: 1.0"
+        '
         'main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(370, 291)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtManSync)
         Me.Controls.Add(Me.Button1)
@@ -523,4 +535,5 @@ Partial Class main
     Friend WithEvents PBSyncHelp As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents ToolTipSyncHelp As ToolTip
+    Friend WithEvents Label3 As Label
 End Class

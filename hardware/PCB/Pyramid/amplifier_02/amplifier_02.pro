@@ -1,4 +1,4 @@
-update=2016-12-03 22:04:26
+update=2016-12-08 12:23:58
 version=1
 last_client=kicad
 [pcbnew]
@@ -29,7 +29,7 @@ version=1
 version=1
 LibDir=
 [eeschema/libraries]
-LibName1=D:/OneDrive/Arduino/KiCad libraries/max9812
+LibName1=amplifier_02-rescue
 LibName2=power
 LibName3=device
 LibName4=transistors
@@ -59,4 +59,4 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=D:/OneDrive/Arduino/KiCad libraries/Mic
+LibName31=D:/OneDrive/AllHearingEar/hardware/PCB/andreas_footprints
