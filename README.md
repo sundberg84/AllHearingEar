@@ -1,6 +1,21 @@
 ﻿# AllHearingEar
+ 
+## Slogan (eng)
+Open the world for your headphones!
+Are you afraid of missing out on something with your headphones covering your ears? 
+
+## Produktbeskrivning (eng)
+We believe it’s possible to combine a world with your headphones covering your ears and still not miss anything important happening IRL. Are you a gamer with sleeping children or a reader listening to recorded books and are afraid of missing something is happening? We have the product for you - AllHearingEar! Just because you are covering your ears to fully enjoy your sound should not stop you from hearing a crying baby or a visitor ringing the doorbell. 
+
+The AllHearingEar is always and secure connected to you home Wi-Fi and alerts you with the exact recording in real time. This way you can enjoy your gaming, videos, music or voice with headphones in both ears and still safely know you will be alerted if needed.
+
+The AllHearingEar is a onetime, low-cost hardware you connect to your home Wi-Fi. Free apps and software are downloaded and run in the background of your PC, smartphone or tablet. The software and hardware have a live status and will alert you if disconnected. You have the endless possibility to adjust trigger limits from even the smallest sound to a small orchestra.
+
+All this to be able to enjoy your gaming in full 7.1 sound or a quiet book tucked inside a blanket by the fire - and always know you are in control.
+
+
 ## Idé:
-Skapa en babymonitor som ansluter till hemmanätverket via WI-FI och bryter aktivt ljud i din hemdator samt spelar upp ljudet som tas upp av mikrofonen i babymonitorn.
+Skapa en babymonitor som ansluter till hemmanätverket via WI-FI och bryter aktivt ljud i din hemdator samt spelar upp ljudet som tas upp av mikrofonen i babymonitorn. 
 Detta för att kunna underlätta för användaren av datorn när användaren spelar spel, ser film, lyssnar på musik eller liknande.
 Idén uppkom när jag och min bror spelade datorspel tillsammans och båda två var tvungna att sitta med endast en hörlur på ena örat.
 Vi vill alltså ha möjlighet att höra våra barn om de eventuellt vaknar, utan att tappa ljud när vi arbetar med våra datorer.
@@ -8,18 +23,14 @@ Vi vill alltså ha möjlighet att höra våra barn om de eventuellt vaknar, utan
 ##Namn
 Om vi nu ska köra på illuminati pyramid kan vi istället för att produkten heter all-seeing-eye heta all-hearing-ear ?
 
-<Beslutat då mer än 50% av styrelsen röstat ja!>
-
 ### Utförande
+USB-stick
+Pyramid
 
 ## Ström?
 
-En mycket känslig fråga.
-Hur koverterar vi 240v AC till 5V dc. Enklast med en mobiltelefonladdare.
-Köpa och skicka med? Säkerhet? CE märkning osv?
-
-Bygga intern AC-DC konvertering? HLK-PM01? 
-Kostnad för CE/FEE märkning?
+USB Anslutningar - Konsument står för egna adapters.
+Anslutes till telefonladdare - standard USB / MicroUSB.
 
 ## Hårdvara
 
