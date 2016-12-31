@@ -1,0 +1,13 @@
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\VOIPtest.exe.config
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\VOIPtest.exe
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\VOIPtest.pdb
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\VOIPtest.xml
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\NAudio.dll
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\bin\Debug\NAudio.xml
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.vbprojResolveAssemblyReference.cache
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.Form1.resources
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.Resources.resources
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.vbproj.GenerateResource.Cache
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.exe
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.xml
+c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.pdb

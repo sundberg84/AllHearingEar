@@ -1,0 +1,10 @@
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\bin\Debug\UDPVOIPLISTEN.exe.config
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\bin\Debug\UDPVOIPLISTEN.exe
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\bin\Debug\UDPVOIPLISTEN.pdb
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\bin\Debug\UDPVOIPLISTEN.xml
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.Form1.resources
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.Resources.resources
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.vbproj.GenerateResource.Cache
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.exe
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.xml
+c:\users\marcus\documents\visual studio 2015\Projects\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.pdb
