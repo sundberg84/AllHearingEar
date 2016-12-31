@@ -63,6 +63,8 @@ https://www.hackster.io/middleca/sending-sound-over-the-internet-f097b4
 
 Https://plus.google.com/wm/1/+MarkChaney/posts/EpTNcAjxMak
 
+https://perso.aquilenet.fr/~sven337/english/2016/07/14/DIY-wifi-baby-monitor.html
+
 #### Ljud/Mic till Arduino:
 
 Https://perso.aquilenet.fr/~sven337/english/2016/07/14/DIY-wifi-baby-monitor.html
