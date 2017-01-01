@@ -11,3 +11,7 @@ c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debu
 c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.exe
 c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.xml
 c:\users\marcus\documents\visual studio 2015\Projects\VOIPtest\VOIPtest\obj\Debug\VOIPtest.pdb
+D:\OneDrive\AllHearingEar\software\VoipTest\VOIPtest\VOIPtest\bin\Debug\VOIPtest.exe.config
+D:\OneDrive\AllHearingEar\software\VoipTest\VOIPtest\VOIPtest\obj\Debug\VOIPtest.exe
+D:\OneDrive\AllHearingEar\software\VoipTest\VOIPtest\VOIPtest\obj\Debug\VOIPtest.xml
+D:\OneDrive\AllHearingEar\software\VoipTest\VOIPtest\VOIPtest\obj\Debug\VOIPtest.pdb

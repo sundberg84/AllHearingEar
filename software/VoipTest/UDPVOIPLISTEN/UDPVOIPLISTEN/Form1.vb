@@ -43,7 +43,7 @@ Public Class Form1
 
     Dim VoxViaUDP As System.Threading.Thread
     Dim VoxViaUDPIPAddress As IPAddress
-    Dim VoxViaUDPLogicalPortNumber As Integer = 11319
+    Dim VoxViaUDPLogicalPortNumber As Integer = 11318
     Dim VoxViaUDPRemoteIpEndPoint As System.Net.IPEndPoint
     Dim VoxViaUDPRxClient As System.Net.Sockets.UdpClient
 
@@ -121,11 +121,11 @@ Public Class Form1
 
     Private Sub CreateWaveHeaderAndPlay()
         WaveData.Clear()
-        For i = 0 To 49
+        For i = 0 To RcvdWaveFileBytes.Count - 1
             WaveData.AddRange(RcvdWaveFileBytes(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
         Next
         Label2.Text = "WaveData created at " & Now.ToLongTimeString & "."
-        RcvdWaveFileBytes.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
+        RcvdWaveFileBytes.RemoveRange(0, 51) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
         FileSize = WaveFileHelper(WaveData.Count + 36, 4)
         FormatLength = WaveFileHelper(16, 4)
         WaveTypePCM = WaveFileHelper(1, 2)
