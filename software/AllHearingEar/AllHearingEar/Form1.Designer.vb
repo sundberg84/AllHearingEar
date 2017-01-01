@@ -62,6 +62,7 @@ Partial Class main
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.ToolTipSyncHelp = New System.Windows.Forms.ToolTip(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.BtnClear = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TBVolume1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,7 +89,7 @@ Partial Class main
         Me.BtnListen.Name = "BtnListen"
         Me.BtnListen.Size = New System.Drawing.Size(75, 23)
         Me.BtnListen.TabIndex = 0
-        Me.BtnListen.Text = "Stop listen"
+        Me.BtnListen.Text = "Mute"
         Me.BtnListen.UseVisualStyleBackColor = True
         '
         'LBLogg
@@ -220,7 +221,7 @@ Partial Class main
         Me.TBSens4.AutoSize = False
         Me.TBSens4.Enabled = False
         Me.TBSens4.Location = New System.Drawing.Point(145, 97)
-        Me.TBSens4.Maximum = 9
+        Me.TBSens4.Maximum = 3
         Me.TBSens4.Name = "TBSens4"
         Me.TBSens4.Size = New System.Drawing.Size(83, 20)
         Me.TBSens4.TabIndex = 15
@@ -233,7 +234,7 @@ Partial Class main
         Me.TBSens3.AutoSize = False
         Me.TBSens3.Enabled = False
         Me.TBSens3.Location = New System.Drawing.Point(145, 71)
-        Me.TBSens3.Maximum = 9
+        Me.TBSens3.Maximum = 3
         Me.TBSens3.Name = "TBSens3"
         Me.TBSens3.Size = New System.Drawing.Size(83, 20)
         Me.TBSens3.TabIndex = 14
@@ -246,7 +247,7 @@ Partial Class main
         Me.TBSens2.AutoSize = False
         Me.TBSens2.Enabled = False
         Me.TBSens2.Location = New System.Drawing.Point(145, 45)
-        Me.TBSens2.Maximum = 9
+        Me.TBSens2.Maximum = 3
         Me.TBSens2.Name = "TBSens2"
         Me.TBSens2.Size = New System.Drawing.Size(83, 20)
         Me.TBSens2.TabIndex = 13
@@ -260,7 +261,7 @@ Partial Class main
         Me.TBSens1.Enabled = False
         Me.TBSens1.LargeChange = 1
         Me.TBSens1.Location = New System.Drawing.Point(145, 19)
-        Me.TBSens1.Maximum = 9
+        Me.TBSens1.Maximum = 3
         Me.TBSens1.Name = "TBSens1"
         Me.TBSens1.Size = New System.Drawing.Size(83, 20)
         Me.TBSens1.TabIndex = 12
@@ -452,12 +453,21 @@ Partial Class main
         Me.Label3.TabIndex = 10
         Me.Label3.Text = "Version: 1.0"
         '
+        'BtnClear
+        '
+        Me.BtnClear.Location = New System.Drawing.Point(12, 467)
+        Me.BtnClear.Name = "BtnClear"
+        Me.BtnClear.Size = New System.Drawing.Size(75, 24)
+        Me.BtnClear.TabIndex = 11
+        Me.BtnClear.Text = "Clear Sync"
+        Me.BtnClear.UseVisualStyleBackColor = True
+        '
         'main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(370, 291)
-        Me.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.Controls.Add(Me.BtnClear)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.txtManSync)
@@ -503,7 +513,6 @@ Partial Class main
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents CBLogg As CheckBox
     Friend WithEvents CBAutoStart As CheckBox
-    Friend WithEvents NotifyIcon1 As NotifyIcon
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents OpenAllHearingEarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
@@ -536,4 +545,6 @@ Partial Class main
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents ToolTipSyncHelp As ToolTip
     Friend WithEvents Label3 As Label
+    Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents BtnClear As Button
 End Class

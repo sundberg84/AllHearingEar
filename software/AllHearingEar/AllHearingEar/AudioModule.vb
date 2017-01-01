@@ -33,11 +33,11 @@ Module Audio
 
         Dim sample As New List(Of Byte)
         sample.Clear()
-        For i = 0 To 48
+        For i = 0 To WaveData.Count - 1
             sample.AddRange(WaveData(i)) ' Add indexes 0 to 24 byte arrays to WaveData from RcvdWaveFileBytes
         Next
 
-        WaveData.RemoveRange(0, 50) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
+        WaveData.RemoveRange(0, 49) ' Remove indexes 0 to 24 (25 total indexes) from RcvdWaveFileBytes
 
         Dim ChunkID() As Byte = System.Text.ASCIIEncoding.ASCII.GetBytes("RIFF")
         Dim Format() As Byte = System.Text.ASCIIEncoding.ASCII.GetBytes("WAVE")

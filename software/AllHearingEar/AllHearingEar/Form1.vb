@@ -20,7 +20,6 @@ Public Class main
         subscriber.Client.ReceiveTimeout = 50
         subscriber.Client.Blocking = False
 
-
         'Loggbok info
         addLog(DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " Startup successfull!")
 
@@ -53,7 +52,7 @@ Public Class main
         NumberOfUnitsSynced = My.Settings.NumOfSynUn
 
         'Visa synkade enheter
-        If txtUnit1.Text <> "" Then
+        If txtUnit1.Text <> "" Or AHESyncIP1 <> "" Then
             txtUnit1.Visible = True
             txtUnit1.Enabled = False
             PBdelete1.Visible = True
@@ -61,7 +60,7 @@ Public Class main
             TBSens1.Visible = True
             TBSens1.Enabled = True
         End If
-        If txtUnit2.Text <> "" Then
+        If txtUnit2.Text <> "" Or AHESyncIP2 <> "" Then
             txtUnit2.Visible = True
             txtUnit2.Enabled = False
             PBdelete2.Visible = True
@@ -69,7 +68,7 @@ Public Class main
             TBSens2.Visible = True
             TBSens2.Enabled = True
         End If
-        If txtUnit3.Text <> "" Then
+        If txtUnit3.Text <> "" Or AHESyncIP3 <> "" Then
             txtUnit3.Visible = True
             txtUnit3.Enabled = False
             PBdelete3.Visible = True
@@ -77,7 +76,7 @@ Public Class main
             TBSens3.Visible = True
             TBSens3.Enabled = True
         End If
-        If txtUnit4.Text <> "" Then
+        If txtUnit4.Text <> "" Or AHESyncIP4 <> "" Then
             txtUnit4.Visible = True
             txtUnit4.Enabled = False
             PBdelete4.Visible = True
@@ -91,8 +90,8 @@ Public Class main
 
         'Kör findslot för att veta hur många enheter det finns syncade och för att veta vilken slot nästa enhet ska hamna i.
         Call FindSlot()
-
-
+        'Kör igång ljudet för att börja lyssna direkt
+        udpAudioThread()
 
     End Sub
 
@@ -121,11 +120,14 @@ Public Class main
         'Finns det syncade AHE så ska AudioMottagningen starta.
         If BtnListen.Text = "Listen" Then
 
-            'Skicka en förfrågan om nya AHE enheten.
-            BtnListen.Text = "Stop listen"
-            udpAudioThread()
-        ElseIf BtnListen.Text = "Stop listen" Then
-            addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
+
+            BtnListen.Text = "Mute"
+            If AHESyncIP1 <> "" Then
+                udpAudioThread()
+            Else
+            End If
+        ElseIf BtnListen.Text = "Mute" Then
+                addLog(Environment.NewLine + DateAndTime.DateString + " " + DateAndTime.TimeOfDay + " You disconnected from All Hearing Ear!")
             BtnListen.Text = "Listen"
             If AHESyncIP1 <> "" Then
                 StopAudioUDP()
@@ -154,7 +156,7 @@ Public Class main
 
     Private Sub CBLogg_CheckedChanged(sender As Object, e As EventArgs) Handles CBLogg.CheckedChanged
         If CBLogg.Checked = True Then
-            Me.Height = 521
+            Me.Height = 534
         Else
             Me.Height = 330
         End If
@@ -162,7 +164,7 @@ Public Class main
 
     Private Sub PBok1_Click(sender As Object, e As EventArgs) Handles PBok1.Click
 
-        If txtUnit1.Text = AHESyncIP1 Or txtUnit1.Text = "" Then
+        If txtUnit1.Text = "" Then
             MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName1 = txtUnit1.Text
@@ -176,7 +178,7 @@ Public Class main
     End Sub
     Private Sub txtUnit1_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit1.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If txtUnit1.Text = AHESyncIP1 Or txtUnit1.Text = "" Then
+            If txtUnit1.Text = "" Then
                 MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
             Else
                 AHEsyncName1 = txtUnit1.Text
@@ -190,9 +192,7 @@ Public Class main
     End Sub
 
     Private Sub PBdelete1_Click(sender As Object, e As EventArgs) Handles PBdelete1.Click
-        If AHESyncIP1 > "" Then
-            StopAudioUDP()
-        End If
+
         AHEsyncName1 = ""
         AHESyncIP1 = ""
         txtUnit1.Text = ""
@@ -206,7 +206,7 @@ Public Class main
 
     Private Sub PBok2_Click(sender As Object, e As EventArgs) Handles PBok2.Click
 
-        If txtUnit2.Text = "" Or txtUnit2.Text = AHESyncIP2 Then
+        If txtUnit2.Text = "" Then
             MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName2 = txtUnit2.Text
@@ -220,7 +220,7 @@ Public Class main
     End Sub
     Private Sub txtUnit2_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit2.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If txtUnit2.Text = AHESyncIP2 Or txtUnit2.Text = "" Then
+            If txtUnit2.Text = "" Then
                 MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
             Else
                 AHEsyncName2 = txtUnit2.Text
@@ -234,7 +234,7 @@ Public Class main
     End Sub
 
     Private Sub PBdelete2_Click(sender As Object, e As EventArgs) Handles PBdelete2.Click
-        StopAudioUDP()
+
         txtUnit2.Text = ""
         PBdelete2.Enabled = False
         PBdelete2.Visible = False
@@ -248,7 +248,7 @@ Public Class main
 
     Private Sub PBok3_Click(sender As Object, e As EventArgs) Handles PBok3.Click
 
-        If txtUnit3.Text = "" Or txtUnit3.Text = AHESyncIP3 Then
+        If txtUnit3.Text = "" Then
             MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName3 = txtUnit3.Text
@@ -262,7 +262,7 @@ Public Class main
     End Sub
     Private Sub txtUnit3_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUnit3.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If txtUnit3.Text = AHESyncIP3 Or txtUnit3.Text = "" Then
+            If txtUnit3.Text = "" Then
                 MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
             Else
                 AHEsyncName3 = txtUnit3.Text
@@ -276,7 +276,7 @@ Public Class main
     End Sub
 
     Private Sub PBdelete3_Click(sender As Object, e As EventArgs) Handles PBdelete3.Click
-        StopAudioUDP()
+
         txtUnit3.Text = ""
         PBdelete3.Enabled = False
         PBdelete3.Visible = False
@@ -289,7 +289,7 @@ Public Class main
 
     Private Sub PBok4_Click(sender As Object, e As EventArgs) Handles PBok4.Click
 
-        If txtUnit4.Text = "" Or txtUnit4.Text = AHESyncIP4 Then
+        If txtUnit4.Text = "" Then
             MsgBox("You have to name your unit!", vbOKOnly, "All hearing ear")
         Else
             AHEsyncName4 = txtUnit3.Text
@@ -316,7 +316,7 @@ Public Class main
     End Sub
 
     Private Sub PBdelete4_Click(sender As Object, e As EventArgs) Handles PBdelete4.Click
-        StopAudioUDP()
+
         txtUnit4.Text = ""
         PBdelete4.Enabled = False
         PBdelete4.Visible = False
@@ -617,7 +617,7 @@ Public Class main
             Dim rcvPingbytes() As Byte = subscriber.Receive(respondPing)
             LookForPing = ASCII.GetString(rcvPingbytes)
 
-            addLog("Debug (11320): " & LookForPing & " " & respondPing.ToString & " " & rcvPingbytes.ToString)
+            'addLog("Debug (11320): " & LookForPing & " " & respondPing.ToString & " " & rcvPingbytes.ToString)
 
             If LookForPing = 1 Then
 
@@ -814,27 +814,104 @@ Public Class main
 
     Private Sub TBSens1_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens1.MouseUp
         SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("2" + TBSens1.Value.ToString))
-        addLog(txtUnit1.Text & " Set sensitivity: " & TBSens1.Value.ToString * 10)
+
+        Select Case TBSens1.Value
+            Case 0
+                addLog(txtUnit1.Text & " Set sensitivity: Movement")
+            Case 1
+                addLog(txtUnit1.Text & " Set sensitivity: Whimpering")
+            Case 2
+                addLog(txtUnit1.Text & " Set sensitivity: Crying")
+            Case 3
+                addLog(txtUnit1.Text & " Set sensitivity: Screaming")
+        End Select
+
+
+
     End Sub
 
     Private Sub TBSens2_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens2.MouseUp
         SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("2" + TBSens2.Value.ToString))
-        addLog(txtUnit2.Text & " Set sensitivity: " & TBSens2.Value.ToString * 10)
+        Select Case TBSens2.Value
+            Case 0
+                addLog(txtUnit2.Text & " Set sensitivity: Movement")
+            Case 1
+                addLog(txtUnit2.Text & " Set sensitivity: Whimpering")
+            Case 2
+                addLog(txtUnit2.Text & " Set sensitivity: Crying")
+            Case 3
+                addLog(txtUnit2.Text & " Set sensitivity: Screaming")
+        End Select
     End Sub
 
     Private Sub TBSens3_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens3.MouseUp
         SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("2" + TBSens3.Value.ToString))
-        addLog(txtUnit3.Text & " Set sensitivity: " & TBSens3.Value.ToString * 10)
+        Select Case TBSens3.Value
+            Case 0
+                addLog(txtUnit3.Text & " Set sensitivity: Movement")
+            Case 1
+                addLog(txtUnit3.Text & " Set sensitivity: Whimpering")
+            Case 2
+                addLog(txtUnit3.Text & " Set sensitivity: Crying")
+            Case 3
+                addLog(txtUnit3.Text & " Set sensitivity: Screaming")
+        End Select
     End Sub
 
 
 
     Private Sub TBSens4_MouseUp(sender As Object, e As MouseEventArgs) Handles TBSens4.MouseUp
         SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("2" + TBSens4.Value.ToString))
-        addLog(txtUnit4.Text & " Set sensitivity: " & TBSens4.Value.ToString * 10)
+        Select Case TBSens4.Value
+            Case 0
+                addLog(txtUnit4.Text & " Set sensitivity: Movement")
+            Case 1
+                addLog(txtUnit4.Text & " Set sensitivity: Whimpering")
+            Case 2
+                addLog(txtUnit4.Text & " Set sensitivity: Crying")
+            Case 3
+                addLog(txtUnit4.Text & " Set sensitivity: Screaming")
+        End Select
     End Sub
 
-
+    Private Sub BtnClear_Click(sender As Object, e As EventArgs) Handles BtnClear.Click
+        AHESyncIP1 = ""
+        AHESyncIP2 = ""
+        AHESyncIP3 = ""
+        AHESyncIP4 = ""
+        AHEsyncName1 = ""
+        AHEsyncName2 = ""
+        AHEsyncName3 = ""
+        AHEsyncName4 = ""
+        txtUnit1.Text = ""
+        txtUnit2.Text = ""
+        txtUnit3.Text = ""
+        txtUnit3.Text = ""
+        txtUnit1.Visible = False
+        txtUnit2.Visible = False
+        txtUnit3.Visible = False
+        txtUnit4.Visible = False
+        txtUnit1.BackColor = SystemColors.Menu
+        txtUnit2.BackColor = SystemColors.Menu
+        txtUnit3.BackColor = SystemColors.Menu
+        txtUnit4.BackColor = SystemColors.Menu
+        PBdelete1.Visible = False
+        PBok1.Visible = False
+        PBdelete2.Visible = False
+        PBok2.Visible = False
+        PBdelete3.Visible = False
+        PBok3.Visible = False
+        PBdelete4.Visible = False
+        PBok4.Visible = False
+        TBSens1.Value = 0
+        TBSens2.Value = 0
+        TBSens3.Value = 0
+        TBSens4.Value = 0
+        TBSens1.Visible = False
+        TBSens2.Visible = False
+        TBSens3.Visible = False
+        TBSens4.Visible = False
+    End Sub
 
     Private Sub txtManSync_MouseClick(sender As Object, e As MouseEventArgs) Handles txtManSync.MouseClick
         If txtManSync.Text = "IP adress:" Then
@@ -842,9 +919,6 @@ Public Class main
         End If
     End Sub
 
-    Private Sub txtUnit1_TextChanged(sender As Object, e As EventArgs) Handles txtUnit1.TextChanged
-
-    End Sub
 
     Private Sub txtManSync_KeyDown(sender As Object, e As KeyEventArgs) Handles txtManSync.KeyDown
         If e.KeyCode = Keys.Enter Then

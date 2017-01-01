@@ -157,6 +157,7 @@
     <None Include="Resources\AHE.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AHEReadme.rtf" />
     <None Include="Resources\greeok.png" />
   </ItemGroup>
   <ItemGroup>

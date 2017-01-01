@@ -19,3 +19,7 @@ D:\OneDrive\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debu
 D:\OneDrive\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.Form1.resources
 D:\OneDrive\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.Resources.resources
 D:\OneDrive\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.vbproj.GenerateResource.Cache
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\bin\Debug\UDPVOIPLISTEN.exe.config
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.exe
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.xml
+C:\Users\Marcus\Documents\GitHub\AllHearingEar\software\VoipTest\UDPVOIPLISTEN\UDPVOIPLISTEN\obj\Debug\UDPVOIPLISTEN.pdb
