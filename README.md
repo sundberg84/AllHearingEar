@@ -37,27 +37,25 @@ Anslutes till telefonladdare - standard USB / MicroUSB.
 Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett snyggt och praktiskt hölje!
 
 - Esp8266 Wifi Accesspoint/Server (https://github.com/tzapu/WiFiManager )
-
-- Atmega328p
-
 - 5V VCC (iphone laddare?) Batteri?
-
 - 3.3V för Esp?
-
 - Electret Microphone Amplifier MAX4466
-
 - Statusled?
-
 - Nattlampa LED
 
-- Hårdvaru
-
+## Skal 
+3d pyramid
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
 -Hål undertill för väggfäste!
 
-- Microfoner: https://store.invensense.com/ProductDetail/ICS43432-InvenSense-Inc/495200/
+USB sticka:
+- https://stickerapp.se/klistermarken/#!
+- http://www.mouser.se/ProductDetail/New-Age-Enclosures/P3A-220805S/?qs=sGAEpiMZZMsrGrAVj6eTvc%252bnjeHQ3V8MaYpIX8AH0%252bY%3d
+
 
 ## Länkar Hårdvara
+
+Microfoner: https://store.invensense.com/ProductDetail/ICS43432-InvenSense-Inc/495200/
 
 https://www.hackster.io/middleca/sending-sound-over-the-internet-f097b4
 
@@ -79,7 +77,7 @@ Sök arduino electret microphone circuit
 ## Wishlist
 Kamera
 
-##Mjukvara
+## Mjukvara
 
 Marcus utformar en mjukvara till Windows som synkar hårdvaran och bryter eventuellt ljud som spelas upp från datorn. För att sedan spela upp ljudet från monitorn.
 Synkning av hårdvara,
@@ -108,34 +106,15 @@ http://www.codeproject.com/Articles/19485/A-Voice-Chat-Application-in-C - A Voic
 Knapp för att visa video.
 Alternativ för att få video picture in picture när monitor aktiveras.
 
-### Språk
-Listener programmeras i Visual Basic då språket är mer känt av Marcus och kod för att skicka och lyssna bevisats fungera och uppfylla de krav vi har.
-
-###Steg 1: Hitta kod för kommunikation mellan mikrofon och dator.
-- UDP / TCP?
-Valt protokoll är UDP då det inte behöver ett svar från client innan nästa packet skickas. UDP streamar hela tiden med risk att tappa delar av packet.
- 
-Då krav på ljudkvalité inte är stort i vårt projekt riskerar vi inte lagg genom att använda TCP.
-
-Två testprogram är färdiga. Sändare och Lyssnare som streamar ljud via UDP. 
-
-###Steg 2: Ändra ljudnivåer i dator för att mikrofonen ska få prioritet på datorn.
-
-###Steg 3: Push/Pull lösning
-
-###Steg 4: Användarinställningar / Decibelbegränsning
-
-###Steg 5: Grafiskt user interface.
-Löser sig på ett enkelt sätt då vi använder VB Form application.
-
 ##Det kommerciella
-
 ###Ce/Fee
 ###Strömadapter
 ###Förpackning
 ###Ekonomi
 Kickstarter?
 ###Marknadsföring
+Hemsida
+Facebook
 ###Målgrupp
 Gamers
 Unga med barn
@@ -143,27 +122,12 @@ Teknikintresserade (hörlurar) (Sälja hörlurar tillsammans?)
 ###Användningsområde
 
 Gamers som passar barnen men vill spela
-
 Mammor som lyssnar på ljudböcker? (Kräver app ios/Android?)
-
 Egenföretagare med barn som behöver jobba kväll och vill lyssna på musik.
-
 Studerande med barn som jobbar med datorn och lyssnar på musik.
-
 Musiker som jobbar hemma.
-
 Arbetande tjänstemän som behöver använda en dator i jobbet medans barnen sover.
 
 ##Produktbeskrivning/Anvädningsområde
 Vi vill alltså ha möjlighet att höra våra barn om de eventuellt vaknar, utan att tappa ljud när vi arbetar med våra datorer.
 På ett smart sätt höra din omgivning, exempelvis barn som vaknar, utan att tappa ljud via hörlurarna när man arbetar vid dator/platta/mobil.
-
-##Logg / Rev historia! (Använda github.com för kod??)
-Sept 2016
-Hårdvara
-Beställt hårdvara (ESP8266, Mikrofon)
-Tänk köra Wifi via (https://github.com/tzapu/WiFiManager) direkt på ESP8266
-Börjar bygge av hårdvara
-Mjukvara
-
-
