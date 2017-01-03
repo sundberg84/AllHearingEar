@@ -3,7 +3,7 @@
   (general
     (links 49)
     (no_connects 0)
-    (area -7.69987 -9.675001 171.43 106.500001)
+    (area 140.549999 47.75 171.43 106.500001)
     (thickness 1.6)
     (drawings 53)
     (tracks 315)
@@ -933,7 +933,7 @@
   (gr_line (start 143.105 99.765) (end 142.23 99.765) (angle 90) (layer F.SilkS) (width 0.127) (tstamp 58565C16))
   (gr_line (start 143.105 100.64) (end 142.23 99.765) (angle 90) (layer F.SilkS) (width 0.127) (tstamp 58565C15))
   (gr_line (start 159.76 104.6) (end 159.76 104.58) (angle 90) (layer Edge.Cuts) (width 0.15))
-  (gr_text "AHE-Stick\n" (at 151.26 86.53) (layer F.SilkS)
+  (gr_text "AHE-Stick\n" (at 151.3 94.6) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.25)))
   )
   (gr_circle (center 150.975 83.005) (end 152.875 86.63) (layer B.SilkS) (width 0.127))

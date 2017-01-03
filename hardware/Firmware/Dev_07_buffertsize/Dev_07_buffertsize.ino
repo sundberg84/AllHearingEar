@@ -46,7 +46,7 @@ int send_samples_now; // flag to signal that a buffer is ready to be sent
 #define ENVELOPE_EMA_WEIGHT 2
 int32_t silence_value = 2048; // computed as an exponential moving average of the signal
 uint16_t envelope_threshold = 10; // envelope threshold to trigger data sending
-uint32_t send_sound_util = 0; // date until sound transmission ends after an envelope threshold has triggered sound transmission
+uint32_t send_sound_util = 0; // eeeeeeeeeeeeeedate until sound transmission ends after an envelope threshold has triggered sound transmission
 unsigned int stop_sound_after  = 10000;
 int enable_highpass_filter = 1;
 
@@ -152,7 +152,7 @@ void loop()
     if (millis() < send_sound_util) {
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
-  //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
+      //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
       udp.endPacket();
     }
     //Serial.print("delay "); Serial.print(millis() - now);
