@@ -8,25 +8,16 @@
 #include <SPI.h>
 
 //UDP Variabler
-const int UDP_PACKET_SIZE = 64; 
-//ABBB
-//A = 1 byte = 1-9, vad ska hända = Sync, Volym, Debug?
-  //0 = SYNC
-  //1 = ACK
-  //2 = VOLYM
-//B = 3 byte = 001-999, Volym eller annan info - MAX 3 chars.
-
+const int UDP_PACKET_SIZE = 64;
 char incomingPacket[UDP_PACKET_SIZE];
 char incomingUDP[UDP_PACKET_SIZE];
 
+WiFiUDP udp;
 IPAddress ipServer(0, 0, 0, 0);
-unsigned int udpServerPort = 11319;
-unsigned int udpPingPort = 11319;
+unsigned int udpRecievePort = 11319;
 unsigned int udpSoundPort = 11318;
 unsigned int udpRespondPort = 11320;
 boolean sync = false;
-
-WiFiUDP udp;
 
 //Microfon variabler.
 unsigned long lastRequest = 0;
@@ -39,25 +30,23 @@ int current_adc_buf; // which data buffer is being used for the ADC (the other i
 unsigned int adc_buf_pos; // position in the ADC data buffer
 int send_samples_now; // flag to signal that a buffer is ready to be sent
 
-// Pin definitions:
-// const int scePin = 15; // SCE - Chip select
-
 #define SILENCE_EMA_WEIGHT 1024
 #define ENVELOPE_EMA_WEIGHT 2
 int32_t silence_value = 2048; // computed as an exponential moving average of the signal
 uint16_t envelope_threshold = 10; // envelope threshold to trigger data sending
-uint32_t send_sound_util = 0; // eeeeeeeeeeeeeedate until sound transmission ends after an envelope threshold has triggered sound transmission
+uint32_t send_sound_util = 0; // date until sound transmission ends after an envelope threshold has triggered sound transmission
 unsigned int stop_sound_after  = 10000;
 int enable_highpass_filter = 1;
 
-// ÖVrigt
+// Övrigt
 const int resetPIN = 5;     // the number of the pushbutton pin
+int debug_threshold = 0;
 
 void setup() {
 
   //Debug
   Serial.begin(115200);
-  Serial.println("Startar! Ver Dev_07_buffertsize");
+  Serial.println("Starting! Firmware: Dev_07_buffertsize");
 
   //Klientnamn på routern.
   wifi_station_set_hostname("AllHearingEar");
@@ -69,10 +58,10 @@ void setup() {
   pinMode(resetPIN, INPUT);
 
   delay(1000);
-  
+
   if (digitalRead(resetPIN)) {
     //Reset settings
-    Serial.println("Nolla WIFI");
+    Serial.println("Reseting WIFI");
     //Använd denna om du vill plocka bort SSID och lösernord.
     wifiManager.resetSettings();
   }
@@ -84,12 +73,10 @@ void setup() {
   spiBegin();
 
   // Starta UDP protokoll.
-  udp.begin(udpPingPort);
-
-  //IPAddress ipServer(217, 210, 144, 102); //Marcus
+  udp.begin(udpRecievePort);
 
   // Vänta inkommande sync från servern
-  Serial.print("Väntar sync.");
+  Serial.print("Waiting sync.");
   while (sync == false) {
     UdpRecieveSync();
   }
@@ -105,10 +92,15 @@ void setup() {
 }
 
 void loop()
-{  
-  
+{
+
   UdpRecieveData();
-  
+
+  //Sync failed - Waiting for new
+  while (sync == false) {
+    UdpRecieveSync();
+  }
+
   if (send_samples_now) {
     /* We're ready to send a buffer of samples over wifi. Decide if it has to happen or not,
        that is, if the sound level is above a certain threshold. */
@@ -152,100 +144,102 @@ void loop()
     if (millis() < send_sound_util) {
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
-      //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
+
+      if (debug_threshold > 0) {
+        Serial.print("Threshold val "); Serial.println(envelope_value);
+        debug_threshold++;
+        if (debug_threshold == 100) {
+          debug_threshold = 0;
+        }
+      }
       udp.endPacket();
     }
-    //Serial.print("delay "); Serial.print(millis() - now);
-    //Serial.println("");
     send_samples_now = 0;
-    
-    //Serial.print("Silence val "); Serial.print(silence_value); Serial.print(" envelope val "); Serial.println(envelope_value);
-    //Serial.print("delay "); Serial.print(millis() - now);
-    //Serial.println("");
   }
 
   // If not sending anything, add a delay to enable modem sleep
   if (millis() > send_sound_util) {
-    
     delay(10);
   }
 }
 
 void UdpSend(byte msg)
-{  
-  
- udp.beginPacket(ipServer, udpRespondPort);
- udp.write(msg);
- udp.endPacket();
-} 
+{
+  udp.beginPacket(ipServer, udpRespondPort);
+  udp.write(msg);
+  Serial.print("Sending UDP: ");   Serial.println(msg);
+  udp.endPacket();
+}
 
 
-void UdpRecieveSync(){
-  
+void UdpRecieveSync() {
+
   unsigned long now = millis();
-  if ((sync == 0) && (now - lastRequest) > 2000) {
-    lastRequest = now;  
-    IPAddress ipServer(192, 168, 1, 255); //LAN
-    udp.beginPacket(ipServer, udpRespondPort);
-    udp.write(49);
-    udp.endPacket();  
+  if ((ipServer < 1) && (now - lastRequest) > 5000) {
+    lastRequest = now;
     Serial.print(".");
-    //Endast 5 min!
   }
 
   int packetSize = udp.parsePacket();
-
-  if (packetSize > 0) { 
+  if (packetSize) {
     ipServer = udp.remoteIP();
-    sync = true;
     int len = udp.read(incomingPacket, 255);
+    sync = true;
     if (len > 0)
     {
       incomingPacket[len] = 0;
     }
-    //Ack!
-    
-    delay(5000);
     UdpSend(49);
- 
   }
-  
 }
 
 void UdpRecieveData()
 {
-  
   int packetSizeD = udp.parsePacket();
   if (packetSizeD) {
-    udp.read(incomingUDP, 255);     
+    udp.read(incomingUDP, 255);
     uint8_t swUDP = incomingUDP[0] - '0';
-        
-     Serial.print("Switching: ");Serial.println(swUDP);
-        
+
+    Serial.print("Switching: "); Serial.println(swUDP);
+    //0 = SYNC
+    //1 = ACK
+    //2 = VOLYM
+    //3 = Debug (Show envelope value)
+    //4 = Set sync to 0
+
     switch (swUDP) {
-      case 0:     
-        UdpSend(49);        
-        break;      
-      case 1:
-        //ACK från dator
+      case 0:
         UdpSend(49);
         break;
-      case 2: 
+      case 1:
+        //ACK from software - should not be used.
+        break;
+      case 2:
         //Sätt volym.
-        Serial.print("RawVolume: ");Serial.println(incomingUDP[1] - '0');    
-        if (incomingUDP[1] - '0' == 0){envelope_threshold = 2;} //Rör sig
-        if (incomingUDP[1] - '0' == 1){envelope_threshold = 5;} //Gnyr
-        if (incomingUDP[1] - '0' == 2){envelope_threshold = 40;} //Skriker
-        if (incomingUDP[1] - '0' == 3){envelope_threshold = 80;} //Världskrig         
-        Serial.print("Volym: "); Serial.println(envelope_threshold);    
+        Serial.print("RawVolume: "); Serial.println(incomingUDP[1] - '0');
+        if (incomingUDP[1] - '0' == 0) {
+          envelope_threshold = 2; //Rör sig
+        }
+        if (incomingUDP[1] - '0' == 1) {
+          envelope_threshold = 5; //Gnyr
+        }
+        if (incomingUDP[1] - '0' == 2) {
+          envelope_threshold = 40; //Skriker
+        }
+        if (incomingUDP[1] - '0' == 3) {
+          envelope_threshold = 80; //Världskrig
+        }
+        Serial.print("Volym: "); Serial.println(envelope_threshold);
         break;
       case 3:
-        stop_sound_after = (incomingUDP[1] - '0') * 3333;
-        if (envelope_threshold == 0){envelope_threshold = 1000;}
-        Serial.print("StopSoundAfter: "); Serial.println(stop_sound_after);
-         break;
+        debug_threshold = 1;
+        break;
+      case 4:
+        Serial.print("Waiting sync.");
+        sync = false;
+        break;
       default:
-        Serial.println("Inget giltigt commando");
+        Serial.println("No command found");
         break;
     }
   }
@@ -277,7 +271,6 @@ static inline ICACHE_RAM_ATTR uint16_t transfer16(void) {
       uint8_t msb;
     };
   } out;
-
 
   // Transfer 16 bits at once, leaving HW CS low for the whole 16 bits
   while (SPI1CMD & SPIBUSY) {}
