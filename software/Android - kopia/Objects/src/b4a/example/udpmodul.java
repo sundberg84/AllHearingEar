@@ -27,7 +27,7 @@ public class udpmodul extends android.app.Service {
 	public void onCreate() {
         mostCurrent = this;
         if (processBA == null) {
-		    processBA = new BA(this, null, null, "b4a.example", "b4a.example.udpmodul");
+		    processBA = new anywheresoftware.b4a.ShellBA(this, null, null, "b4a.example", "b4a.example.udpmodul");
             try {
                 Class.forName(BA.applicationContext.getPackageName() + ".main").getMethod("initializeProcessGlobals").invoke(null, null);
             } catch (Exception e) {
@@ -88,26 +88,31 @@ public class udpmodul extends android.app.Service {
 		processBA.setActivityPaused(true);
         processBA.runHook("ondestroy", this, null);
 	}
+
 public anywheresoftware.b4a.keywords.Common __c = null;
 public b4a.example.main _main = null;
-public static String  _process_globals() throws Exception{
- //BA.debugLineNum = 5;BA.debugLine="Sub Process_Globals";
- //BA.debugLineNum = 9;BA.debugLine="End Sub";
-return "";
-}
 public static String  _service_create() throws Exception{
- //BA.debugLineNum = 10;BA.debugLine="Sub Service_Create";
- //BA.debugLineNum = 12;BA.debugLine="End Sub";
+RDebugUtils.currentModule="udpmodul";
+RDebugUtils.currentLine=720896;
+ //BA.debugLineNum = 720896;BA.debugLine="Sub Service_Create";
+RDebugUtils.currentLine=720898;
+ //BA.debugLineNum = 720898;BA.debugLine="End Sub";
 return "";
 }
 public static String  _service_destroy() throws Exception{
- //BA.debugLineNum = 18;BA.debugLine="Sub Service_Destroy";
- //BA.debugLineNum = 20;BA.debugLine="End Sub";
+RDebugUtils.currentModule="udpmodul";
+RDebugUtils.currentLine=851968;
+ //BA.debugLineNum = 851968;BA.debugLine="Sub Service_Destroy";
+RDebugUtils.currentLine=851970;
+ //BA.debugLineNum = 851970;BA.debugLine="End Sub";
 return "";
 }
 public static String  _service_start(anywheresoftware.b4a.objects.IntentWrapper _startingintent) throws Exception{
- //BA.debugLineNum = 14;BA.debugLine="Sub Service_Start (StartingIntent As Intent)";
- //BA.debugLineNum = 16;BA.debugLine="End Sub";
+RDebugUtils.currentModule="udpmodul";
+RDebugUtils.currentLine=786432;
+ //BA.debugLineNum = 786432;BA.debugLine="Sub Service_Start (StartingIntent As Intent)";
+RDebugUtils.currentLine=786434;
+ //BA.debugLineNum = 786434;BA.debugLine="End Sub";
 return "";
 }
 }

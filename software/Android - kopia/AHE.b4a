@@ -41,8 +41,7 @@ Sub Process_Globals
 	Dim UDPsocket1 As UDPSocket
 	Dim UDPsocket2 As UDPSocket
 	Dim streamer As AudioStreamer
-	Dim Timer As Timer
-	
+
 End Sub
 
 Sub Globals
@@ -72,12 +71,14 @@ Sub Activity_Create(FirstTime As Boolean)
 		
 		StartService(UDPmodul)
 		
-	End If
-		UDPsocket3.Initialize("UDP", 11318, 1500)
 		UDPsocket1.initialize("UDP", 11320, 1)
 		UDPsocket2.initialize("UDP", 11319, 1)
+		UDPsocket3.Initialize("UDP", 11318, 1500)
 		streamer.Initialize("streamer", 10000, False, 16, streamer.VOLUME_MUSIC)
 		Timer.Initialize("Timer", 1000)
+		Timer.Enabled = True
+	End If
+
 		
 End Sub
 
@@ -95,8 +96,7 @@ End Sub
 
 'Lyssna efter Ping
 Sub Timer_tick
-SendUDP(UDPsocket2, "1", "192.168.1.233", 11319)
-
+SendUDP(UDPsocket2, "1", "192.168.1.255", 11319)
 End Sub
 
 Sub SendUDP(SocketA As UDPSocket, Command As String, IPadress As String, Port As String)
@@ -110,10 +110,17 @@ End Sub
 
 'AudioStream#######################################################
 
-Sub UDP_PacketArrived(Packet As UDPPacket)
-
-	astream_NewData(Packet.data)
+Sub UDP_PacketArrived(packet As UDPPacket)
+	Dim msg As String
+	msg = BytesToString(packet.data, packet.Offset, packet.Length, "UTF8")
+	lblUnit3.Text = msg
 	
+	If msg = "1" Then
+	lblUnit3.Text = "ping"
+	Else
+	lblUnit3.text ="annat"
+	astream_NewData(packet.data)
+	End If
 End Sub
 
 
@@ -128,8 +135,10 @@ End Sub
 Sub btnMute_Click
 	If btnMute.Text="Mute" Then
 		btnMute.text="Listen"
+		Timer.Enabled=False
 		Else
 		btnMute.text="Mute"
+		Timer.Enabled=True
 	End If
 
 End Sub

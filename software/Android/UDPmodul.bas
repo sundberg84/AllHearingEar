@@ -25,9 +25,9 @@ Sub Process_Globals
 End Sub
 
 Sub Service_Create
-	UDPsocket1.Initialize("UDP", 11319, 8)
-	UDPsocket2.initialize("UDP", 11320, 8)
-	UDPsocket3.Initialize("UDP", 11318, 1500)
+	UDPsocket3.Initialize("UDP", 11318, 1400)
+	UDPsocket2.Initialize("UDP", 11320, 2)
+	UDPsocket1.Initialize("UDP", 11319, 2)
 	streamer.Initialize("streamer", 10000, False, 16, streamer.VOLUME_MUSIC)
 	Timer1.Initialize("Timer1", 1000)
 	Timer1.Enabled =False
@@ -35,7 +35,7 @@ Sub Service_Create
 	Unit1 = "Disconnected"
 	Unit2 = "Press Sync AHE to synchronize."
 	UpdateUI
-	
+	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
 End Sub
 	
 Sub Service_Start (StartingIntent As Intent)
@@ -49,15 +49,11 @@ End Sub
 'Lyssna efter UDPpacket från AHE
 Sub UDP_PacketArrived(Packet As UDPPacket)
 	
-	
-	astream_NewData(Packet.Data)
-	
-	
 	Dim msg As String
 	msg = BytesToString(Packet.Data, Packet.Offset, Packet.Length, "UTF8")
 	Unit3 = msg
-	
-	If AHEIP = "" Then
+
+	If AHEIP = "" And msg = "1" Then
 	AHEIP = Packet.HostAddress
 	End If
 	
@@ -68,12 +64,15 @@ Sub UDP_PacketArrived(Packet As UDPPacket)
 		Unit2 = "Connected"
 		Unit3 = ""
 		Unit4 =""
-		
 		Timer1.Enabled = True
 		UpdateUI
 	End If
+	
+	'Plocka bort 1-orna från streamen samt återställa räknaren(?)
 	If msg = "1" And ConnectionStatus = True Then
-		Ticks = 0	
+	Ticks = 0
+	Else
+	astream_NewData(Packet.Data)
 	End If
 
 End Sub
@@ -96,9 +95,10 @@ Sub Timer1_Tick
 
 	UpdateUI
 	
-	If Ticks > 10 And AHEIP <> "" Then
+	If Ticks > 8 And AHEIP <> "" Then
 			
 			SendUDP(UDPsocket1, "0", AHEIP, 11319)
+			
 	End If
 		If Ticks > 11 Then
 		ConnectionStatus = False
@@ -118,9 +118,9 @@ End Sub
 
 Sub astream_NewData (Buffer() As Byte)
 	streamer.Write(Buffer)
-	
+	If Main.mute = False Then
 	streamer.StartPlaying
-
+	End If
 End Sub
 '###################################################################
 

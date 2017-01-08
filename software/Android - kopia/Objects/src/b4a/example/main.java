@@ -32,7 +32,7 @@ public class main extends Activity implements B4AActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (isFirst) {
-			processBA = new BA(this.getApplicationContext(), null, null, "b4a.example", "b4a.example.main");
+			processBA = new anywheresoftware.b4a.ShellBA(this.getApplicationContext(), null, null, "b4a.example", "b4a.example.main");
 			processBA.loadHtSubs(this.getClass());
 	        float deviceScale = getApplicationContext().getResources().getDisplayMetrics().density;
 	        BALayout.setDeviceScale(deviceScale);
@@ -306,6 +306,39 @@ public class main extends Activity implements B4AActivity{
 		processBA.raiseEvent2(null, true, "globals", false, (Object[])null);
 	}
 
+
+
+public static void initializeProcessGlobals() {
+    
+    if (main.processGlobalsRun == false) {
+	    main.processGlobalsRun = true;
+		try {
+		        		
+        } catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+    }
+}
+public static boolean isAnyActivityVisible() {
+    boolean vis = false;
+vis = vis | (main.mostCurrent != null);
+return vis;}
+
+public static void killProgram() {
+     {
+            Activity __a = null;
+            if (main.previousOne != null) {
+				__a = main.previousOne.get();
+			}
+            else {
+                BA ba = main.mostCurrent.processBA.sharedProcessBA.activityBA.get();
+                if (ba != null) __a = ba.activity;
+            }
+            if (__a != null)
+				__a.finish();}
+
+BA.applicationContext.stopService(new android.content.Intent(BA.applicationContext, udpmodul.class));
+}
 public anywheresoftware.b4a.keywords.Common __c = null;
 public static anywheresoftware.b4a.objects.SocketWrapper.UDPSocket _udpsocket3 = null;
 public static anywheresoftware.b4a.objects.SocketWrapper.UDPSocket _udpsocket1 = null;
@@ -324,160 +357,85 @@ public anywheresoftware.b4a.objects.LabelWrapper _lblunit4 = null;
 public anywheresoftware.b4a.objects.PanelWrapper _pnlunits = null;
 public static boolean _bconnect = false;
 public b4a.example.udpmodul _udpmodul = null;
-
-public static boolean isAnyActivityVisible() {
-    boolean vis = false;
-vis = vis | (main.mostCurrent != null);
-return vis;}
-public static String  _activity_create(boolean _firsttime) throws Exception{
- //BA.debugLineNum = 51;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
- //BA.debugLineNum = 52;BA.debugLine="Activity.LoadLayout(\"mainAHE\")";
-mostCurrent._activity.LoadLayout("mainAHE",mostCurrent.activityBA);
- //BA.debugLineNum = 56;BA.debugLine="If FirstTime Then";
-if (_firsttime) { 
- //BA.debugLineNum = 58;BA.debugLine="StartService(UDPmodul)";
-anywheresoftware.b4a.keywords.Common.StartService(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()));
- };
- //BA.debugLineNum = 61;BA.debugLine="UDPsocket3.Initialize(\"UDP\", 11318, 1500)";
-_udpsocket3.Initialize(processBA,"UDP",(int) (11318),(int) (1500));
- //BA.debugLineNum = 62;BA.debugLine="UDPsocket1.initialize(\"UDP\", 11320, 1)";
-_udpsocket1.Initialize(processBA,"UDP",(int) (11320),(int) (1));
- //BA.debugLineNum = 63;BA.debugLine="UDPsocket2.initialize(\"UDP\", 11319, 1)";
-_udpsocket2.Initialize(processBA,"UDP",(int) (11319),(int) (1));
- //BA.debugLineNum = 64;BA.debugLine="streamer.Initialize(\"streamer\", 10000, False, 16";
-_streamer.Initialize(processBA,"streamer",(int) (10000),anywheresoftware.b4a.keywords.Common.False,(int) (16),_streamer.VOLUME_MUSIC);
- //BA.debugLineNum = 65;BA.debugLine="Timer.Initialize(\"Timer\", 1000)";
-_timer.Initialize(processBA,"Timer",(long) (1000));
- //BA.debugLineNum = 67;BA.debugLine="End Sub";
-return "";
-}
 public static String  _activity_pause(boolean _userclosed) throws Exception{
- //BA.debugLineNum = 75;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
- //BA.debugLineNum = 77;BA.debugLine="End Sub";
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=262144;
+ //BA.debugLineNum = 262144;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+RDebugUtils.currentLine=262146;
+ //BA.debugLineNum = 262146;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_resume() throws Exception{
- //BA.debugLineNum = 71;BA.debugLine="Sub Activity_Resume";
- //BA.debugLineNum = 73;BA.debugLine="End Sub";
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=196608;
+ //BA.debugLineNum = 196608;BA.debugLine="Sub Activity_Resume";
+RDebugUtils.currentLine=196610;
+ //BA.debugLineNum = 196610;BA.debugLine="End Sub";
 return "";
 }
 public static String  _astream_newdata(byte[] _buffer) throws Exception{
- //BA.debugLineNum = 105;BA.debugLine="Sub astream_NewData (Buffer() As Byte)";
- //BA.debugLineNum = 106;BA.debugLine="streamer.Write(Buffer)";
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=524288;
+ //BA.debugLineNum = 524288;BA.debugLine="Sub astream_NewData (Buffer() As Byte)";
+RDebugUtils.currentLine=524289;
+ //BA.debugLineNum = 524289;BA.debugLine="streamer.Write(Buffer)";
 _streamer.Write(_buffer);
- //BA.debugLineNum = 107;BA.debugLine="streamer.StartPlaying";
+RDebugUtils.currentLine=524290;
+ //BA.debugLineNum = 524290;BA.debugLine="streamer.StartPlaying";
 _streamer.StartPlaying();
- //BA.debugLineNum = 108;BA.debugLine="End Sub";
+RDebugUtils.currentLine=524291;
+ //BA.debugLineNum = 524291;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnmute_click() throws Exception{
- //BA.debugLineNum = 113;BA.debugLine="Sub btnMute_Click";
- //BA.debugLineNum = 114;BA.debugLine="If btnMute.Text=\"Mute\" Then";
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=589824;
+ //BA.debugLineNum = 589824;BA.debugLine="Sub btnMute_Click";
+RDebugUtils.currentLine=589825;
+ //BA.debugLineNum = 589825;BA.debugLine="If btnMute.Text=\"Mute\" Then";
 if ((mostCurrent._btnmute.getText()).equals("Mute")) { 
- //BA.debugLineNum = 115;BA.debugLine="btnMute.text=\"Listen\"";
+RDebugUtils.currentLine=589826;
+ //BA.debugLineNum = 589826;BA.debugLine="btnMute.text=\"Listen\"";
 mostCurrent._btnmute.setText((Object)("Listen"));
+RDebugUtils.currentLine=589827;
+ //BA.debugLineNum = 589827;BA.debugLine="Timer.Enabled=False";
+_timer.setEnabled(anywheresoftware.b4a.keywords.Common.False);
  }else {
- //BA.debugLineNum = 117;BA.debugLine="btnMute.text=\"Mute\"";
+RDebugUtils.currentLine=589829;
+ //BA.debugLineNum = 589829;BA.debugLine="btnMute.text=\"Mute\"";
 mostCurrent._btnmute.setText((Object)("Mute"));
+RDebugUtils.currentLine=589830;
+ //BA.debugLineNum = 589830;BA.debugLine="Timer.Enabled=True";
+_timer.setEnabled(anywheresoftware.b4a.keywords.Common.True);
  };
- //BA.debugLineNum = 120;BA.debugLine="End Sub";
-return "";
-}
-public static String  _globals() throws Exception{
- //BA.debugLineNum = 33;BA.debugLine="Sub Globals";
- //BA.debugLineNum = 37;BA.debugLine="Private ImageView1 As ImageView";
-mostCurrent._imageview1 = new anywheresoftware.b4a.objects.ImageViewWrapper();
- //BA.debugLineNum = 38;BA.debugLine="Private btnManual As Button";
-mostCurrent._btnmanual = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 39;BA.debugLine="Private btnSync As Button";
-mostCurrent._btnsync = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 40;BA.debugLine="Private btnMute As Button";
-mostCurrent._btnmute = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 41;BA.debugLine="Private EditText1 As EditText";
-mostCurrent._edittext1 = new anywheresoftware.b4a.objects.EditTextWrapper();
- //BA.debugLineNum = 42;BA.debugLine="Private lblUnit1 As Label";
-mostCurrent._lblunit1 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 43;BA.debugLine="Private lblUnit2 As Label";
-mostCurrent._lblunit2 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 44;BA.debugLine="Private lblUnit3 As Label";
-mostCurrent._lblunit3 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 45;BA.debugLine="Private lblUnit4 As Label";
-mostCurrent._lblunit4 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 46;BA.debugLine="Private pnlUnits As Panel";
-mostCurrent._pnlunits = new anywheresoftware.b4a.objects.PanelWrapper();
- //BA.debugLineNum = 47;BA.debugLine="Public bConnect As Boolean";
-_bconnect = false;
- //BA.debugLineNum = 49;BA.debugLine="End Sub";
-return "";
-}
-
-public static void initializeProcessGlobals() {
-    
-    if (main.processGlobalsRun == false) {
-	    main.processGlobalsRun = true;
-		try {
-		        main._process_globals();
-udpmodul._process_globals();
-		
-        } catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-    }
-}public static String  _process_globals() throws Exception{
- //BA.debugLineNum = 17;BA.debugLine="Sub Process_Globals";
- //BA.debugLineNum = 20;BA.debugLine="Dim UDPsocket3 As UDPSocket";
-_udpsocket3 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 21;BA.debugLine="Dim UDPsocket1 As UDPSocket";
-_udpsocket1 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 22;BA.debugLine="Dim UDPsocket2 As UDPSocket";
-_udpsocket2 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 23;BA.debugLine="Dim streamer As AudioStreamer";
-_streamer = new anywheresoftware.b4a.audio.AudioStreamer();
- //BA.debugLineNum = 24;BA.debugLine="Dim Timer As Timer";
-_timer = new anywheresoftware.b4a.objects.Timer();
- //BA.debugLineNum = 25;BA.debugLine="Dim UDPsocket3 As UDPSocket";
-_udpsocket3 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 26;BA.debugLine="Dim UDPsocket1 As UDPSocket";
-_udpsocket1 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 27;BA.debugLine="Dim UDPsocket2 As UDPSocket";
-_udpsocket2 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 28;BA.debugLine="Dim streamer As AudioStreamer";
-_streamer = new anywheresoftware.b4a.audio.AudioStreamer();
- //BA.debugLineNum = 29;BA.debugLine="Dim Timer As Timer";
-_timer = new anywheresoftware.b4a.objects.Timer();
- //BA.debugLineNum = 31;BA.debugLine="End Sub";
+RDebugUtils.currentLine=589833;
+ //BA.debugLineNum = 589833;BA.debugLine="End Sub";
 return "";
 }
 public static String  _sendudp(anywheresoftware.b4a.objects.SocketWrapper.UDPSocket _socketa,String _command,String _ipadress,String _port) throws Exception{
+RDebugUtils.currentModule="main";
 anywheresoftware.b4a.objects.SocketWrapper.UDPSocket.UDPPacket _packet = null;
 byte[] _data = null;
- //BA.debugLineNum = 87;BA.debugLine="Sub SendUDP(SocketA As UDPSocket, Command As Strin";
- //BA.debugLineNum = 88;BA.debugLine="Dim Packet As UDPPacket";
+RDebugUtils.currentLine=393216;
+ //BA.debugLineNum = 393216;BA.debugLine="Sub SendUDP(SocketA As UDPSocket, Command As Strin";
+RDebugUtils.currentLine=393217;
+ //BA.debugLineNum = 393217;BA.debugLine="Dim Packet As UDPPacket";
 _packet = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket.UDPPacket();
- //BA.debugLineNum = 89;BA.debugLine="Dim data() As Byte";
+RDebugUtils.currentLine=393218;
+ //BA.debugLineNum = 393218;BA.debugLine="Dim data() As Byte";
 _data = new byte[(int) (0)];
 ;
- //BA.debugLineNum = 90;BA.debugLine="data = Command.GetBytes(\"UTF8\")";
+RDebugUtils.currentLine=393219;
+ //BA.debugLineNum = 393219;BA.debugLine="data = Command.GetBytes(\"UTF8\")";
 _data = _command.getBytes("UTF8");
- //BA.debugLineNum = 91;BA.debugLine="Packet.Initialize(data, IPadress, Port)";
+RDebugUtils.currentLine=393220;
+ //BA.debugLineNum = 393220;BA.debugLine="Packet.Initialize(data, IPadress, Port)";
 _packet.Initialize(_data,_ipadress,(int)(Double.parseDouble(_port)));
- //BA.debugLineNum = 92;BA.debugLine="SocketA.Send(Packet)";
+RDebugUtils.currentLine=393221;
+ //BA.debugLineNum = 393221;BA.debugLine="SocketA.Send(Packet)";
 _socketa.Send(_packet);
- //BA.debugLineNum = 94;BA.debugLine="End Sub";
-return "";
-}
-public static String  _timer_tick() throws Exception{
- //BA.debugLineNum = 82;BA.debugLine="Sub Timer_tick";
- //BA.debugLineNum = 83;BA.debugLine="SendUDP(UDPsocket2, \"1\", \"192.168.1.233\", 11319)";
-_sendudp(_udpsocket2,"1","192.168.1.233",BA.NumberToString(11319));
- //BA.debugLineNum = 85;BA.debugLine="End Sub";
-return "";
-}
-public static String  _udp_packetarrived(anywheresoftware.b4a.objects.SocketWrapper.UDPSocket.UDPPacket _packet) throws Exception{
- //BA.debugLineNum = 98;BA.debugLine="Sub UDP_PacketArrived(Packet As UDPPacket)";
- //BA.debugLineNum = 100;BA.debugLine="astream_NewData(Packet.data)";
-_astream_newdata(_packet.getData());
- //BA.debugLineNum = 102;BA.debugLine="End Sub";
+RDebugUtils.currentLine=393223;
+ //BA.debugLineNum = 393223;BA.debugLine="End Sub";
 return "";
 }
 }
