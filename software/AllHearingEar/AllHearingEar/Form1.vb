@@ -200,6 +200,7 @@ Public Class main
         PBdelete1.Visible = False
         TBSens1.Value = 0
         TBSens1.Visible = False
+        SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
         Call FindSlot()
 
     End Sub
@@ -242,6 +243,7 @@ Public Class main
         AHESyncIP2 = ""
         TBSens2.Value = 0
         TBSens2.Visible = False
+        SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
         Call FindSlot()
 
     End Sub
@@ -284,6 +286,7 @@ Public Class main
         AHESyncIP3 = ""
         TBSens3.Value = 0
         TBSens3.Visible = False
+        SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
         Call FindSlot()
     End Sub
 
@@ -324,7 +327,7 @@ Public Class main
         AHESyncIP4 = ""
         TBSens4.Value = 0
         TBSens4.Visible = False
-
+        SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
         Call FindSlot()
     End Sub
 
@@ -911,6 +914,18 @@ Public Class main
         TBSens2.Visible = False
         TBSens3.Visible = False
         TBSens4.Visible = False
+        If AHESyncIP1 <> "" Then
+            SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("0"))
+        End If
+        If AHESyncIP2 <> "" Then
+            SendUDP(AHESyncIP2, 11319, Encoding.ASCII.GetBytes("0"))
+        End If
+        If AHESyncIP3 <> "" Then
+            SendUDP(AHESyncIP3, 11319, Encoding.ASCII.GetBytes("0"))
+        End If
+        If AHESyncIP4 <> "" Then
+            SendUDP(AHESyncIP4, 11319, Encoding.ASCII.GetBytes("0"))
+        End If
     End Sub
 
     Private Sub txtManSync_MouseClick(sender As Object, e As MouseEventArgs) Handles txtManSync.MouseClick

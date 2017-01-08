@@ -1,0 +1,118 @@
+﻿Version=5.02
+NumberOfModules=1
+Module1=UDPmodul
+Build1=Default,b4a.example
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~SetApplicationAttribute(android:theme, "@android:style/Theme.Holo")~\n~AddPermission(android.permission.INTERNET)~\n~AddPermission(android.permission.ACCESS_WIFI_STATE)~\n~AddPermission(android.permission.ACCESS_NETWORK_STATE)~\n~AddPermission(android.permission.CHANGE_WIFI_MULTICAST_STATE)~\n~'End of default text.~\n~
+IconFile=
+NumberOfFiles=1
+File1=mainAHE.bal
+NumberOfLibraries=5
+Library1=core
+Library2=network
+Library3=audio
+Library4=randomaccessfile
+Library5=byteconverter
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: All Hearing Ear
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: portrait
+	#CanInstallToExternalStorage: False
+	
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: false
+	
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Dim UDPsocket1 As UDPSocket
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+
+	Private ImageView1 As ImageView
+	Private btnManual As Button
+	Private btnSync As Button
+	Private btnMute As Button
+	Private EditText1 As EditText
+	Private lblUnit1 As Label
+	Private lblUnit2 As Label
+	Private lblUnit3 As Label
+	Private lblUnit4 As Label
+	Private pnlUnits As Panel
+	'Public mute As Boolean
+	Dim green As Int = 0xFF05CE00
+	Dim red As Int = 0xFFC40000
+	
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("mainAHE")
+	
+	If FirstTime Then
+		StartService(UDPmodul)
+	End If
+	UpdateUI
+End Sub
+
+Sub Activity_Resume
+	StartService(UDPmodul)
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+
+'Knappar i Main-aktiviteten
+Sub btnSync_Click
+	SendUDP(UDPsocket1, "1", "192.168.1.255", 11319)
+End Sub
+
+'UDPsender
+Sub SendUDP(SocketA As UDPSocket, Command As String, IPadress As String, Port As String)
+	Dim Packet As UDPPacket
+	Dim data() As Byte
+	data = Command.GetBytes("UTF8")
+	Packet.Initialize(data, IPadress, Port)
+	SocketA.Send(Packet)
+	
+End Sub
+
+
+Sub btnMute_Click
+	If btnMute.Text="Mute" Then
+		btnMute.text="Listen"
+		'mute = True
+		'CallSub(UDPmodul, "astream_stop")
+		Else
+		btnMute.text="Mute"
+		'mute = False
+	End If
+
+End Sub
+
+'Uppdatera User Interface
+Public Sub UpdateUI
+	lblUnit1.Text = UDPmodul.Unit1
+	
+	If UDPmodul.ConnectionStatus= True Then
+		lblUnit2.Text = UDPmodul.Unit2
+		lblUnit2.TextColor = green
+	Else
+		lblUnit2.TextColor = red
+		lblUnit2.Text = UDPmodul.Unit2
+	End If
+	
+	lblUnit3.Text = UDPmodul.unit3
+	lblUnit4.Text = UDPmodul.unit4
+End Sub
