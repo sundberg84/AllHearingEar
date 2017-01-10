@@ -22,7 +22,7 @@ Sub Process_Globals
 	Public Unit2 As String
 	Public Unit3 As String
 	Public Unit4 As String
-	Dim visaikon As Notification
+	Dim notis As Notification
 End Sub
 
 Sub Service_Create
@@ -39,12 +39,13 @@ Sub Service_Create
 	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
 	
 	'Ikon visas på toppen av telefonen.
-	visaikon.Initialize
-	visaikon.Icon="icon"
-	visaikon.SetInfo("All hearing ear", "All hearing ear is running", Me)
-	visaikon.Sound=False
-	visaikon.Vibrate=False
-	visaikon.Notify(1)
+	notis.Initialize
+	notis.Icon="icon"
+	notis.Vibrate=True
+	notis.Sound=True
+	
+	
+		
 End Sub
 	
 Sub Service_Start (StartingIntent As Intent)
@@ -55,7 +56,7 @@ Sub Service_Destroy
 	UDPsocket1.Close
 	UDPsocket2.Close
 	UDPsocket3.Close
-	visaikon.Cancel(1)
+	notis.Cancel(1)
 End Sub
 
 'Lyssna efter UDPpacket från AHE
@@ -77,7 +78,10 @@ Sub UDP_PacketArrived(Packet As UDPPacket)
 		Unit3 = ""
 		Unit4 =""
 		Timer1.Enabled = True
+		notis.SetInfo("All hearing ear", "All hearing ear is connected", Me)
+		notis.Notify(1)
 		UpdateUI
+
 	End If
 	
 	'Plocka bort 1-orna från streamen samt återställa räknaren(?)
@@ -85,6 +89,7 @@ Sub UDP_PacketArrived(Packet As UDPPacket)
 	Ticks = 0
 	Else
 	astream_NewData(Packet.Data)
+	Ticks = 0
 	End If
 
 End Sub
@@ -123,8 +128,11 @@ Sub Timer1_Tick
 			Unit2 ="Status: Disconnected"
 			Unit3 ="Try pressing the Sync AHE button!"
 			Unit4 ="Check that your hardware is powered!"
+			notis.SetInfo("All hearing ear", "You lost connection to All hearing ear", Me)
+			notis.Notify(1)
 			Timer1.Enabled = False
 			Ticks = 0
+
 			UpdateUI
 	End If
 	
