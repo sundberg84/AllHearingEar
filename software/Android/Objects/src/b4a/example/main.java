@@ -307,7 +307,6 @@ public class main extends Activity implements B4AActivity{
 	}
 
 public anywheresoftware.b4a.keywords.Common __c = null;
-public static anywheresoftware.b4a.objects.SocketWrapper.UDPSocket _udpsocket1 = null;
 public anywheresoftware.b4a.objects.ImageViewWrapper _imageview1 = null;
 public anywheresoftware.b4a.objects.ButtonWrapper _btnmanual = null;
 public anywheresoftware.b4a.objects.ButtonWrapper _btnsync = null;
@@ -323,6 +322,7 @@ public static boolean _mute = false;
 public static int _green = 0;
 public static int _red = 0;
 public static String _manualip = "";
+public anywheresoftware.b4a.objects.IME _ime = null;
 public anywheresoftware.b4a.objects.EditTextWrapper _txtmanip = null;
 public anywheresoftware.b4a.objects.ButtonWrapper _btnok = null;
 public b4a.example.udpmodul _udpmodul = null;
@@ -332,148 +332,156 @@ public static boolean isAnyActivityVisible() {
 vis = vis | (main.mostCurrent != null);
 return vis;}
 public static String  _activity_create(boolean _firsttime) throws Exception{
- //BA.debugLineNum = 47;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
- //BA.debugLineNum = 48;BA.debugLine="Activity.LoadLayout(\"mainAHE\")";
+ //BA.debugLineNum = 50;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
+ //BA.debugLineNum = 51;BA.debugLine="Activity.LoadLayout(\"mainAHE\")";
 mostCurrent._activity.LoadLayout("mainAHE",mostCurrent.activityBA);
- //BA.debugLineNum = 50;BA.debugLine="If FirstTime Then";
+ //BA.debugLineNum = 53;BA.debugLine="If FirstTime Then";
 if (_firsttime) { 
- //BA.debugLineNum = 51;BA.debugLine="StartService(UDPmodul)";
+ //BA.debugLineNum = 54;BA.debugLine="StartService(UDPmodul)";
 anywheresoftware.b4a.keywords.Common.StartService(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()));
  };
- //BA.debugLineNum = 53;BA.debugLine="UpdateUI";
+ //BA.debugLineNum = 57;BA.debugLine="IME.Initialize(\"IME\")";
+mostCurrent._ime.Initialize("IME");
+ //BA.debugLineNum = 58;BA.debugLine="UpdateUI";
 _updateui();
- //BA.debugLineNum = 54;BA.debugLine="End Sub";
+ //BA.debugLineNum = 59;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
- //BA.debugLineNum = 60;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
- //BA.debugLineNum = 62;BA.debugLine="End Sub";
+ //BA.debugLineNum = 65;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+ //BA.debugLineNum = 67;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_resume() throws Exception{
- //BA.debugLineNum = 56;BA.debugLine="Sub Activity_Resume";
- //BA.debugLineNum = 57;BA.debugLine="StartService(UDPmodul)";
+ //BA.debugLineNum = 61;BA.debugLine="Sub Activity_Resume";
+ //BA.debugLineNum = 62;BA.debugLine="StartService(UDPmodul)";
 anywheresoftware.b4a.keywords.Common.StartService(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()));
- //BA.debugLineNum = 58;BA.debugLine="End Sub";
+ //BA.debugLineNum = 63;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnmanual_click() throws Exception{
- //BA.debugLineNum = 107;BA.debugLine="Sub btnManual_click";
- //BA.debugLineNum = 108;BA.debugLine="If txtManIP.Visible=False Then";
+ //BA.debugLineNum = 102;BA.debugLine="Sub btnManual_click";
+ //BA.debugLineNum = 103;BA.debugLine="If txtManIP.Visible=False Then";
 if (mostCurrent._txtmanip.getVisible()==anywheresoftware.b4a.keywords.Common.False) { 
- //BA.debugLineNum = 109;BA.debugLine="Panel1.Visible=True";
+ //BA.debugLineNum = 104;BA.debugLine="Panel1.Visible=True";
 mostCurrent._panel1.setVisible(anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 110;BA.debugLine="txtManIP.Visible=True";
+ //BA.debugLineNum = 105;BA.debugLine="txtManIP.Visible=True";
 mostCurrent._txtmanip.setVisible(anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 111;BA.debugLine="btnOK.Visible=True";
+ //BA.debugLineNum = 106;BA.debugLine="btnOK.Visible=True";
 mostCurrent._btnok.setVisible(anywheresoftware.b4a.keywords.Common.True);
  }else {
- //BA.debugLineNum = 113;BA.debugLine="txtManIP.Visible=False";
+ //BA.debugLineNum = 108;BA.debugLine="txtManIP.Visible=False";
 mostCurrent._txtmanip.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 114;BA.debugLine="Panel1.Visible=False";
+ //BA.debugLineNum = 109;BA.debugLine="Panel1.Visible=False";
 mostCurrent._panel1.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 115;BA.debugLine="btnOK.Visible=False";
+ //BA.debugLineNum = 110;BA.debugLine="btnOK.Visible=False";
 mostCurrent._btnok.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
- //BA.debugLineNum = 117;BA.debugLine="End Sub";
+ //BA.debugLineNum = 112;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnmute_click() throws Exception{
- //BA.debugLineNum = 80;BA.debugLine="Sub btnMute_Click";
- //BA.debugLineNum = 81;BA.debugLine="If btnMute.Text=\"Mute\" Then";
+ //BA.debugLineNum = 75;BA.debugLine="Sub btnMute_Click";
+ //BA.debugLineNum = 76;BA.debugLine="If btnMute.Text=\"Mute\" Then";
 if ((mostCurrent._btnmute.getText()).equals("Mute")) { 
- //BA.debugLineNum = 82;BA.debugLine="btnMute.text=\"Listen\"";
+ //BA.debugLineNum = 77;BA.debugLine="btnMute.text=\"Listen\"";
 mostCurrent._btnmute.setText((Object)("Listen"));
- //BA.debugLineNum = 83;BA.debugLine="mute = True";
+ //BA.debugLineNum = 78;BA.debugLine="mute = True";
 _mute = anywheresoftware.b4a.keywords.Common.True;
- //BA.debugLineNum = 84;BA.debugLine="CallSub(UDPmodul, \"astream_stop\")";
+ //BA.debugLineNum = 79;BA.debugLine="CallSub(UDPmodul, \"astream_stop\")";
 anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"astream_stop");
  }else {
- //BA.debugLineNum = 86;BA.debugLine="btnMute.text=\"Mute\"";
+ //BA.debugLineNum = 81;BA.debugLine="btnMute.text=\"Mute\"";
 mostCurrent._btnmute.setText((Object)("Mute"));
+ //BA.debugLineNum = 82;BA.debugLine="mute = False";
+_mute = anywheresoftware.b4a.keywords.Common.False;
  };
- //BA.debugLineNum = 90;BA.debugLine="End Sub";
+ //BA.debugLineNum = 85;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnok_click() throws Exception{
- //BA.debugLineNum = 132;BA.debugLine="Sub btnOK_Click";
- //BA.debugLineNum = 133;BA.debugLine="ManualIP = txtManIP.Text";
+ //BA.debugLineNum = 127;BA.debugLine="Sub btnOK_Click";
+ //BA.debugLineNum = 128;BA.debugLine="IME.HideKeyboard";
+mostCurrent._ime.HideKeyboard(mostCurrent.activityBA);
+ //BA.debugLineNum = 130;BA.debugLine="ManualIP = txtManIP.Text";
 mostCurrent._manualip = mostCurrent._txtmanip.getText();
- //BA.debugLineNum = 134;BA.debugLine="If ManualIP <> \"\" Then";
+ //BA.debugLineNum = 131;BA.debugLine="If ManualIP <> \"\" Then";
 if ((mostCurrent._manualip).equals("") == false) { 
- //BA.debugLineNum = 135;BA.debugLine="SendUDP(UDPsocket1, \"0\", ManualIP, 11319)";
-_sendudp(_udpsocket1,"0",mostCurrent._manualip,BA.NumberToString(11319));
- //BA.debugLineNum = 136;BA.debugLine="ManualIP=\"\"";
+ //BA.debugLineNum = 132;BA.debugLine="CallSub(UDPmodul, \"BtnSync\")";
+anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"BtnSync");
+ //BA.debugLineNum = 133;BA.debugLine="ManualIP=\"\"";
 mostCurrent._manualip = "";
- //BA.debugLineNum = 137;BA.debugLine="txtManIP.Text =\"\"";
+ //BA.debugLineNum = 134;BA.debugLine="txtManIP.Text =\"\"";
 mostCurrent._txtmanip.setText((Object)(""));
- //BA.debugLineNum = 138;BA.debugLine="txtManIP.Visible=False";
+ //BA.debugLineNum = 135;BA.debugLine="txtManIP.Visible=False";
 mostCurrent._txtmanip.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 139;BA.debugLine="Panel1.Visible=False";
+ //BA.debugLineNum = 136;BA.debugLine="Panel1.Visible=False";
 mostCurrent._panel1.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 140;BA.debugLine="btnOK.Visible=False";
+ //BA.debugLineNum = 137;BA.debugLine="btnOK.Visible=False";
 mostCurrent._btnok.setVisible(anywheresoftware.b4a.keywords.Common.False);
  }else {
- //BA.debugLineNum = 142;BA.debugLine="Msgbox(\"Enter a valid IPaddress.\", \"AHE\")";
+ //BA.debugLineNum = 139;BA.debugLine="Msgbox(\"Enter a valid IPaddress.\", \"AHE\")";
 anywheresoftware.b4a.keywords.Common.Msgbox("Enter a valid IPaddress.","AHE",mostCurrent.activityBA);
- //BA.debugLineNum = 143;BA.debugLine="ManualIP=\"\"";
+ //BA.debugLineNum = 140;BA.debugLine="ManualIP=\"\"";
 mostCurrent._manualip = "";
- //BA.debugLineNum = 144;BA.debugLine="txtManIP.Text =\"\"";
+ //BA.debugLineNum = 141;BA.debugLine="txtManIP.Text =\"\"";
 mostCurrent._txtmanip.setText((Object)(""));
- //BA.debugLineNum = 145;BA.debugLine="txtManIP.Visible=False";
+ //BA.debugLineNum = 142;BA.debugLine="txtManIP.Visible=False";
 mostCurrent._txtmanip.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 146;BA.debugLine="Panel1.Visible=False";
+ //BA.debugLineNum = 143;BA.debugLine="Panel1.Visible=False";
 mostCurrent._panel1.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 147;BA.debugLine="btnOK.Visible=False";
+ //BA.debugLineNum = 144;BA.debugLine="btnOK.Visible=False";
 mostCurrent._btnok.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
- //BA.debugLineNum = 149;BA.debugLine="End Sub";
+ //BA.debugLineNum = 146;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnsync_click() throws Exception{
- //BA.debugLineNum = 66;BA.debugLine="Sub btnSync_Click";
- //BA.debugLineNum = 67;BA.debugLine="SendUDP(UDPsocket1, \"0\", \"192.168.1.255\", 11319)";
-_sendudp(_udpsocket1,"0","192.168.1.255",BA.NumberToString(11319));
- //BA.debugLineNum = 68;BA.debugLine="End Sub";
+ //BA.debugLineNum = 71;BA.debugLine="Sub btnSync_Click";
+ //BA.debugLineNum = 72;BA.debugLine="CallSub(UDPmodul, \"BtnSync\")";
+anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"BtnSync");
+ //BA.debugLineNum = 73;BA.debugLine="End Sub";
 return "";
 }
 public static String  _globals() throws Exception{
- //BA.debugLineNum = 23;BA.debugLine="Sub Globals";
- //BA.debugLineNum = 27;BA.debugLine="Private ImageView1 As ImageView";
+ //BA.debugLineNum = 24;BA.debugLine="Sub Globals";
+ //BA.debugLineNum = 28;BA.debugLine="Private ImageView1 As ImageView";
 mostCurrent._imageview1 = new anywheresoftware.b4a.objects.ImageViewWrapper();
- //BA.debugLineNum = 28;BA.debugLine="Private btnManual As Button";
+ //BA.debugLineNum = 29;BA.debugLine="Private btnManual As Button";
 mostCurrent._btnmanual = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 29;BA.debugLine="Private btnSync As Button";
+ //BA.debugLineNum = 30;BA.debugLine="Private btnSync As Button";
 mostCurrent._btnsync = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 30;BA.debugLine="Private btnMute As Button";
+ //BA.debugLineNum = 31;BA.debugLine="Private btnMute As Button";
 mostCurrent._btnmute = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 31;BA.debugLine="Private EditText1 As EditText";
+ //BA.debugLineNum = 32;BA.debugLine="Private EditText1 As EditText";
 mostCurrent._edittext1 = new anywheresoftware.b4a.objects.EditTextWrapper();
- //BA.debugLineNum = 32;BA.debugLine="Private lblUnit1 As Label";
+ //BA.debugLineNum = 33;BA.debugLine="Private lblUnit1 As Label";
 mostCurrent._lblunit1 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 33;BA.debugLine="Private lblUnit2 As Label";
+ //BA.debugLineNum = 34;BA.debugLine="Private lblUnit2 As Label";
 mostCurrent._lblunit2 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 34;BA.debugLine="Private lblUnit3 As Label";
+ //BA.debugLineNum = 35;BA.debugLine="Private lblUnit3 As Label";
 mostCurrent._lblunit3 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 35;BA.debugLine="Private lblUnit4 As Label";
+ //BA.debugLineNum = 36;BA.debugLine="Private lblUnit4 As Label";
 mostCurrent._lblunit4 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 36;BA.debugLine="Private pnlUnits As Panel";
+ //BA.debugLineNum = 37;BA.debugLine="Private pnlUnits As Panel";
 mostCurrent._pnlunits = new anywheresoftware.b4a.objects.PanelWrapper();
- //BA.debugLineNum = 37;BA.debugLine="Private Panel1 As Panel";
+ //BA.debugLineNum = 38;BA.debugLine="Private Panel1 As Panel";
 mostCurrent._panel1 = new anywheresoftware.b4a.objects.PanelWrapper();
- //BA.debugLineNum = 38;BA.debugLine="Public mute As Boolean";
+ //BA.debugLineNum = 39;BA.debugLine="Public mute As Boolean";
 _mute = false;
- //BA.debugLineNum = 39;BA.debugLine="Dim green As Int = 0xFF05CE00";
+ //BA.debugLineNum = 40;BA.debugLine="Dim green As Int = 0xFF05CE00";
 _green = (int) (0xff05ce00);
- //BA.debugLineNum = 40;BA.debugLine="Dim red As Int = 0xFFC40000";
+ //BA.debugLineNum = 41;BA.debugLine="Dim red As Int = 0xFFC40000";
 _red = (int) (0xffc40000);
- //BA.debugLineNum = 41;BA.debugLine="Public ManualIP As String";
+ //BA.debugLineNum = 42;BA.debugLine="Public ManualIP As String";
 mostCurrent._manualip = "";
- //BA.debugLineNum = 43;BA.debugLine="Private txtManIP As EditText";
+ //BA.debugLineNum = 43;BA.debugLine="Dim IME As IME";
+mostCurrent._ime = new anywheresoftware.b4a.objects.IME();
+ //BA.debugLineNum = 44;BA.debugLine="Private txtManIP As EditText";
 mostCurrent._txtmanip = new anywheresoftware.b4a.objects.EditTextWrapper();
- //BA.debugLineNum = 44;BA.debugLine="Private btnOK As Button";
+ //BA.debugLineNum = 45;BA.debugLine="Private btnOK As Button";
 mostCurrent._btnok = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 45;BA.debugLine="End Sub";
+ //BA.debugLineNum = 46;BA.debugLine="End Sub";
 return "";
 }
 
@@ -491,77 +499,57 @@ udpmodul._process_globals();
     }
 }public static String  _process_globals() throws Exception{
  //BA.debugLineNum = 17;BA.debugLine="Sub Process_Globals";
- //BA.debugLineNum = 20;BA.debugLine="Dim UDPsocket1 As UDPSocket";
-_udpsocket1 = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket();
- //BA.debugLineNum = 21;BA.debugLine="End Sub";
-return "";
-}
-public static String  _sendudp(anywheresoftware.b4a.objects.SocketWrapper.UDPSocket _socketa,String _command,String _ipadress,String _port) throws Exception{
-anywheresoftware.b4a.objects.SocketWrapper.UDPSocket.UDPPacket _packet = null;
-byte[] _data = null;
- //BA.debugLineNum = 71;BA.debugLine="Sub SendUDP(SocketA As UDPSocket, Command As Strin";
- //BA.debugLineNum = 72;BA.debugLine="Dim Packet As UDPPacket";
-_packet = new anywheresoftware.b4a.objects.SocketWrapper.UDPSocket.UDPPacket();
- //BA.debugLineNum = 73;BA.debugLine="Dim data() As Byte";
-_data = new byte[(int) (0)];
-;
- //BA.debugLineNum = 74;BA.debugLine="data = Command.GetBytes(\"UTF8\")";
-_data = _command.getBytes("UTF8");
- //BA.debugLineNum = 75;BA.debugLine="Packet.Initialize(data, IPadress, Port)";
-_packet.Initialize(_data,_ipadress,(int)(Double.parseDouble(_port)));
- //BA.debugLineNum = 76;BA.debugLine="SocketA.Send(Packet)";
-_socketa.Send(_packet);
- //BA.debugLineNum = 77;BA.debugLine="End Sub";
+ //BA.debugLineNum = 22;BA.debugLine="End Sub";
 return "";
 }
 public static String  _txtmanip_enterpressed() throws Exception{
- //BA.debugLineNum = 118;BA.debugLine="Sub txtManIP_EnterPressed";
- //BA.debugLineNum = 119;BA.debugLine="ManualIP = txtManIP.Text";
+ //BA.debugLineNum = 113;BA.debugLine="Sub txtManIP_EnterPressed";
+ //BA.debugLineNum = 114;BA.debugLine="ManualIP = txtManIP.Text";
 mostCurrent._manualip = mostCurrent._txtmanip.getText();
- //BA.debugLineNum = 120;BA.debugLine="If ManualIP <> \"\" Then";
+ //BA.debugLineNum = 115;BA.debugLine="If ManualIP <> \"\" Then";
 if ((mostCurrent._manualip).equals("") == false) { 
- //BA.debugLineNum = 121;BA.debugLine="SendUDP(UDPsocket1, \"0\", ManualIP, 11319)";
-_sendudp(_udpsocket1,"0",mostCurrent._manualip,BA.NumberToString(11319));
- //BA.debugLineNum = 122;BA.debugLine="ManualIP=\"\"";
+ //BA.debugLineNum = 116;BA.debugLine="CallSub(UDPmodul, \"BtnSync\")";
+anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"BtnSync");
+ //BA.debugLineNum = 117;BA.debugLine="ManualIP=\"\"";
 mostCurrent._manualip = "";
- //BA.debugLineNum = 123;BA.debugLine="txtManIP.Text =\"\"";
+ //BA.debugLineNum = 118;BA.debugLine="txtManIP.Text =\"\"";
 mostCurrent._txtmanip.setText((Object)(""));
  }else {
- //BA.debugLineNum = 125;BA.debugLine="Msgbox(\"Enter a valid IPaddress.\", \"AHE\")";
+ //BA.debugLineNum = 120;BA.debugLine="Msgbox(\"Enter a valid IPaddress.\", \"AHE\")";
 anywheresoftware.b4a.keywords.Common.Msgbox("Enter a valid IPaddress.","AHE",mostCurrent.activityBA);
- //BA.debugLineNum = 126;BA.debugLine="ManualIP=\"\"";
+ //BA.debugLineNum = 121;BA.debugLine="ManualIP=\"\"";
 mostCurrent._manualip = "";
- //BA.debugLineNum = 127;BA.debugLine="txtManIP.Text =\"\"";
+ //BA.debugLineNum = 122;BA.debugLine="txtManIP.Text =\"\"";
 mostCurrent._txtmanip.setText((Object)(""));
- //BA.debugLineNum = 128;BA.debugLine="Panel1.Visible=False";
+ //BA.debugLineNum = 123;BA.debugLine="Panel1.Visible=False";
 mostCurrent._panel1.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 129;BA.debugLine="btnOK.Visible=False";
+ //BA.debugLineNum = 124;BA.debugLine="btnOK.Visible=False";
 mostCurrent._btnok.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
- //BA.debugLineNum = 131;BA.debugLine="End Sub";
+ //BA.debugLineNum = 126;BA.debugLine="End Sub";
 return "";
 }
 public static String  _updateui() throws Exception{
- //BA.debugLineNum = 93;BA.debugLine="Public Sub UpdateUI";
- //BA.debugLineNum = 94;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
+ //BA.debugLineNum = 88;BA.debugLine="Public Sub UpdateUI";
+ //BA.debugLineNum = 89;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
 mostCurrent._lblunit1.setText((Object)(mostCurrent._udpmodul._unit1));
- //BA.debugLineNum = 96;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
+ //BA.debugLineNum = 91;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
 if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Common.True) { 
- //BA.debugLineNum = 97;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+ //BA.debugLineNum = 92;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
 mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
- //BA.debugLineNum = 98;BA.debugLine="lblUnit2.TextColor = green";
+ //BA.debugLineNum = 93;BA.debugLine="lblUnit2.TextColor = green";
 mostCurrent._lblunit2.setTextColor(_green);
  }else {
- //BA.debugLineNum = 100;BA.debugLine="lblUnit2.TextColor = red";
+ //BA.debugLineNum = 95;BA.debugLine="lblUnit2.TextColor = red";
 mostCurrent._lblunit2.setTextColor(_red);
- //BA.debugLineNum = 101;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+ //BA.debugLineNum = 96;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
 mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
  };
- //BA.debugLineNum = 104;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
+ //BA.debugLineNum = 99;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
 mostCurrent._lblunit3.setText((Object)(mostCurrent._udpmodul._unit3));
- //BA.debugLineNum = 105;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
+ //BA.debugLineNum = 100;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
 mostCurrent._lblunit4.setText((Object)(mostCurrent._udpmodul._unit4));
- //BA.debugLineNum = 106;BA.debugLine="End Sub";
+ //BA.debugLineNum = 101;BA.debugLine="End Sub";
 return "";
 }
 }

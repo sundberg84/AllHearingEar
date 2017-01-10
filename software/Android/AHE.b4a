@@ -4,19 +4,21 @@ Module1=UDPmodul
 Build1=Default,b4a.example
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~SetApplicationAttribute(android:theme, "@android:style/Theme.Holo")~\n~AddPermission(android.permission.INTERNET)~\n~AddPermission(android.permission.ACCESS_WIFI_STATE)~\n~AddPermission(android.permission.ACCESS_NETWORK_STATE)~\n~AddPermission(android.permission.CHANGE_WIFI_MULTICAST_STATE)~\n~'End of default text.~\n~
 IconFile=
-NumberOfFiles=6
+NumberOfFiles=7
 File1=ahe.png
 File2=button_dis.png
 File3=button_idle.png
 File4=button_pressed.png
 File5=ikon.png
 File6=mainAHE.bal
-NumberOfLibraries=5
+File7=topicon.png
+NumberOfLibraries=6
 Library1=core
 Library2=network
 Library3=audio
 Library4=randomaccessfile
 Library5=byteconverter
+Library6=ime
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: All Hearing Ear
@@ -37,7 +39,8 @@ Library5=byteconverter
 Sub Process_Globals
 	'These global variables will be declared once when the application starts.
 	'These variables can be accessed from all modules.
-	Dim UDPsocket1 As UDPSocket
+	
+	
 End Sub
 
 Sub Globals
@@ -59,17 +62,21 @@ Sub Globals
 	Dim green As Int = 0xFF05CE00
 	Dim red As Int = 0xFFC40000
 	Public ManualIP As String
-	
+	Dim IME As IME
 	Private txtManIP As EditText
 	Private btnOK As Button
 End Sub
+
+
 
 Sub Activity_Create(FirstTime As Boolean)
 	Activity.LoadLayout("mainAHE")
 	
 	If FirstTime Then
 		StartService(UDPmodul)
+		
 	End If
+	IME.Initialize("IME")
 	UpdateUI
 End Sub
 
@@ -84,18 +91,8 @@ End Sub
 
 'Knappar i Main-aktiviteten
 Sub btnSync_Click
-	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
+	CallSub(UDPmodul, "BtnSync")
 End Sub
-
-'UDPsender
-Sub SendUDP(SocketA As UDPSocket, Command As String, IPadress As String, Port As String)
-	Dim Packet As UDPPacket
-	Dim data() As Byte
-	data = Command.GetBytes("UTF8")
-	Packet.Initialize(data, IPadress, Port)
-	SocketA.Send(Packet)
-End Sub
-
 
 Sub btnMute_Click
 	If btnMute.Text="Mute" Then
@@ -104,7 +101,7 @@ Sub btnMute_Click
 		CallSub(UDPmodul, "astream_stop")
 		Else
 		btnMute.text="Mute"
-		'mute = False
+		mute = False
 	End If
 
 End Sub
@@ -138,7 +135,7 @@ End Sub
 Sub txtManIP_EnterPressed
 	ManualIP = txtManIP.Text
 	If ManualIP <> "" Then
-	SendUDP(UDPsocket1, "0", ManualIP, 11319)
+	CallSub(UDPmodul, "BtnSync")
 	ManualIP=""
 	txtManIP.Text =""
 	Else
@@ -150,9 +147,11 @@ Sub txtManIP_EnterPressed
 	End If
 End Sub
 Sub btnOK_Click
+	IME.HideKeyboard
+	
 	ManualIP = txtManIP.Text
 	If ManualIP <> "" Then
-	SendUDP(UDPsocket1, "0", ManualIP, 11319)
+	CallSub(UDPmodul, "BtnSync")
 	ManualIP=""
 	txtManIP.Text =""
 	txtManIP.Visible=False

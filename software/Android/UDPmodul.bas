@@ -10,7 +10,7 @@ B4A=true
 Sub Process_Globals
 	'These global variables will be declared once when the application starts.
 	'These variables can be accessed from all modules.
-	Dim UDPsocket1 As UDPSocket
+	Public UDPsocket1 As UDPSocket
 	Dim UDPsocket2 As UDPSocket
 	Dim UDPsocket3 As UDPSocket
 	Private Timer1 As Timer
@@ -22,6 +22,7 @@ Sub Process_Globals
 	Public Unit2 As String
 	Public Unit3 As String
 	Public Unit4 As String
+	Dim visaikon As Notification
 End Sub
 
 Sub Service_Create
@@ -36,6 +37,14 @@ Sub Service_Create
 	Unit2 = "Press Sync AHE to synchronize."
 	UpdateUI
 	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
+	
+	'Ikon visas på toppen av telefonen.
+	visaikon.Initialize
+	visaikon.Icon="icon"
+	visaikon.SetInfo("All hearing ear", "All hearing ear is running", Me)
+	visaikon.Sound=False
+	visaikon.Vibrate=False
+	visaikon.Notify(1)
 End Sub
 	
 Sub Service_Start (StartingIntent As Intent)
@@ -43,7 +52,10 @@ Sub Service_Start (StartingIntent As Intent)
 End Sub
 
 Sub Service_Destroy
-
+	UDPsocket1.Close
+	UDPsocket2.Close
+	UDPsocket3.Close
+	visaikon.Cancel(1)
 End Sub
 
 'Lyssna efter UDPpacket från AHE
@@ -84,6 +96,10 @@ Sub SendUDP(SocketA As UDPSocket, Command As String, IPadress As String, Port As
 	data = Command.GetBytes("UTF8")
 	Packet.Initialize(data, IPadress, Port)
 	SocketA.Send(Packet)
+End Sub
+
+Sub BtnSync
+	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
 End Sub
 
 'Timer1 kod (Uppdatera interface med rätt information för användaren. (ConnectionStatus, Färger, meddelanden)
