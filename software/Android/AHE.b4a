@@ -4,14 +4,16 @@ Module1=UDPmodul
 Build1=Default,b4a.example
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~SetApplicationAttribute(android:theme, "@android:style/Theme.Holo")~\n~AddPermission(android.permission.INTERNET)~\n~AddPermission(android.permission.ACCESS_WIFI_STATE)~\n~AddPermission(android.permission.ACCESS_NETWORK_STATE)~\n~AddPermission(android.permission.CHANGE_WIFI_MULTICAST_STATE)~\n~'End of default text.~\n~
 IconFile=
-NumberOfFiles=7
+NumberOfFiles=9
 File1=ahe.png
 File2=button_dis.png
 File3=button_idle.png
 File4=button_pressed.png
 File5=ikon.png
 File6=mainAHE.bal
-File7=topicon.png
+File7=Pyr_Connected.png
+File8=Pyr_Disconnected.png
+File9=topicon.png
 NumberOfLibraries=6
 Library1=core
 Library2=network
@@ -58,6 +60,7 @@ Sub Globals
 	Private lblUnit4 As Label
 	Private pnlUnits As Panel
 	Private Panel1 As Panel
+	Private imgConStat As ImageView
 	Public mute As Boolean
 	Dim green As Int = 0xFF05CE00
 	Dim red As Int = 0xFFC40000
@@ -108,6 +111,15 @@ End Sub
 
 'Uppdatera User Interface
 Public Sub UpdateUI
+'Grafisk UI
+
+If UDPmodul.ConnectionStatus=True Then
+	imgConStat.Bitmap = LoadBitmap(File.DirAssets, "Pyr_Connected.png")
+	Else
+	imgConStat.Bitmap = LoadBitmap(File.DirAssets, "Pyr_Disconnected.png")
+	
+End If
+	
 	lblUnit1.Text = UDPmodul.Unit1
 	
 	If UDPmodul.ConnectionStatus= True Then

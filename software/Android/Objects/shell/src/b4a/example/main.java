@@ -64,6 +64,7 @@ public static RemoteObject _lblunit3 = RemoteObject.declareNull("anywheresoftwar
 public static RemoteObject _lblunit4 = RemoteObject.declareNull("anywheresoftware.b4a.objects.LabelWrapper");
 public static RemoteObject _pnlunits = RemoteObject.declareNull("anywheresoftware.b4a.objects.PanelWrapper");
 public static RemoteObject _panel1 = RemoteObject.declareNull("anywheresoftware.b4a.objects.PanelWrapper");
+public static RemoteObject _imgconstat = RemoteObject.declareNull("anywheresoftware.b4a.objects.ImageViewWrapper");
 public static RemoteObject _mute = RemoteObject.createImmutable(false);
 public static RemoteObject _green = RemoteObject.createImmutable(0);
 public static RemoteObject _red = RemoteObject.createImmutable(0);
@@ -73,6 +74,6 @@ public static RemoteObject _txtmanip = RemoteObject.declareNull("anywheresoftwar
 public static RemoteObject _btnok = RemoteObject.declareNull("anywheresoftware.b4a.objects.ButtonWrapper");
 public static b4a.example.udpmodul _udpmodul = null;
   public Object[] GetGlobals() {
-		return new Object[] {"Activity",main.mostCurrent._activity,"btnManual",main.mostCurrent._btnmanual,"btnMute",main.mostCurrent._btnmute,"btnOK",main.mostCurrent._btnok,"btnSync",main.mostCurrent._btnsync,"EditText1",main.mostCurrent._edittext1,"green",main._green,"ImageView1",main.mostCurrent._imageview1,"IME",main.mostCurrent._ime,"lblUnit1",main.mostCurrent._lblunit1,"lblUnit2",main.mostCurrent._lblunit2,"lblUnit3",main.mostCurrent._lblunit3,"lblUnit4",main.mostCurrent._lblunit4,"ManualIP",main.mostCurrent._manualip,"mute",main._mute,"Panel1",main.mostCurrent._panel1,"pnlUnits",main.mostCurrent._pnlunits,"red",main._red,"txtManIP",main.mostCurrent._txtmanip,"UDPmodul",Debug.moduleToString(b4a.example.udpmodul.class)};
+		return new Object[] {"Activity",main.mostCurrent._activity,"btnManual",main.mostCurrent._btnmanual,"btnMute",main.mostCurrent._btnmute,"btnOK",main.mostCurrent._btnok,"btnSync",main.mostCurrent._btnsync,"EditText1",main.mostCurrent._edittext1,"green",main._green,"ImageView1",main.mostCurrent._imageview1,"IME",main.mostCurrent._ime,"imgConStat",main.mostCurrent._imgconstat,"lblUnit1",main.mostCurrent._lblunit1,"lblUnit2",main.mostCurrent._lblunit2,"lblUnit3",main.mostCurrent._lblunit3,"lblUnit4",main.mostCurrent._lblunit4,"ManualIP",main.mostCurrent._manualip,"mute",main._mute,"Panel1",main.mostCurrent._panel1,"pnlUnits",main.mostCurrent._pnlunits,"red",main._red,"txtManIP",main.mostCurrent._txtmanip,"UDPmodul",Debug.moduleToString(b4a.example.udpmodul.class)};
 }
 }

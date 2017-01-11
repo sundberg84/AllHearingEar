@@ -211,16 +211,13 @@ RDebugUtils.currentLine=786447;
  //BA.debugLineNum = 786447;BA.debugLine="notis.Icon=\"icon\"";
 _notis.setIcon("icon");
 RDebugUtils.currentLine=786448;
- //BA.debugLineNum = 786448;BA.debugLine="notis.OnGoingEvent=True";
-_notis.setOnGoingEvent(anywheresoftware.b4a.keywords.Common.True);
+ //BA.debugLineNum = 786448;BA.debugLine="notis.Vibrate=True";
+_notis.setVibrate(anywheresoftware.b4a.keywords.Common.True);
 RDebugUtils.currentLine=786449;
- //BA.debugLineNum = 786449;BA.debugLine="notis.Vibrate=False";
-_notis.setVibrate(anywheresoftware.b4a.keywords.Common.False);
-RDebugUtils.currentLine=786450;
- //BA.debugLineNum = 786450;BA.debugLine="notis.Sound=False";
-_notis.setSound(anywheresoftware.b4a.keywords.Common.False);
-RDebugUtils.currentLine=786454;
- //BA.debugLineNum = 786454;BA.debugLine="End Sub";
+ //BA.debugLineNum = 786449;BA.debugLine="notis.Sound=True";
+_notis.setSound(anywheresoftware.b4a.keywords.Common.True);
+RDebugUtils.currentLine=786453;
+ //BA.debugLineNum = 786453;BA.debugLine="End Sub";
 return "";
 }
 public static String  _updateui() throws Exception{
@@ -248,13 +245,10 @@ RDebugUtils.currentLine=917507;
  //BA.debugLineNum = 917507;BA.debugLine="UDPsocket3.Close";
 _udpsocket3.Close();
 RDebugUtils.currentLine=917508;
- //BA.debugLineNum = 917508;BA.debugLine="notis.OnGoingEvent=False";
-_notis.setOnGoingEvent(anywheresoftware.b4a.keywords.Common.False);
-RDebugUtils.currentLine=917509;
- //BA.debugLineNum = 917509;BA.debugLine="notis.Cancel(1)";
+ //BA.debugLineNum = 917508;BA.debugLine="notis.Cancel(1)";
 _notis.Cancel((int) (1));
-RDebugUtils.currentLine=917510;
- //BA.debugLineNum = 917510;BA.debugLine="End Sub";
+RDebugUtils.currentLine=917509;
+ //BA.debugLineNum = 917509;BA.debugLine="End Sub";
 return "";
 }
 public static String  _service_start(anywheresoftware.b4a.objects.IntentWrapper _startingintent) throws Exception{

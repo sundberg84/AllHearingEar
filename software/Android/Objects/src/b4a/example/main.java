@@ -351,6 +351,7 @@ public anywheresoftware.b4a.objects.LabelWrapper _lblunit3 = null;
 public anywheresoftware.b4a.objects.LabelWrapper _lblunit4 = null;
 public anywheresoftware.b4a.objects.PanelWrapper _pnlunits = null;
 public anywheresoftware.b4a.objects.PanelWrapper _panel1 = null;
+public anywheresoftware.b4a.objects.ImageViewWrapper _imgconstat = null;
 public static boolean _mute = false;
 public static int _green = 0;
 public static int _red = 0;
@@ -387,34 +388,45 @@ public static String  _updateui() throws Exception{
 RDebugUtils.currentModule="main";
 RDebugUtils.currentLine=458752;
  //BA.debugLineNum = 458752;BA.debugLine="Public Sub UpdateUI";
-RDebugUtils.currentLine=458753;
- //BA.debugLineNum = 458753;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
-mostCurrent._lblunit1.setText((Object)(mostCurrent._udpmodul._unit1));
 RDebugUtils.currentLine=458755;
- //BA.debugLineNum = 458755;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
+ //BA.debugLineNum = 458755;BA.debugLine="If UDPmodul.ConnectionStatus=True Then";
 if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Common.True) { 
 RDebugUtils.currentLine=458756;
- //BA.debugLineNum = 458756;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+ //BA.debugLineNum = 458756;BA.debugLine="imgConStat.Bitmap = LoadBitmap(File.DirAssets, \"P";
+mostCurrent._imgconstat.setBitmap((android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"Pyr_Connected.png").getObject()));
+ }else {
+RDebugUtils.currentLine=458758;
+ //BA.debugLineNum = 458758;BA.debugLine="imgConStat.Bitmap = LoadBitmap(File.DirAssets, \"P";
+mostCurrent._imgconstat.setBitmap((android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"Pyr_Disconnected.png").getObject()));
+ };
+RDebugUtils.currentLine=458762;
+ //BA.debugLineNum = 458762;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
+mostCurrent._lblunit1.setText((Object)(mostCurrent._udpmodul._unit1));
+RDebugUtils.currentLine=458764;
+ //BA.debugLineNum = 458764;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
+if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Common.True) { 
+RDebugUtils.currentLine=458765;
+ //BA.debugLineNum = 458765;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
 mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
-RDebugUtils.currentLine=458757;
- //BA.debugLineNum = 458757;BA.debugLine="lblUnit2.TextColor = green";
+RDebugUtils.currentLine=458766;
+ //BA.debugLineNum = 458766;BA.debugLine="lblUnit2.TextColor = green";
 mostCurrent._lblunit2.setTextColor(_green);
  }else {
-RDebugUtils.currentLine=458759;
- //BA.debugLineNum = 458759;BA.debugLine="lblUnit2.TextColor = red";
+RDebugUtils.currentLine=458768;
+ //BA.debugLineNum = 458768;BA.debugLine="lblUnit2.TextColor = red";
 mostCurrent._lblunit2.setTextColor(_red);
-RDebugUtils.currentLine=458760;
- //BA.debugLineNum = 458760;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+RDebugUtils.currentLine=458769;
+ //BA.debugLineNum = 458769;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
 mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
  };
-RDebugUtils.currentLine=458763;
- //BA.debugLineNum = 458763;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
+RDebugUtils.currentLine=458772;
+ //BA.debugLineNum = 458772;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
 mostCurrent._lblunit3.setText((Object)(mostCurrent._udpmodul._unit3));
-RDebugUtils.currentLine=458764;
- //BA.debugLineNum = 458764;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
+RDebugUtils.currentLine=458773;
+ //BA.debugLineNum = 458773;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
 mostCurrent._lblunit4.setText((Object)(mostCurrent._udpmodul._unit4));
-RDebugUtils.currentLine=458765;
- //BA.debugLineNum = 458765;BA.debugLine="End Sub";
+RDebugUtils.currentLine=458774;
+ //BA.debugLineNum = 458774;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
