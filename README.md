@@ -43,6 +43,13 @@ Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett s
 - Statusled?
 - Nattlampa LED
 
+"" PreAmplifier
+- OPA3344
+https://learn.sparkfun.com/tutorials/electret-mic-breakout-board-hookup-guide
+http://www.ti.com/lit/ds/symlink/opa345.pdf
+
+
+
 ## Skal 
 3d pyramid
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
