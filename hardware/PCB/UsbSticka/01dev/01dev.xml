@@ -2,7 +2,7 @@
 <export version="D">
   <design>
     <source>D:/OneDrive/AllHearingEar/hardware/PCB/UsbSticka/01dev/01dev.sch</source>
-    <date>2016-12-12 21:48:02</date>
+    <date>2017-01-19 10:29:02</date>
     <tool>Eeschema 4.0.4-stable</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -21,7 +21,7 @@
   <components>
     <comp ref="P1">
       <value>USB_B</value>
-      <footprint>ASKicadLib:USB_A_AS</footprint>
+      <footprint>Connect:USB_Micro-B</footprint>
       <libsource lib="conn" part="USB_B"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>58495BE0</tstamp>
@@ -120,7 +120,7 @@
     <comp ref="FB1">
       <value>FERRITE</value>
       <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
-      <libsource lib="andreas_footprints" part="FERRITE"/>
+      <libsource lib="ferrite" part="FERRITE"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>5849DA18</tstamp>
     </comp>
@@ -259,7 +259,7 @@
         <pin num="16" name="TXD" type="output"/>
       </pins>
     </libpart>
-    <libpart lib="andreas_footprints" part="FERRITE">
+    <libpart lib="ferrite" part="FERRITE">
       <fields>
         <field name="Reference">FB</field>
         <field name="Value">FERRITE</field>
@@ -295,8 +295,6 @@
       </pins>
     </libpart>
     <libpart lib="andreas_footprints" part="MAX9813">
-      <description>MAX9813 - Tiny, Low-Cost, Single/Dual-Input, Fixed-Gain Microphone Amplifiers with Integrated Bias</description>
-      <docs>https://datasheets.maximintegrated.com/en/ds/MAX9812-MAX9813L.pdf</docs>
       <fields>
         <field name="Reference">U</field>
         <field name="Value">MAX9813</field>
@@ -316,8 +314,6 @@
       <aliases>
         <alias>MCP3553-E/SN</alias>
       </aliases>
-      <description>MCP3550-60, Single Delta-Sigma 22bit Analog to Digital Converter, SPI Interface, 60Hz Rejection, MSOP-8</description>
-      <docs>http://ww1.microchip.com/downloads/en/devicedoc/21950c.pdf</docs>
       <footprints>
         <fp>SO*</fp>
       </footprints>
@@ -382,16 +378,19 @@
   </libparts>
   <libraries>
     <library logical="device">
-      <uri>D:\Program Files (x86)\KiCad\share\kicad\library\device.lib</uri>
+      <uri>D:\Program Files\KiCad\share\kicad\library\device.lib</uri>
     </library>
     <library logical="conn">
-      <uri>D:\Program Files (x86)\KiCad\share\kicad\library\conn.lib</uri>
+      <uri>D:\Program Files\KiCad\share\kicad\library\conn.lib</uri>
     </library>
     <library logical="regul">
-      <uri>D:\Program Files (x86)\KiCad\share\kicad\library\regul.lib</uri>
+      <uri>D:\Program Files\KiCad\share\kicad\library\regul.lib</uri>
     </library>
     <library logical="andreas_footprints">
       <uri>D:\OneDrive\AllHearingEar\hardware\PCB\KiCad Libraries\andreas_footprints.lib</uri>
+    </library>
+    <library logical="ferrite">
+      <uri>D:\OneDrive\AllHearingEar\hardware\PCB\KiCad Libraries\ferrite.lib</uri>
     </library>
   </libraries>
   <nets>

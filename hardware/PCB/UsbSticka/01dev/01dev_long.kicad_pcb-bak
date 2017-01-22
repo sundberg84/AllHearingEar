@@ -1,9 +1,9 @@
 (kicad_pcb (version 4) (host pcbnew 4.0.4-stable)
 
   (general
-    (links 52)
-    (no_connects 2)
-    (area 140.549999 39.424999 171.43 106.500001)
+    (links 50)
+    (no_connects 0)
+    (area -7.69987 -9.675001 171.43 106.500001)
     (thickness 1.6)
     (drawings 53)
     (tracks 293)
@@ -64,7 +64,7 @@
     (aux_axis_origin 0 0)
     (visible_elements 7FFEFFFF)
     (pcbplotparams
-      (layerselection 0x01030_80000001)
+      (layerselection 0x010f0_80000001)
       (usegerberextensions false)
       (excludeedgelayer true)
       (linewidth 0.100000)

@@ -28,9 +28,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:andreas_footprints
-LIBS:ferrite
-LIBS:01dev-cache
+LIBS:02dev-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -51,7 +49,7 @@ U 1 1 58495BE0
 P 2700 1800
 F 0 "P1" H 2900 1600 50  0000 C CNN
 F 1 "USB_B" H 2650 2000 50  0000 C CNN
-F 2 "Connect:USB_Micro-B" V 2650 1700 50  0001 C CNN
+F 2 "ASKicadLib:USB_A_AS" V 2650 1700 50  0001 C CNN
 F 3 "" V 2650 1700 50  0000 C CNN
 	1    2700 1800
 	0    -1   -1   0   
