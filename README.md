@@ -48,7 +48,11 @@ Andreas bygger hårdvara i form av kretskort och mikrofoner. Samt designar ett s
 https://learn.sparkfun.com/tutorials/electret-mic-breakout-board-hookup-guide
 http://www.ti.com/lit/ds/symlink/opa345.pdf
 
+Avoid common problems when designing op-amp and in-amp circuits:
+http://www.planetanalog.com/document.asp?doc_id=527560
 
+Div PreAmp
+https://arduinodiy.wordpress.com/category/audio/
 
 ## Skal 
 3d pyramid
