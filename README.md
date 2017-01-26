@@ -54,6 +54,9 @@ http://www.planetanalog.com/document.asp?doc_id=527560
 Div PreAmp
 https://arduinodiy.wordpress.com/category/audio/
 
+Noice reduction
+http://www.diystompboxes.com/smfforum/index.php?topic=74265.0
+
 ## Skal 
 3d pyramid
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
