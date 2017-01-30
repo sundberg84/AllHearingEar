@@ -1,0 +1,12 @@
+Qty,partname,description,lib
+0,"C","Unpolarized capacitor","device"
+0,"CONN_01X02","Connector, single row, 01x02","conn"
+0,"CONN_01X03","Connector, single row, 01x03","conn"
+0,"ESP-07","","02devOPAdual-cache"
+0,"FERRITE","","02devOPAdual-cache"
+0,"LM1117-ADJ","800mA Low-Dropout Linear Regulator, adjustable output","regul"
+0,"MCP3201","","02devOPAdual-cache"
+0,"OPA345","","02devOPAdual-cache"
+0,"R","Resistor","device"
+0,"SW_PUSH","Button","device"
+0,"USB_B","USB Type B connector","conn"
