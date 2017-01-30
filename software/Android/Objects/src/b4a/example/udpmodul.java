@@ -216,8 +216,8 @@ _notis.setVibrate(anywheresoftware.b4a.keywords.Common.True);
 RDebugUtils.currentLine=786449;
  //BA.debugLineNum = 786449;BA.debugLine="notis.Sound=True";
 _notis.setSound(anywheresoftware.b4a.keywords.Common.True);
-RDebugUtils.currentLine=786453;
- //BA.debugLineNum = 786453;BA.debugLine="End Sub";
+RDebugUtils.currentLine=786454;
+ //BA.debugLineNum = 786454;BA.debugLine="End Sub";
 return "";
 }
 public static String  _updateui() throws Exception{
@@ -236,19 +236,22 @@ RDebugUtils.currentModule="udpmodul";
 RDebugUtils.currentLine=917504;
  //BA.debugLineNum = 917504;BA.debugLine="Sub Service_Destroy";
 RDebugUtils.currentLine=917505;
- //BA.debugLineNum = 917505;BA.debugLine="UDPsocket1.Close";
-_udpsocket1.Close();
+ //BA.debugLineNum = 917505;BA.debugLine="SendUDP(UDPsocket1, \"4\", AHEIP, 11319)";
+_sendudp(_udpsocket1,"4",_aheip,BA.NumberToString(11319));
 RDebugUtils.currentLine=917506;
- //BA.debugLineNum = 917506;BA.debugLine="UDPsocket2.Close";
-_udpsocket2.Close();
+ //BA.debugLineNum = 917506;BA.debugLine="UDPsocket1.Close";
+_udpsocket1.Close();
 RDebugUtils.currentLine=917507;
- //BA.debugLineNum = 917507;BA.debugLine="UDPsocket3.Close";
-_udpsocket3.Close();
+ //BA.debugLineNum = 917507;BA.debugLine="UDPsocket2.Close";
+_udpsocket2.Close();
 RDebugUtils.currentLine=917508;
- //BA.debugLineNum = 917508;BA.debugLine="notis.Cancel(1)";
-_notis.Cancel((int) (1));
+ //BA.debugLineNum = 917508;BA.debugLine="UDPsocket3.Close";
+_udpsocket3.Close();
 RDebugUtils.currentLine=917509;
- //BA.debugLineNum = 917509;BA.debugLine="End Sub";
+ //BA.debugLineNum = 917509;BA.debugLine="notis.Cancel(1)";
+_notis.Cancel((int) (1));
+RDebugUtils.currentLine=917510;
+ //BA.debugLineNum = 917510;BA.debugLine="End Sub";
 return "";
 }
 public static String  _service_start(anywheresoftware.b4a.objects.IntentWrapper _startingintent) throws Exception{
@@ -257,6 +260,17 @@ RDebugUtils.currentLine=851968;
  //BA.debugLineNum = 851968;BA.debugLine="Sub Service_Start (StartingIntent As Intent)";
 RDebugUtils.currentLine=851970;
  //BA.debugLineNum = 851970;BA.debugLine="End Sub";
+return "";
+}
+public static String  _tbsens() throws Exception{
+RDebugUtils.currentModule="udpmodul";
+RDebugUtils.currentLine=2097152;
+ //BA.debugLineNum = 2097152;BA.debugLine="Sub TBSens";
+RDebugUtils.currentLine=2097153;
+ //BA.debugLineNum = 2097153;BA.debugLine="SendUDP(UDPsocket1, \"2\" + Main.Sens, \"192.168.1.2";
+_sendudp(_udpsocket1,BA.NumberToString((double)(Double.parseDouble("2"))+(double)(Double.parseDouble(mostCurrent._main._sens))),"192.168.1.255",BA.NumberToString(11319));
+RDebugUtils.currentLine=2097154;
+ //BA.debugLineNum = 2097154;BA.debugLine="End Sub";
 return "";
 }
 public static String  _timer1_tick() throws Exception{

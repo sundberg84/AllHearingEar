@@ -72,8 +72,9 @@ public static RemoteObject _manualip = RemoteObject.createImmutable("");
 public static RemoteObject _ime = RemoteObject.declareNull("anywheresoftware.b4a.objects.IME");
 public static RemoteObject _txtmanip = RemoteObject.declareNull("anywheresoftware.b4a.objects.EditTextWrapper");
 public static RemoteObject _btnok = RemoteObject.declareNull("anywheresoftware.b4a.objects.ButtonWrapper");
+public static RemoteObject _sens = RemoteObject.createImmutable("");
 public static b4a.example.udpmodul _udpmodul = null;
   public Object[] GetGlobals() {
-		return new Object[] {"Activity",main.mostCurrent._activity,"btnManual",main.mostCurrent._btnmanual,"btnMute",main.mostCurrent._btnmute,"btnOK",main.mostCurrent._btnok,"btnSync",main.mostCurrent._btnsync,"EditText1",main.mostCurrent._edittext1,"green",main._green,"ImageView1",main.mostCurrent._imageview1,"IME",main.mostCurrent._ime,"imgConStat",main.mostCurrent._imgconstat,"lblUnit1",main.mostCurrent._lblunit1,"lblUnit2",main.mostCurrent._lblunit2,"lblUnit3",main.mostCurrent._lblunit3,"lblUnit4",main.mostCurrent._lblunit4,"ManualIP",main.mostCurrent._manualip,"mute",main._mute,"Panel1",main.mostCurrent._panel1,"pnlUnits",main.mostCurrent._pnlunits,"red",main._red,"txtManIP",main.mostCurrent._txtmanip,"UDPmodul",Debug.moduleToString(b4a.example.udpmodul.class)};
+		return new Object[] {"Activity",main.mostCurrent._activity,"btnManual",main.mostCurrent._btnmanual,"btnMute",main.mostCurrent._btnmute,"btnOK",main.mostCurrent._btnok,"btnSync",main.mostCurrent._btnsync,"EditText1",main.mostCurrent._edittext1,"green",main._green,"ImageView1",main.mostCurrent._imageview1,"IME",main.mostCurrent._ime,"imgConStat",main.mostCurrent._imgconstat,"lblUnit1",main.mostCurrent._lblunit1,"lblUnit2",main.mostCurrent._lblunit2,"lblUnit3",main.mostCurrent._lblunit3,"lblUnit4",main.mostCurrent._lblunit4,"ManualIP",main.mostCurrent._manualip,"mute",main._mute,"Panel1",main.mostCurrent._panel1,"pnlUnits",main.mostCurrent._pnlunits,"red",main._red,"Sens",main.mostCurrent._sens,"txtManIP",main.mostCurrent._txtmanip,"UDPmodul",Debug.moduleToString(b4a.example.udpmodul.class)};
 }
 }

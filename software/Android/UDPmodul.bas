@@ -45,6 +45,7 @@ Sub Service_Create
 	notis.Sound=True
 	
 	
+	
 		
 End Sub
 	
@@ -53,6 +54,7 @@ Sub Service_Start (StartingIntent As Intent)
 End Sub
 
 Sub Service_Destroy
+	SendUDP(UDPsocket1, "4", AHEIP, 11319)
 	UDPsocket1.Close
 	UDPsocket2.Close
 	UDPsocket3.Close
@@ -107,6 +109,13 @@ Sub BtnSync
 	SendUDP(UDPsocket1, "0", "192.168.1.255", 11319)
 End Sub
 
+Sub TBSens
+	SendUDP(UDPsocket1, "2" + Main.Sens, AHEIP, 11319)
+End Sub
+	
+Sub DebugSend
+	SendUDP(UDPsocket1, "3", AHEIP, 11319)
+End Sub
 'Timer1 kod (Uppdatera interface med rätt information för användaren. (ConnectionStatus, Färger, meddelanden)
 
 Sub Timer1_Tick

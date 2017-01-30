@@ -977,6 +977,11 @@ Public Class main
     <DllImport("winmm.dll")> Private Shared Function waveOutGetVolume(ByVal hwo As IntPtr, ByRef pdwVolume As UInteger) As UInteger
     End Function
 
+    'Skicka Debug i HW.
+    Private Sub Label1_DoubleClick(sender As Object, e As EventArgs) Handles Label1.DoubleClick
+        SendUDP(AHESyncIP1, 11319, Encoding.ASCII.GetBytes("3"))
+    End Sub
+
 
     '-------------
 
