@@ -61,6 +61,7 @@ Sub Globals
 	Private pnlUnits As Panel
 	Private Panel1 As Panel
 	Private imgConStat As ImageView
+	Private SBSens As SeekBar
 	Public mute As Boolean
 	Dim green As Int = 0xFF05CE00
 	Dim red As Int = 0xFFC40000
@@ -68,6 +69,7 @@ Sub Globals
 	Dim IME As IME
 	Private txtManIP As EditText
 	Private btnOK As Button
+	Public Sens As String
 End Sub
 
 
@@ -85,6 +87,7 @@ End Sub
 
 Sub Activity_Resume
 	StartService(UDPmodul)
+	UpdateUI
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
@@ -115,9 +118,10 @@ Public Sub UpdateUI
 
 If UDPmodul.ConnectionStatus=True Then
 	imgConStat.Bitmap = LoadBitmap(File.DirAssets, "Pyr_Connected.png")
+	SBSens.Visible = True
 	Else
 	imgConStat.Bitmap = LoadBitmap(File.DirAssets, "Pyr_Disconnected.png")
-	
+	SBSens.Visible = False
 End If
 	
 	lblUnit1.Text = UDPmodul.Unit1
@@ -177,4 +181,11 @@ Sub btnOK_Click
 	Panel1.Visible=False
 	btnOK.Visible=False
 	End If
+End Sub
+Sub SBSens_ValueChanged (Value As Int, UserChanged As Boolean)
+	Sens = Value
+	CallSub(UDPmodul, "TBSens")
+End Sub
+Sub ImageView1_LongClick
+	CallSub(UDPmodul, "DebugSend")
 End Sub

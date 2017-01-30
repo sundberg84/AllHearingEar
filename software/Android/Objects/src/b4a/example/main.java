@@ -359,6 +359,7 @@ public static String _manualip = "";
 public anywheresoftware.b4a.objects.IME _ime = null;
 public anywheresoftware.b4a.objects.EditTextWrapper _txtmanip = null;
 public anywheresoftware.b4a.objects.ButtonWrapper _btnok = null;
+public static String _sens = "";
 public b4a.example.udpmodul _udpmodul = null;
 public static String  _activity_create(boolean _firsttime) throws Exception{
 RDebugUtils.currentModule="main";
@@ -445,7 +446,10 @@ RDebugUtils.currentLine=196609;
  //BA.debugLineNum = 196609;BA.debugLine="StartService(UDPmodul)";
 anywheresoftware.b4a.keywords.Common.StartService(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()));
 RDebugUtils.currentLine=196610;
- //BA.debugLineNum = 196610;BA.debugLine="End Sub";
+ //BA.debugLineNum = 196610;BA.debugLine="UpdateUI";
+_updateui();
+RDebugUtils.currentLine=196611;
+ //BA.debugLineNum = 196611;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnmanual_click() throws Exception{
@@ -571,6 +575,20 @@ RDebugUtils.currentLine=327681;
 anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"BtnSync");
 RDebugUtils.currentLine=327682;
  //BA.debugLineNum = 327682;BA.debugLine="End Sub";
+return "";
+}
+public static String  _sbsens_valuechanged(int _value,boolean _userchanged) throws Exception{
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=1507328;
+ //BA.debugLineNum = 1507328;BA.debugLine="Sub SBSens_ValueChanged (Value As Int, UserChanged";
+RDebugUtils.currentLine=1507329;
+ //BA.debugLineNum = 1507329;BA.debugLine="Sens = Value";
+mostCurrent._sens = BA.NumberToString(_value);
+RDebugUtils.currentLine=1507330;
+ //BA.debugLineNum = 1507330;BA.debugLine="CallSub(UDPmodul, \"TBSens\")";
+anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"TBSens");
+RDebugUtils.currentLine=1507331;
+ //BA.debugLineNum = 1507331;BA.debugLine="End Sub";
 return "";
 }
 public static String  _txtmanip_enterpressed() throws Exception{
