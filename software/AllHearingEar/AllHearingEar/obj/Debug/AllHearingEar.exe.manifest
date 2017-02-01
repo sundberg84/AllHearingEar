@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AllHearingEar.exe" size="1349592">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AllHearingEar.exe" size="1350104">
       <assemblyIdentity name="AllHearingEar" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ptcl+PNwcBbYV6MaILxbXfjO3ZzG1wUs3DcEFGSLyCc=</dsig:DigestValue>
+        <dsig:DigestValue>8JRzyQzjqOo5yYoucIfgUvO00g3qu9xTRGTKjXgN79U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

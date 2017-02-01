@@ -352,6 +352,7 @@ public anywheresoftware.b4a.objects.LabelWrapper _lblunit4 = null;
 public anywheresoftware.b4a.objects.PanelWrapper _pnlunits = null;
 public anywheresoftware.b4a.objects.PanelWrapper _panel1 = null;
 public anywheresoftware.b4a.objects.ImageViewWrapper _imgconstat = null;
+public anywheresoftware.b4a.objects.SeekBarWrapper _sbsens = null;
 public static boolean _mute = false;
 public static int _green = 0;
 public static int _red = 0;
@@ -395,39 +396,45 @@ if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Commo
 RDebugUtils.currentLine=458756;
  //BA.debugLineNum = 458756;BA.debugLine="imgConStat.Bitmap = LoadBitmap(File.DirAssets, \"P";
 mostCurrent._imgconstat.setBitmap((android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"Pyr_Connected.png").getObject()));
+RDebugUtils.currentLine=458757;
+ //BA.debugLineNum = 458757;BA.debugLine="SBSens.Visible = True";
+mostCurrent._sbsens.setVisible(anywheresoftware.b4a.keywords.Common.True);
  }else {
-RDebugUtils.currentLine=458758;
- //BA.debugLineNum = 458758;BA.debugLine="imgConStat.Bitmap = LoadBitmap(File.DirAssets, \"P";
+RDebugUtils.currentLine=458759;
+ //BA.debugLineNum = 458759;BA.debugLine="imgConStat.Bitmap = LoadBitmap(File.DirAssets, \"P";
 mostCurrent._imgconstat.setBitmap((android.graphics.Bitmap)(anywheresoftware.b4a.keywords.Common.LoadBitmap(anywheresoftware.b4a.keywords.Common.File.getDirAssets(),"Pyr_Disconnected.png").getObject()));
+RDebugUtils.currentLine=458760;
+ //BA.debugLineNum = 458760;BA.debugLine="SBSens.Visible = False";
+mostCurrent._sbsens.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
-RDebugUtils.currentLine=458762;
- //BA.debugLineNum = 458762;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
+RDebugUtils.currentLine=458763;
+ //BA.debugLineNum = 458763;BA.debugLine="lblUnit1.Text = UDPmodul.Unit1";
 mostCurrent._lblunit1.setText((Object)(mostCurrent._udpmodul._unit1));
-RDebugUtils.currentLine=458764;
- //BA.debugLineNum = 458764;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
-if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Common.True) { 
 RDebugUtils.currentLine=458765;
- //BA.debugLineNum = 458765;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
-mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
+ //BA.debugLineNum = 458765;BA.debugLine="If UDPmodul.ConnectionStatus= True Then";
+if (mostCurrent._udpmodul._connectionstatus==anywheresoftware.b4a.keywords.Common.True) { 
 RDebugUtils.currentLine=458766;
- //BA.debugLineNum = 458766;BA.debugLine="lblUnit2.TextColor = green";
+ //BA.debugLineNum = 458766;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
+RDebugUtils.currentLine=458767;
+ //BA.debugLineNum = 458767;BA.debugLine="lblUnit2.TextColor = green";
 mostCurrent._lblunit2.setTextColor(_green);
  }else {
-RDebugUtils.currentLine=458768;
- //BA.debugLineNum = 458768;BA.debugLine="lblUnit2.TextColor = red";
-mostCurrent._lblunit2.setTextColor(_red);
 RDebugUtils.currentLine=458769;
- //BA.debugLineNum = 458769;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
+ //BA.debugLineNum = 458769;BA.debugLine="lblUnit2.TextColor = red";
+mostCurrent._lblunit2.setTextColor(_red);
+RDebugUtils.currentLine=458770;
+ //BA.debugLineNum = 458770;BA.debugLine="lblUnit2.Text = UDPmodul.Unit2";
 mostCurrent._lblunit2.setText((Object)(mostCurrent._udpmodul._unit2));
  };
-RDebugUtils.currentLine=458772;
- //BA.debugLineNum = 458772;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
-mostCurrent._lblunit3.setText((Object)(mostCurrent._udpmodul._unit3));
 RDebugUtils.currentLine=458773;
- //BA.debugLineNum = 458773;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
-mostCurrent._lblunit4.setText((Object)(mostCurrent._udpmodul._unit4));
+ //BA.debugLineNum = 458773;BA.debugLine="lblUnit3.Text = UDPmodul.unit3";
+mostCurrent._lblunit3.setText((Object)(mostCurrent._udpmodul._unit3));
 RDebugUtils.currentLine=458774;
- //BA.debugLineNum = 458774;BA.debugLine="End Sub";
+ //BA.debugLineNum = 458774;BA.debugLine="lblUnit4.Text = UDPmodul.unit4";
+mostCurrent._lblunit4.setText((Object)(mostCurrent._udpmodul._unit4));
+RDebugUtils.currentLine=458775;
+ //BA.debugLineNum = 458775;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
@@ -577,18 +584,29 @@ RDebugUtils.currentLine=327682;
  //BA.debugLineNum = 327682;BA.debugLine="End Sub";
 return "";
 }
+public static String  _imageview1_longclick() throws Exception{
+RDebugUtils.currentModule="main";
+RDebugUtils.currentLine=786432;
+ //BA.debugLineNum = 786432;BA.debugLine="Sub ImageView1_LongClick";
+RDebugUtils.currentLine=786433;
+ //BA.debugLineNum = 786433;BA.debugLine="CallSub(UDPmodul, \"DebugSend\")";
+anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"DebugSend");
+RDebugUtils.currentLine=786434;
+ //BA.debugLineNum = 786434;BA.debugLine="End Sub";
+return "";
+}
 public static String  _sbsens_valuechanged(int _value,boolean _userchanged) throws Exception{
 RDebugUtils.currentModule="main";
-RDebugUtils.currentLine=1507328;
- //BA.debugLineNum = 1507328;BA.debugLine="Sub SBSens_ValueChanged (Value As Int, UserChanged";
-RDebugUtils.currentLine=1507329;
- //BA.debugLineNum = 1507329;BA.debugLine="Sens = Value";
+RDebugUtils.currentLine=720896;
+ //BA.debugLineNum = 720896;BA.debugLine="Sub SBSens_ValueChanged (Value As Int, UserChanged";
+RDebugUtils.currentLine=720897;
+ //BA.debugLineNum = 720897;BA.debugLine="Sens = Value";
 mostCurrent._sens = BA.NumberToString(_value);
-RDebugUtils.currentLine=1507330;
- //BA.debugLineNum = 1507330;BA.debugLine="CallSub(UDPmodul, \"TBSens\")";
+RDebugUtils.currentLine=720898;
+ //BA.debugLineNum = 720898;BA.debugLine="CallSub(UDPmodul, \"TBSens\")";
 anywheresoftware.b4a.keywords.Common.CallSubNew(mostCurrent.activityBA,(Object)(mostCurrent._udpmodul.getObject()),"TBSens");
-RDebugUtils.currentLine=1507331;
- //BA.debugLineNum = 1507331;BA.debugLine="End Sub";
+RDebugUtils.currentLine=720899;
+ //BA.debugLineNum = 720899;BA.debugLine="End Sub";
 return "";
 }
 public static String  _txtmanip_enterpressed() throws Exception{

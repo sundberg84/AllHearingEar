@@ -8,23 +8,23 @@ public class udpmodul_subs_0 {
 
 public static RemoteObject  _astream_newdata(RemoteObject _buffer) throws Exception{
 try {
-		Debug.PushSubsStack("astream_NewData (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,144);
+		Debug.PushSubsStack("astream_NewData (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,147);
 if (RapidSub.canDelegate("astream_newdata")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","astream_newdata", _buffer);
 Debug.locals.put("Buffer", _buffer);
- BA.debugLineNum = 144;BA.debugLine="Sub astream_NewData (Buffer() As Byte)";
-Debug.ShouldStop(32768);
- BA.debugLineNum = 145;BA.debugLine="streamer.Write(Buffer)";
-Debug.ShouldStop(65536);
-udpmodul._streamer.runVoidMethod ("Write",(Object)(_buffer));
- BA.debugLineNum = 146;BA.debugLine="If Main.mute = False Then";
-Debug.ShouldStop(131072);
-if (RemoteObject.solveBoolean("=",udpmodul.mostCurrent._main._mute,udpmodul.mostCurrent.__c.getField(true,"False"))) { 
- BA.debugLineNum = 147;BA.debugLine="streamer.StartPlaying";
+ BA.debugLineNum = 147;BA.debugLine="Sub astream_NewData (Buffer() As Byte)";
 Debug.ShouldStop(262144);
+ BA.debugLineNum = 148;BA.debugLine="streamer.Write(Buffer)";
+Debug.ShouldStop(524288);
+udpmodul._streamer.runVoidMethod ("Write",(Object)(_buffer));
+ BA.debugLineNum = 149;BA.debugLine="If Main.mute = False Then";
+Debug.ShouldStop(1048576);
+if (RemoteObject.solveBoolean("=",udpmodul.mostCurrent._main._mute,udpmodul.mostCurrent.__c.getField(true,"False"))) { 
+ BA.debugLineNum = 150;BA.debugLine="streamer.StartPlaying";
+Debug.ShouldStop(2097152);
 udpmodul._streamer.runVoidMethod ("StartPlaying");
  };
- BA.debugLineNum = 149;BA.debugLine="End Sub";
-Debug.ShouldStop(1048576);
+ BA.debugLineNum = 152;BA.debugLine="End Sub";
+Debug.ShouldStop(8388608);
 return RemoteObject.createImmutable("");
 }
 catch (Exception e) {
@@ -36,15 +36,15 @@ finally {
 		}}
 public static RemoteObject  _astream_stop() throws Exception{
 try {
-		Debug.PushSubsStack("astream_Stop (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,152);
+		Debug.PushSubsStack("astream_Stop (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,155);
 if (RapidSub.canDelegate("astream_stop")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","astream_stop");
- BA.debugLineNum = 152;BA.debugLine="Sub astream_Stop";
-Debug.ShouldStop(8388608);
- BA.debugLineNum = 153;BA.debugLine="streamer.StopPlaying";
-Debug.ShouldStop(16777216);
+ BA.debugLineNum = 155;BA.debugLine="Sub astream_Stop";
+Debug.ShouldStop(67108864);
+ BA.debugLineNum = 156;BA.debugLine="streamer.StopPlaying";
+Debug.ShouldStop(134217728);
 udpmodul._streamer.runVoidMethod ("StopPlaying");
- BA.debugLineNum = 154;BA.debugLine="End Sub";
-Debug.ShouldStop(33554432);
+ BA.debugLineNum = 157;BA.debugLine="End Sub";
+Debug.ShouldStop(268435456);
 return RemoteObject.createImmutable("");
 }
 catch (Exception e) {
@@ -65,6 +65,26 @@ Debug.ShouldStop(128);
 _sendudp(udpmodul._udpsocket1,BA.ObjectToString("0"),BA.ObjectToString("192.168.1.255"),BA.NumberToString(11319));
  BA.debugLineNum = 105;BA.debugLine="End Sub";
 Debug.ShouldStop(256);
+return RemoteObject.createImmutable("");
+}
+catch (Exception e) {
+			Debug.ErrorCaught(e);
+			throw e;
+		} 
+finally {
+			Debug.PopSubsStack();
+		}}
+public static RemoteObject  _debugsend() throws Exception{
+try {
+		Debug.PushSubsStack("DebugSend (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,111);
+if (RapidSub.canDelegate("debugsend")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","debugsend");
+ BA.debugLineNum = 111;BA.debugLine="Sub DebugSend";
+Debug.ShouldStop(16384);
+ BA.debugLineNum = 112;BA.debugLine="SendUDP(UDPsocket1, \"3\", AHEIP, 11319)";
+Debug.ShouldStop(32768);
+_sendudp(udpmodul._udpsocket1,BA.ObjectToString("3"),udpmodul._aheip,BA.NumberToString(11319));
+ BA.debugLineNum = 113;BA.debugLine="End Sub";
+Debug.ShouldStop(65536);
 return RemoteObject.createImmutable("");
 }
 catch (Exception e) {
@@ -258,9 +278,9 @@ try {
 if (RapidSub.canDelegate("tbsens")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","tbsens");
  BA.debugLineNum = 107;BA.debugLine="Sub TBSens";
 Debug.ShouldStop(1024);
- BA.debugLineNum = 108;BA.debugLine="SendUDP(UDPsocket1, \"2\" + Main.Sens, \"192.168.1.2";
+ BA.debugLineNum = 108;BA.debugLine="SendUDP(UDPsocket1, \"2\" + Main.Sens, AHEIP, 11319";
 Debug.ShouldStop(2048);
-_sendudp(udpmodul._udpsocket1,BA.NumberToString(RemoteObject.solve(new RemoteObject[] {BA.numberCast(double.class, "2"),BA.numberCast(double.class, udpmodul.mostCurrent._main._sens)}, "+",1, 0)),BA.ObjectToString("192.168.1.255"),BA.NumberToString(11319));
+_sendudp(udpmodul._udpsocket1,BA.NumberToString(RemoteObject.solve(new RemoteObject[] {BA.numberCast(double.class, "2"),BA.numberCast(double.class, udpmodul.mostCurrent._main._sens)}, "+",1, 0)),udpmodul._aheip,BA.NumberToString(11319));
  BA.debugLineNum = 109;BA.debugLine="End Sub";
 Debug.ShouldStop(4096);
 return RemoteObject.createImmutable("");
@@ -274,65 +294,65 @@ finally {
 		}}
 public static RemoteObject  _timer1_tick() throws Exception{
 try {
-		Debug.PushSubsStack("Timer1_Tick (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,113);
+		Debug.PushSubsStack("Timer1_Tick (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,116);
 if (RapidSub.canDelegate("timer1_tick")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","timer1_tick");
- BA.debugLineNum = 113;BA.debugLine="Sub Timer1_Tick";
-Debug.ShouldStop(65536);
- BA.debugLineNum = 115;BA.debugLine="Ticks = Ticks + 1";
-Debug.ShouldStop(262144);
-udpmodul._ticks = RemoteObject.solve(new RemoteObject[] {udpmodul._ticks,RemoteObject.createImmutable(1)}, "+",1, 1);
- BA.debugLineNum = 116;BA.debugLine="Unit4 = Ticks";
+ BA.debugLineNum = 116;BA.debugLine="Sub Timer1_Tick";
 Debug.ShouldStop(524288);
-udpmodul._unit4 = BA.NumberToString(udpmodul._ticks);
- BA.debugLineNum = 118;BA.debugLine="UpdateUI";
+ BA.debugLineNum = 118;BA.debugLine="Ticks = Ticks + 1";
 Debug.ShouldStop(2097152);
+udpmodul._ticks = RemoteObject.solve(new RemoteObject[] {udpmodul._ticks,RemoteObject.createImmutable(1)}, "+",1, 1);
+ BA.debugLineNum = 119;BA.debugLine="Unit4 = Ticks";
+Debug.ShouldStop(4194304);
+udpmodul._unit4 = BA.NumberToString(udpmodul._ticks);
+ BA.debugLineNum = 121;BA.debugLine="UpdateUI";
+Debug.ShouldStop(16777216);
 _updateui();
- BA.debugLineNum = 120;BA.debugLine="If Ticks > 8 And AHEIP <> \"\" Then";
-Debug.ShouldStop(8388608);
+ BA.debugLineNum = 123;BA.debugLine="If Ticks > 8 And AHEIP <> \"\" Then";
+Debug.ShouldStop(67108864);
 if (RemoteObject.solveBoolean(">",udpmodul._ticks,BA.numberCast(double.class, 8)) && RemoteObject.solveBoolean("!",udpmodul._aheip,BA.ObjectToString(""))) { 
- BA.debugLineNum = 122;BA.debugLine="SendUDP(UDPsocket1, \"0\", AHEIP, 11319)";
-Debug.ShouldStop(33554432);
+ BA.debugLineNum = 125;BA.debugLine="SendUDP(UDPsocket1, \"0\", AHEIP, 11319)";
+Debug.ShouldStop(268435456);
 _sendudp(udpmodul._udpsocket1,BA.ObjectToString("0"),udpmodul._aheip,BA.NumberToString(11319));
  };
- BA.debugLineNum = 125;BA.debugLine="If Ticks > 11 Then";
-Debug.ShouldStop(268435456);
-if (RemoteObject.solveBoolean(">",udpmodul._ticks,BA.numberCast(double.class, 11))) { 
- BA.debugLineNum = 126;BA.debugLine="ConnectionStatus = False";
-Debug.ShouldStop(536870912);
-udpmodul._connectionstatus = udpmodul.mostCurrent.__c.getField(true,"False");
- BA.debugLineNum = 127;BA.debugLine="ToastMessageShow(\"You lost connection to AHE\",";
-Debug.ShouldStop(1073741824);
-udpmodul.mostCurrent.__c.runVoidMethod ("ToastMessageShow",(Object)(BA.ObjectToString("You lost connection to AHE")),(Object)(udpmodul.mostCurrent.__c.getField(true,"True")));
- BA.debugLineNum = 128;BA.debugLine="Unit1 = AHEIP";
+ BA.debugLineNum = 128;BA.debugLine="If Ticks > 11 Then";
 Debug.ShouldStop(-2147483648);
-udpmodul._unit1 = udpmodul._aheip;
- BA.debugLineNum = 129;BA.debugLine="Unit2 =\"Status: Disconnected\"";
+if (RemoteObject.solveBoolean(">",udpmodul._ticks,BA.numberCast(double.class, 11))) { 
+ BA.debugLineNum = 129;BA.debugLine="ConnectionStatus = False";
 Debug.ShouldStop(1);
-udpmodul._unit2 = BA.ObjectToString("Status: Disconnected");
- BA.debugLineNum = 130;BA.debugLine="Unit3 =\"Try pressing the Sync AHE button!\"";
+udpmodul._connectionstatus = udpmodul.mostCurrent.__c.getField(true,"False");
+ BA.debugLineNum = 130;BA.debugLine="ToastMessageShow(\"You lost connection to AHE\",";
 Debug.ShouldStop(2);
-udpmodul._unit3 = BA.ObjectToString("Try pressing the Sync AHE button!");
- BA.debugLineNum = 131;BA.debugLine="Unit4 =\"Check that your hardware is powered!\"";
+udpmodul.mostCurrent.__c.runVoidMethod ("ToastMessageShow",(Object)(BA.ObjectToString("You lost connection to AHE")),(Object)(udpmodul.mostCurrent.__c.getField(true,"True")));
+ BA.debugLineNum = 131;BA.debugLine="Unit1 = AHEIP";
 Debug.ShouldStop(4);
-udpmodul._unit4 = BA.ObjectToString("Check that your hardware is powered!");
- BA.debugLineNum = 132;BA.debugLine="notis.SetInfo(\"All hearing ear\", \"You lost conn";
+udpmodul._unit1 = udpmodul._aheip;
+ BA.debugLineNum = 132;BA.debugLine="Unit2 =\"Status: Disconnected\"";
 Debug.ShouldStop(8);
-udpmodul._notis.runVoidMethod ("SetInfo",udpmodul.processBA,(Object)(BA.ObjectToString("All hearing ear")),(Object)(BA.ObjectToString("You lost connection to All hearing ear")),(Object)(udpmodul.getObject()));
- BA.debugLineNum = 133;BA.debugLine="notis.Notify(1)";
+udpmodul._unit2 = BA.ObjectToString("Status: Disconnected");
+ BA.debugLineNum = 133;BA.debugLine="Unit3 =\"Try pressing the Sync AHE button!\"";
 Debug.ShouldStop(16);
-udpmodul._notis.runVoidMethod ("Notify",(Object)(BA.numberCast(int.class, 1)));
- BA.debugLineNum = 134;BA.debugLine="Timer1.Enabled = False";
+udpmodul._unit3 = BA.ObjectToString("Try pressing the Sync AHE button!");
+ BA.debugLineNum = 134;BA.debugLine="Unit4 =\"Check that your hardware is powered!\"";
 Debug.ShouldStop(32);
-udpmodul._timer1.runMethod(true,"setEnabled",udpmodul.mostCurrent.__c.getField(true,"False"));
- BA.debugLineNum = 135;BA.debugLine="Ticks = 0";
+udpmodul._unit4 = BA.ObjectToString("Check that your hardware is powered!");
+ BA.debugLineNum = 135;BA.debugLine="notis.SetInfo(\"All hearing ear\", \"You lost conn";
 Debug.ShouldStop(64);
-udpmodul._ticks = BA.numberCast(int.class, 0);
- BA.debugLineNum = 137;BA.debugLine="UpdateUI";
+udpmodul._notis.runVoidMethod ("SetInfo",udpmodul.processBA,(Object)(BA.ObjectToString("All hearing ear")),(Object)(BA.ObjectToString("You lost connection to All hearing ear")),(Object)(udpmodul.getObject()));
+ BA.debugLineNum = 136;BA.debugLine="notis.Notify(1)";
+Debug.ShouldStop(128);
+udpmodul._notis.runVoidMethod ("Notify",(Object)(BA.numberCast(int.class, 1)));
+ BA.debugLineNum = 137;BA.debugLine="Timer1.Enabled = False";
 Debug.ShouldStop(256);
+udpmodul._timer1.runMethod(true,"setEnabled",udpmodul.mostCurrent.__c.getField(true,"False"));
+ BA.debugLineNum = 138;BA.debugLine="Ticks = 0";
+Debug.ShouldStop(512);
+udpmodul._ticks = BA.numberCast(int.class, 0);
+ BA.debugLineNum = 140;BA.debugLine="UpdateUI";
+Debug.ShouldStop(2048);
 _updateui();
  };
- BA.debugLineNum = 140;BA.debugLine="End Sub";
-Debug.ShouldStop(2048);
+ BA.debugLineNum = 143;BA.debugLine="End Sub";
+Debug.ShouldStop(16384);
 return RemoteObject.createImmutable("");
 }
 catch (Exception e) {
@@ -427,15 +447,15 @@ finally {
 		}}
 public static RemoteObject  _updateui() throws Exception{
 try {
-		Debug.PushSubsStack("UpdateUI (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,157);
+		Debug.PushSubsStack("UpdateUI (udpmodul) ","udpmodul",1,udpmodul.processBA,udpmodul.mostCurrent,160);
 if (RapidSub.canDelegate("updateui")) return udpmodul.remoteMe.runUserSub(false, "udpmodul","updateui");
- BA.debugLineNum = 157;BA.debugLine="Private Sub UpdateUI";
-Debug.ShouldStop(268435456);
- BA.debugLineNum = 158;BA.debugLine="CallSub(Main, \"UpdateUI\")";
-Debug.ShouldStop(536870912);
+ BA.debugLineNum = 160;BA.debugLine="Private Sub UpdateUI";
+Debug.ShouldStop(-2147483648);
+ BA.debugLineNum = 161;BA.debugLine="CallSub(Main, \"UpdateUI\")";
+Debug.ShouldStop(1);
 udpmodul.mostCurrent.__c.runMethodAndSync(false,"CallSubNew",udpmodul.processBA,(Object)((udpmodul.mostCurrent._main.getObject())),(Object)(RemoteObject.createImmutable("UpdateUI")));
- BA.debugLineNum = 159;BA.debugLine="End Sub";
-Debug.ShouldStop(1073741824);
+ BA.debugLineNum = 162;BA.debugLine="End Sub";
+Debug.ShouldStop(2);
 return RemoteObject.createImmutable("");
 }
 catch (Exception e) {

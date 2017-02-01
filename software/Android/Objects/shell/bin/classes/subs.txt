@@ -1,57 +1,61 @@
 b4a.example
-main,activity_create,1,0,52,61
-,btnmanual,,btnmute,,btnok,,btnsync,,imageview1,,imgconstat,,lblunit1,,lblunit2,,lblunit3,,lblunit4,,panel1,,pnlunits,,txtmanip,,ime,udpmodul,connectionstatus,udpmodul,unit1,udpmodul,unit2,,green,,red,udpmodul,unit3,udpmodul,unit4
-,btnmanual,,btnmute,,btnok,,btnsync,,imageview1,,imgconstat,,lblunit1,,lblunit2,,lblunit3,,lblunit4,,panel1,,pnlunits,,txtmanip
+main,activity_create,1,0,53,62
+,btnmanual,,btnmute,,btnok,,btnsync,,imageview1,,imgconstat,,lblunit1,,lblunit2,,lblunit3,,lblunit4,,panel1,,pnlunits,,sbsens,,txtmanip,,ime,udpmodul,connectionstatus,udpmodul,unit1,udpmodul,unit2,,green,,red,udpmodul,unit3,udpmodul,unit4
+,btnmanual,,btnmute,,btnok,,btnsync,,imageview1,,imgconstat,,lblunit1,,lblunit2,,lblunit3,,lblunit4,,panel1,,pnlunits,,sbsens,,txtmanip
 ,updateui
-main,updateui,0,0,91,113
-udpmodul,connectionstatus,,imgconstat,,lblunit1,udpmodul,unit1,,lblunit2,udpmodul,unit2,,green,,red,,lblunit3,udpmodul,unit3,,lblunit4,udpmodul,unit4
+main,updateui,0,0,92,115
+udpmodul,connectionstatus,,imgconstat,,sbsens,,lblunit1,udpmodul,unit1,,lblunit2,udpmodul,unit2,,green,,red,,lblunit3,udpmodul,unit3,,lblunit4,udpmodul,unit4
 
 
-main,activity_pause,0,0,68,70
+main,activity_pause,0,0,69,71
 
 
 
-main,activity_resume,0,0,63,66
-udpmodul,connectionstatus,,imgconstat,,lblunit1,udpmodul,unit1,,lblunit2,udpmodul,unit2,,green,,red,,lblunit3,udpmodul,unit3,,lblunit4,udpmodul,unit4
+main,activity_resume,0,0,64,67
+udpmodul,connectionstatus,,imgconstat,,sbsens,,lblunit1,udpmodul,unit1,,lblunit2,udpmodul,unit2,,green,,red,,lblunit3,udpmodul,unit3,,lblunit4,udpmodul,unit4
 
 ,updateui
-main,btnmanual_click,0,0,114,124
+main,btnmanual_click,0,0,116,126
 ,txtmanip,,panel1,,btnok
 
 
-main,btnmute_click,1,0,78,88
+main,btnmute_click,1,0,79,89
 ,btnmute,,mute
 ,mute
 
-main,btnok_click,1,0,139,158
+main,btnok_click,1,0,141,160
 ,ime,,manualip,,txtmanip,,panel1,,btnok
 ,manualip
 
-main,btnsync_click,1,0,74,76
+main,btnsync_click,1,0,75,77
 
 
 
-main,globals,0,1,24,48
+main,globals,0,1,24,49
 ,green,,red
 ,green,,red
+
+main,imageview1_longclick,1,0,165,167
+
+
 
 main,process_globals,0,1,17,22
 
 
 
-main,sbsens_valuechanged,1,0,159,162
+main,sbsens_valuechanged,1,0,161,164
 ,sens
 ,sens
 
-main,txtmanip_enterpressed,1,0,125,138
+main,txtmanip_enterpressed,1,0,127,140
 ,manualip,,txtmanip,,panel1,,btnok
 ,manualip
 
-udpmodul,astream_newdata,0,0,144,149
+udpmodul,astream_newdata,0,0,147,152
 ,streamer,main,mute
 
 
-udpmodul,astream_stop,0,0,152,154
+udpmodul,astream_stop,0,0,155,157
 ,streamer
 
 
@@ -63,6 +67,10 @@ udpmodul,sendudp,0,0,95,101
 
 
 
+udpmodul,debugsend,0,0,111,113
+,udpsocket1,,aheip
+
+,sendudp
 udpmodul,process_globals,0,1,5,21
 ,connectionstatus
 ,connectionstatus
@@ -71,7 +79,7 @@ udpmodul,service_create,1,0,23,45
 ,udpsocket3,,udpsocket2,,udpsocket1,,streamer,,timer1,,unit1,,unit2,,notis
 ,unit1,,unit2
 ,updateui,,sendudp
-udpmodul,updateui,1,0,157,159
+udpmodul,updateui,1,0,160,162
 
 
 
@@ -84,10 +92,10 @@ udpmodul,service_start,0,0,47,49
 
 
 udpmodul,tbsens,0,0,107,109
-,udpsocket1,main,sens
+,udpsocket1,main,sens,,aheip
 
 ,sendudp
-udpmodul,timer1_tick,1,0,113,140
+udpmodul,timer1_tick,1,0,116,143
 ,ticks,,unit4,,aheip,,udpsocket1,,connectionstatus,,unit1,,unit2,,unit3,,notis,,timer1
 ,ticks,,unit4,,connectionstatus,,unit1,,unit2,,unit3
 ,updateui,,sendudp
