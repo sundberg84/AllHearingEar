@@ -137,6 +137,14 @@ void loop()
     silence_value = (SILENCE_EMA_WEIGHT * silence_value + accum_silence) / (SILENCE_EMA_WEIGHT + 1);
     envelope_value = envelope_value;
 
+      if (debug_threshold > 0) {
+        Serial.print("Threshold val "); Serial.println(envelope_value);
+        debug_threshold++;
+        if (debug_threshold == 1000) {
+          debug_threshold = 0;
+        }
+      }
+
     if (envelope_value > envelope_threshold) {
       send_sound_util = millis() + stop_sound_after;
     }
@@ -144,14 +152,6 @@ void loop()
     if (millis() < send_sound_util) {
       udp.beginPacket(ipServer, udpSoundPort);
       udp.write((const uint8_t *)(&adc_buf[!current_adc_buf][0]), writeptr - (uint8_t *)&adc_buf[!current_adc_buf][0]);
-
-      if (debug_threshold > 0) {
-        Serial.print("Threshold val "); Serial.println(envelope_value);
-        debug_threshold++;
-        if (debug_threshold == 100) {
-          debug_threshold = 0;
-        }
-      }
       udp.endPacket();
     }
     send_samples_now = 0;
@@ -221,18 +221,24 @@ void UdpRecieveData()
           envelope_threshold = 2; //Rör sig
         }
         if (incomingUDP[1] - '0' == 1) {
-          envelope_threshold = 5; //Gnyr
+          envelope_threshold = 4; //Gnyr
         }
         if (incomingUDP[1] - '0' == 2) {
-          envelope_threshold = 40; //Skriker
+          envelope_threshold = 30; //Skriker
         }
         if (incomingUDP[1] - '0' == 3) {
-          envelope_threshold = 80; //Världskrig
+          envelope_threshold = 60; //Världskrig
         }
         Serial.print("Volym: "); Serial.println(envelope_threshold);
         break;
       case 3:
-        debug_threshold = 1;
+      
+        if (debug_threshold  == 0) {
+          debug_threshold = 1;
+        }
+        if (debug_threshold  == 1) {
+          debug_threshold = 0;
+        }
         break;
       case 4:
         Serial.print("Waiting sync.");
