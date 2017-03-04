@@ -65,6 +65,8 @@ https://www.eeweb.com/blog/circuit_projects/basic-concepts-of-designing-an-rf-pc
 Small- Signal Audio Design (s.541)
 https://books.google.se/books?id=pVIdAAAAQBAJ&pg=PA542&lpg=PA542&dq=microphone+ADC+pcb&source=bl&ots=9AMiR27RV6&sig=jDy-KNQHOQVXisLZhPLIu_6ktNw&hl=sv&sa=X&ved=0ahUKEwjYrtzK87zSAhXLiSwKHYIEA5A4ChDoAQhNMAg#v=onepage&q&f=false
 
+http://www.ti.com/lit/an/szza009/szza009.pdf
+
 ## Skal 
 3d pyramid
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
