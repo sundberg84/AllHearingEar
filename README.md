@@ -55,7 +55,11 @@ Div PreAmp
 https://arduinodiy.wordpress.com/category/audio/
 
 Noice reduction
+
+General power supply and op-amp noise reduction techniques
 http://www.diystompboxes.com/smfforum/index.php?topic=74265.0
+Basic Concepts of Designing an RF PCB Board:
+https://www.eeweb.com/blog/circuit_projects/basic-concepts-of-designing-an-rf-pcb-board
 
 ## Skal 
 3d pyramid
