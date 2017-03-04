@@ -58,8 +58,12 @@ Noice reduction
 
 General power supply and op-amp noise reduction techniques
 http://www.diystompboxes.com/smfforum/index.php?topic=74265.0
+
 Basic Concepts of Designing an RF PCB Board:
 https://www.eeweb.com/blog/circuit_projects/basic-concepts-of-designing-an-rf-pcb-board
+
+Small- Signal Audio Design (s.541)
+https://books.google.se/books?id=pVIdAAAAQBAJ&pg=PA542&lpg=PA542&dq=microphone+ADC+pcb&source=bl&ots=9AMiR27RV6&sig=jDy-KNQHOQVXisLZhPLIu_6ktNw&hl=sv&sa=X&ved=0ahUKEwjYrtzK87zSAhXLiSwKHYIEA5A4ChDoAQhNMAg#v=onepage&q&f=false
 
 ## Skal 
 3d pyramid
