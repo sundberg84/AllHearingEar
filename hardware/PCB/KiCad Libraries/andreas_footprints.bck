@@ -7,9 +7,8 @@ F http://www.national.com/ds/LM/LM1875.pdf
 $ENDCMP
 #
 $CMP OPA345
-D 20W Audio Power Amplifier, TO220-5
-K LM1875 Amplifier 20W
-F http://www.national.com/ds/LM/LM1875.pdf
+D LOW POWER, SINGLE-SUPPLY, RAIL-TO-RAIL
+F http://www.ti.com/lit/ds/symlink/opa345.pdf
 $ENDCMP
 #
 #End Doc Library

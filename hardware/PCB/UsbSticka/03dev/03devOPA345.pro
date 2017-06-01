@@ -1,6 +1,10 @@
-update=2017-01-01 13:54:51
+update=2017-03-02 20:14:15
 version=1
-last_client=kicad
+last_client=eeschema
+[general]
+version=1
+RootSch=
+BoardNm=
 [pcbnew]
 version=1
 LastNetListRead=
@@ -23,11 +27,9 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
-LibDir=
+LibDir=../../KiCad Libraries/ASKicadLib.pretty
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -60,13 +62,3 @@ LibName28=contrib
 LibName29=valves
 LibName30=D:/OneDrive/AllHearingEar/hardware/PCB/KiCad Libraries/andreas_footprints
 LibName31=D:/OneDrive/AllHearingEar/hardware/PCB/KiCad Libraries/ferrite
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=60

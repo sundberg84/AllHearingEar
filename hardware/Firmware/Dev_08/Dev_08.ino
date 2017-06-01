@@ -7,6 +7,10 @@
 #define WIFIUDP_H
 #include <SPI.h>
 
+#define SS 13
+#define PIN_SPI_SS (13)
+#define PIN_SPI_MOSI (15)
+
 //UDP Variabler
 const int UDP_PACKET_SIZE = 64;
 char incomingPacket[UDP_PACKET_SIZE];
@@ -42,6 +46,7 @@ int enable_highpass_filter = 1;
 const int resetPIN = 5;     // the number of the pushbutton pin
 int debug_threshold = 0;
 
+
 void setup() {
 
   //Debug
@@ -56,6 +61,8 @@ void setup() {
 
   // initialize the pushbutton pin as an input:
   pinMode(resetPIN, INPUT);
+
+  // initialize manual SS/CS for MCP3201:
 
   delay(1000);
 
@@ -306,6 +313,7 @@ void ICACHE_RAM_ATTR sample_isr(void)
 {
   uint16_t val;
   // Read a sample from ADC
+
   val = transfer16();
   adc_buf[current_adc_buf][adc_buf_pos] = val & 0xFFF;
   adc_buf_pos++;
