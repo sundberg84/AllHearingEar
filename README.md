@@ -67,6 +67,8 @@ https://books.google.se/books?id=pVIdAAAAQBAJ&pg=PA542&lpg=PA542&dq=microphone+A
 
 http://www.ti.com/lit/an/szza009/szza009.pdf
 
+https://www.maximintegrated.com/en/app-notes/index.mvp/id/5450
+
 ## Skal 
 3d pyramid
 - 3d printad iluminati pyramid (http://www.shapeways.com/product/G3PZPGYJB/illuminati-flat-peice-v2e)
