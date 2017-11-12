@@ -51,7 +51,7 @@ void setup() {
 
   //Debug
   Serial.begin(115200);
-  Serial.println("Starting! Firmware: Dev_07_buffertsize");
+  Serial.println("Starting! Firmware: Dev_08");
 
   //Klientnamn på routern.
   wifi_station_set_hostname("AllHearingEar");
